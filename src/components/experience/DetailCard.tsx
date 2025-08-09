@@ -37,13 +37,13 @@ export default function DetailCard({ title, subtitle, imageUrl, docUrl, children
         </div>
 
         {/* Title + body + actions */}
-        <div className="space-y-3">
+        <div className="space-y-6 md:space-y-8">
           <div>
             <h2 className="text-xl font-semibold text-slate-900 dark:text-white">{title}</h2>
             {subtitle && <p className="text-sm text-slate-500 dark:text-slate-400">{subtitle}</p>}
           </div>
 
-          <div className="mt-8 md:mt-10 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
+          <div className="text-sm leading-relaxed text-slate-700 dark:text-slate-200">
             {children}
           </div>
 
