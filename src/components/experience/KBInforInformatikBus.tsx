@@ -1,58 +1,21 @@
-import Image from "next/image";
-import { FiExternalLink, FiFileText } from "react-icons/fi";
+import DetailCard from "./DetailCard";
 
 export default function KBInforInformatikBus() {
   const imageUrl = "/assets/bilder/KBInforInformatikBus.png";
   const docUrl = "/assets/pdfs/KBInforInformatikBus.pdf";
 
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-1 md:grid-cols-[220px,1fr] gap-4 items-start">
-        <div className="rounded-lg border border-rose-200/70 dark:border-slate-700/70 bg-white dark:bg-slate-900 p-2 shadow-sm flex justify-center">
-          <a href={imageUrl} target="_blank" rel="noopener noreferrer" className="block" aria-label="Bild in neuem Tab öffnen">
-            <Image
-              src={imageUrl}
-              alt="Zürcher Kantonalbank – Informatik & EDB Nachweis"
-              width={420}
-              height={280}
-              className="w-36 sm:w-44 md:w-full h-auto object-contain rounded-md"
-              sizes="(max-width: 768px) 9rem, (max-width: 1024px) 11rem, 220px"
-              priority
-            />
-          </a>
-        </div>
-
-        <div className="space-y-3">
-          <div>
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-white">ZKB – Informationsveranstaltung Informatik & Entwicklung digitales Business</h2>
-            <p className="text-sm text-slate-500 dark:text-slate-400">Überblick zu IT‑/EDB‑Lehre, Bewerbungs‑ und Rekrutierungsprozess</p>
-          </div>
-          <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-200">
-            Beim Kennenlernen der Zürcher Kantonalbank und ihrer Ausbildungswelt erhielt ich Einblicke in den
-            Ablauf der IT- und EDB-Lehre, inklusive der drei Lernorte, informierte mich über den Bewerbungs- und
-            Rekrutierungsprozess, konnte allgemeine Fragen zu den Lehren klären und mich mit Lernenden sowie
-            Ausbildungsverantwortlichen austauschen.
-          </p>
-          <div className="flex flex-wrap items-center gap-2">
-            <a
-              href={docUrl}
-              download
-              className="inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-full border border-slate-300/70 dark:border-slate-700 hover:bg-rose-50/60 dark:hover:bg-slate-800/60"
-            >
-              <FiFileText /> Beleg herunterladen
-            </a>
-            <a
-              href={imageUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-full border border-slate-300/70 dark:border-slate-700 hover:bg-rose-50/60 dark:hover:bg-slate-800/60"
-            >
-              <FiExternalLink /> Im neuen Tab öffnen
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+    <DetailCard
+      title="ZKB – Informationsveranstaltung Informatik & Entwicklung digitales Business"
+      subtitle="Überblick zu IT‑/EDB‑Lehre, Bewerbungs‑ und Rekrutierungsprozess"
+      imageUrl={imageUrl}
+      docUrl={docUrl}
+    >
+      Beim Kennenlernen der Zürcher Kantonalbank und ihrer Ausbildungswelt erhielt ich Einblicke in den
+      Ablauf der IT- und EDB-Lehre, inklusive der drei Lernorte, informierte mich über den Bewerbungs- und
+      Rekrutierungsprozess, konnte allgemeine Fragen zu den Lehren klären und mich mit Lernenden sowie
+      Ausbildungsverantwortlichen austauschen.
+    </DetailCard>
   );
 }
 
