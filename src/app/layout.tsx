@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,14 +15,43 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio - Max Mustermann | Full-Stack Entwickler",
-  description: "Portfolio von Max Mustermann - Full-Stack Entwickler mit Leidenschaft für moderne Webtechnologien. React, Next.js, TypeScript und mehr.",
-  keywords: ["portfolio", "full-stack entwickler", "react", "next.js", "typescript", "webentwicklung", "frontend", "backend"],
-  authors: [{ name: "Max Mustermann" }],
+  metadataBase: new URL("https://erenworks.vercel.app"),
+  title: "Eren Aydin – Portfolio",
+  description:
+    "Persönliches Profil, Schulische Unterlagen (PDF), Erfahrungen & Schnupperlehren, Sprachkenntnisse, Interessen, Referenzen und Kontakt.",
+  keywords: [
+    "portfolio",
+    "lebenslauf",
+    "schulische unterlagen",
+    "zeugnisse",
+    "erfahrungen",
+    "schnupperlehren",
+    "sprachkenntnisse",
+    "next.js",
+    "typescript",
+  ],
+  authors: [{ name: "Eren Aydin" }],
   openGraph: {
-    title: "Portfolio - Max Mustermann | Full-Stack Entwickler",
-    description: "Portfolio von Max Mustermann - Full-Stack Entwickler mit Leidenschaft für moderne Webtechnologien",
+    title: "Eren Aydin – Portfolio",
+    description:
+      "Persönliches Profil, Schulische Unterlagen (PDF), Erfahrungen & Schnupperlehren, Sprachkenntnisse, Interessen, Referenzen und Kontakt.",
+    url: "https://erenworks.vercel.app",
+    siteName: "Eren Aydin – Portfolio",
     type: "website",
+    locale: "de_CH",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Eren Aydin – Portfolio",
+    description:
+      "Persönliches Profil, Schulische Unterlagen (PDF), Erfahrungen & Schnupperlehren, Sprachkenntnisse, Interessen, Referenzen und Kontakt.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: "https://erenworks.vercel.app",
   },
 };
 
@@ -37,6 +68,8 @@ export default function RootLayout({
       >
         {/* Toast container */}
         <div id="toast-root" />
+        <Analytics />
+        <SpeedInsights />
         {children}
       </body>
     </html>
