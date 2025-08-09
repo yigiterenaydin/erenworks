@@ -9,6 +9,16 @@ interface StartseiteProps {
 }
 
 export default function Startseite({ name }: StartseiteProps) {
+  const stats = [
+    {
+      value: 12,
+      label: 'Schnupperlehren, an denen ich bisher teilnehmen durfte',
+    },
+    {
+      value: 6,
+      label: 'Bisher von mir versandte Bewerbungen für Lehrstellen',
+    },
+  ];
   return (
     <section id="home" className="relative pt-20 pb-16 bg-rose-50/60 dark:bg-slate-800/30 backdrop-blur-sm section-anchor">
 
@@ -154,6 +164,29 @@ export default function Startseite({ name }: StartseiteProps) {
               onContactClick={() => console.log('Contact clicked')}
             />
           </motion.div>
+        </div>
+
+        {/* Stats Row (test) */}
+        <div className="mt-10">
+          <h3 className="flex items-center gap-2 text-lg font-semibold text-slate-900 dark:text-white mb-4">
+            <span className="w-2 h-2 rounded-full bg-pink-500"></span>
+            Meine Zahlen
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {stats.map((s, i) => (
+              <div
+                key={i}
+                className="rounded-2xl border border-slate-800/60 bg-gradient-to-br from-slate-900/70 to-slate-800/40 text-white p-6 shadow-[0_10px_30px_rgba(0,0,0,0.35)]"
+              >
+                <div className="flex items-center gap-6">
+                  <div className="text-5xl font-extrabold bg-gradient-to-br from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-sm">
+                    {s.value}
+                  </div>
+                  <p className="text-sm leading-relaxed text-slate-300">{s.label}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
