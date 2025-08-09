@@ -1,7 +1,17 @@
 'use client';
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef, useCallback, Fragment } from "react";
+import {
+  HomeIcon,
+  UserCircleIcon,
+  AcademicCapIcon,
+  BriefcaseIcon,
+  Squares2X2Icon,
+  EnvelopeIcon,
+  MoonIcon,
+  SunIcon,
+} from '@heroicons/react/24/outline';
 
 interface HeaderProps {
   theme: 'light' | 'dark';
@@ -20,12 +30,12 @@ export default function Header({
 }: HeaderProps) {
   const headerRef = useRef<HTMLElement | null>(null);
   const navigationItems = [
-    { name: 'Startseite', href: '#home' },
-    { name: 'Persönliches Profil', href: '#about' },
-    { name: 'Schulische Unterlagen', href: '#reports' },
-    { name: 'Erfahrung', href: '#experience' },
-    { name: 'Projekte', href: '#projects' },
-    { name: 'Kontakt', href: '#contact' }
+    { name: 'Startseite', href: '#home', Icon: HomeIcon },
+    { name: 'Persönliches Profil', href: '#about', Icon: UserCircleIcon },
+    { name: 'Schulische Unterlagen', href: '#reports', Icon: AcademicCapIcon },
+    { name: 'Erfahrung', href: '#experience', Icon: BriefcaseIcon },
+    { name: 'Projekte', href: '#projects', Icon: Squares2X2Icon },
+    { name: 'Kontakt', href: '#contact', Icon: EnvelopeIcon }
   ];
 
   const [activeSection, setActiveSection] = useState<string>('home');
@@ -84,35 +94,62 @@ export default function Header({
              Lebenslauf
            </motion.h1>
           
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
-            {navigationItems.map((item, index) => (
-              <motion.a
-                key={item.name}
-                href={item.href}
-                onClick={(e) => { e.preventDefault(); scrollToHash(item.href); }}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ scale: 1.1, y: -2 }}
-                className={`relative px-4 py-2 rounded-full transition-all duration-300 font-medium ${
-                  activeSection === item.href.replace('#', '')
-                    ? 'text-emerald-700 dark:text-emerald-300 bg-emerald-50/80 dark:bg-emerald-900/30 shadow-sm'
-                    : 'text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50/80 dark:hover:bg-emerald-900/20'
-                }`}
+          {/* Desktop Pill Navigation */}
+          <div className="hidden md:flex flex-1 justify-center">
+            <nav
+              aria-label="Primary"
+              className="flex items-center gap-1 rounded-full border border-slate-200/70 dark:border-slate-700/60 bg-white/90 dark:bg-slate-900/70 backdrop-blur-md shadow-[0_2px_20px_rgba(0,0,0,0.06)] px-2 py-2"
+            >
+              {navigationItems.map((item, index) => {
+                const isActive = activeSection === item.href.replace('#', '');
+                const ItemIcon = item.Icon as (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
+                return (
+                  <Fragment key={item.name}>
+                    <motion.a
+                      href={item.href}
+                      onClick={(e) => { e.preventDefault(); scrollToHash(item.href); }}
+                      whileHover={{ y: -1 }}
+                      className={`group flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                        isActive
+                          ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white shadow-inner'
+                          : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/60'
+                      }`}
+                    >
+                      {ItemIcon && (
+                        <ItemIcon className={`${isActive ? 'text-slate-900 dark:text-slate-100' : 'text-slate-500 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200'} w-4 h-4`} />
+                      )}
+                      <span>{item.name}</span>
+                    </motion.a>
+                    {index < navigationItems.length - 1 && (
+                      <span className="h-6 w-px bg-slate-200/80 dark:bg-slate-700/70" />
+                    )}
+                  </Fragment>
+                );
+              })}
+              <span className="h-6 w-px bg-slate-200/80 dark:bg-slate-700/70" />
+              <motion.button
+                whileHover={{ rotate: 10 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={onThemeToggle}
+                aria-label="Theme toggle"
+                className="ml-1 inline-flex h-9 w-9 items-center justify-center rounded-full text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800/60"
               >
-                {item.name}
-              </motion.a>
-            ))}
-          </nav>
+                {theme === 'light' ? (
+                  <MoonIcon className="w-5 h-5" />
+                ) : (
+                  <SunIcon className="w-5 h-5 text-yellow-400" />
+                )}
+              </motion.button>
+            </nav>
+          </div>
 
           <div className="flex items-center space-x-4">
-            {/* Theme Toggle */}
+            {/* Theme Toggle (mobile) */}
             <motion.button
               whileHover={{ scale: 1.1, rotate: 180 }}
               whileTap={{ scale: 0.9 }}
               onClick={onThemeToggle}
-              className="p-3 rounded-xl bg-gradient-to-r from-indigo-100 to-purple-100 dark:from-slate-800 dark:to-indigo-800 hover:from-indigo-200 hover:to-purple-200 dark:hover:from-slate-700 dark:hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+              className="md:hidden p-3 rounded-xl bg-gradient-to-r from-indigo-100 to-purple-100 dark:from-slate-800 dark:to-indigo-800 hover:from-indigo-200 hover:to-purple-200 dark:hover:from-slate-700 dark:hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl"
             >
               {theme === 'light' ? (
                 <svg className="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
