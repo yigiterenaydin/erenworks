@@ -158,7 +158,7 @@ export default function Home() {
       <PortfolioColumns
         languages={[
           { code: 'DE', name: 'Deutsch', note: 'Muttersprache', level: 100 },
-          { code: 'TR', name: 'Türkçe', note: 'Muttersprache', level: 100 },
+          { code: 'TR', name: 'Türkisch', note: 'Muttersprache', level: 100 },
           { code: 'GB', name: 'Englisch', note: 'Schulkenntnisse im 7. Jahr', level: 70 },
           { code: 'FR', name: 'Französisch', note: 'Schulkenntnisse im 4. Jahr', level: 55 },
         ]}

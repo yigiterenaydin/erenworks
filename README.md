@@ -1,114 +1,79 @@
-# Portfolio - Max Mustermann
+## Eren Aydin – Portfolio
 
-Ein modernes, responsives Portfolio mit Next.js, TypeScript und Tailwind CSS.
+Modernes, responsives Portfolio mit Next.js, TypeScript und Tailwind CSS. Enthält PDF‑Vorschau, Accordion für Erfahrungen, Sprachkenntnisse/Interessen/Referenzen und ein Kontaktformular.
 
-## 🚀 Features
+### 🚀 Highlights
+- **Sauberes Design**: sanfte Gradients, Glassmorphism, dezente Schatten
+- **Dark/Light Mode**: Theme‑Toggle mit Speicherung
+- **Weiches Scrolling**: aktiver Menü‑Status via IntersectionObserver
+- **Animationen**: Framer Motion für Eingänge, Hover, Accordion
+- **PDF‑Vorschau**: Zeugnisse im Modal, Download mit einem Klick
+- **CV‑Download**: Blinkender Button, `ErenLebensL.pdf`
 
-- **Modern Design** - Glassmorphism ve Gradient-Effekte
-- **Dark Mode** - Automatischer Theme-Toggle
-- **Responsive** - Mobile-first Design
-- **Animations** - Framer Motion Integration
-- **Almanca** - Vollständig auf Deutsch
-- **SEO Optimiert** - Meta-Tags und Open Graph
+### 📦 Tech‑Stack
+- Next.js 15 (Turbopack) · React 19 · TypeScript 5
+- Tailwind CSS 3 · Framer Motion 12 · Heroicons · react‑icons
+- react‑hot‑toast (Interessen‑Toasts)
 
-## 📁 Projektstruktur
-
+### 📁 Struktur (Auszug)
+```text
+public/
+  assets/
+    bilder/
+      eren-photo.png
+    pdfs/
+      ErenLebensL.pdf
+      SekundarSchuleZeugnisse1sek.pdf
+      SekundarSchuleZeugnisse2sek.pdf
+src/
+  app/
+    globals.css
+    layout.tsx
+    page.tsx
+  components/
+    layout/
+      AppShell.tsx          # Shell: Theme, Header, Hintergrund, BackToTop
+      Header.tsx            # Sticky Header + aktiver Menüstatus
+      AnimatedBackground.tsx
+    sections/
+      Startseite.tsx        # Hero + CV‑Download
+      UeberMich.tsx         # Persönliches Profil (3 Karten)
+      Zeugnisse.tsx         # Schulische Unterlagen (PDF Modal + Download)
+      ExperienceAccordion.tsx # Erfahrungen & Schnupperlehren (Accordion)
+      PortfolioColumns.tsx  # Sprachkenntnisse, Interessen, Referenzen
+    shared/
+      ProfileCard.tsx
+      BackToTop.tsx
+      Kontakt.tsx
 ```
-portfolio/
-├── public/
-│   ├── assets/
-│   │   ├── bilder/          # Profilbilder, Screenshots
-│   │   ├── icons/           # Favicon, UI Icons
-│   │   ├── zertifikate/     # Zertifikate, Diplome
-│   │   ├── projekte/        # Projekt-Assets
-│   │   └── pdfs/            # Lebenslauf, Dokumente
-│   └── README.md
-├── src/
-│   ├── app/
-│   │   ├── contexts/        # React Context
-│   │   ├── globals.css      # Global Styles
-│   │   ├── layout.tsx       # Root Layout
-│   │   └── page.tsx         # Homepage
-│   ├── components/          # Wiederverwendbare Komponenten
-│   ├── lib/                 # Utility Libraries
-│   ├── types/               # TypeScript Types
-│   └── utils/               # Helper Functions
-├── tailwind.config.ts       # Tailwind Konfiguration
-├── postcss.config.js        # PostCSS Konfiguration
-└── package.json
-```
 
-## 🛠️ Technologien
-
-- **Next.js 15** - React Framework
-- **TypeScript** - Type Safety
-- **Tailwind CSS** - Utility-First CSS
-- **Framer Motion** - Animations
-- **Vercel** - Deployment
-
-## 📦 Installation
-
+### 🔧 Entwicklung
 ```bash
-# Dependencies installieren
 npm install
+npm run dev   # startet auf http://localhost:3000 (belegt → 3001)
 
-# Development Server starten
-npm run dev
-
-# Build erstellen
+# Production Build
 npm run build
-
-# Production starten
 npm start
 ```
 
-## 🎨 Anpassung
+### 🧩 Inhalte anpassen
+- Daten werden in `src/app/page.tsx` zusammengeführt (Titel, Texte, Listen).
+- Abschnitte sind in `src/components/sections/*` gekapselt.
+- PDFs und Bilder liegen unter `public/assets/*` (Dateinamen siehe Struktur oben).
+- Konsistentes Scroll‑Offset via `.section-anchor` in `globals.css`.
 
-### 1. Persönliche Informationen
-- `src/app/page.tsx` - Name, Beschreibung, Kontakt
-- `src/app/layout.tsx` - Meta-Tags und Titel
+### 🌐 Deployment (Vercel empfohlen)
+1. Repo: `https://github.com/yigiterenaydin/erenworks`
+2. Vercel → New Project → Import Git Repository → `yigiterenaydin/erenworks`
+3. Framework: Next.js · Build: `next build` · Output: `.next`
+4. Deploy. (Env‑Variablen sind aktuell nicht erforderlich.)
 
-### 2. Assets hinzufügen
-- **Profilbild**: `public/assets/bilder/profilbild.jpg`
-- **Zertifikate**: `public/assets/zertifikate/`
-- **Projekte**: `public/assets/projekte/`
-- **Lebenslauf**: `public/assets/pdfs/lebenslauf.pdf`
+### 📝 Notizen
+- Aktive Sektionen: Header markiert den aktuellen Abschnitt automatisch.
+- Farben/Abstände: Alle Sektionen haben einheitliche vertikale Abstände.
+- Barrierefreiheit: Buttons/Links mit `aria‑label`, semantische Überschriften.
 
-### 3. Farben anpassen
-- `tailwind.config.ts` - Theme-Farben
-- `src/app/globals.css` - Custom CSS
-
-## 🚀 Deployment
-
-### Vercel (Empfohlen)
-1. Repository zu GitHub pushen
-2. Vercel-Projekt erstellen
-3. Automatisches Deployment
-
-### Andere Plattformen
-- Netlify
-- Railway
-- DigitalOcean
-
-## 📱 Responsive Design
-
-- **Mobile**: < 768px
-- **Tablet**: 768px - 1024px
-- **Desktop**: > 1024px
-
-## 🎯 SEO
-
-- Meta-Tags optimiert
-- Open Graph Images
-- Structured Data
-- Sitemap (automatisch)
-
-## 📄 Lizenz
-
-MIT License - Siehe LICENSE Datei für Details.
-
-## 🤝 Kontakt
-
-- **Email**: max@example.com
-- **LinkedIn**: [Max Mustermann](https://linkedin.com/in/maxmustermann)
-- **GitHub**: [@maxmustermann](https://github.com/maxmustermann)
+### 👤 Kontakt
+- E‑Mail: eren.yigit.aydin@gmail.com
+- GitHub: `yigiterenaydin/erenworks`
