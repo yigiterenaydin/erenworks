@@ -220,10 +220,12 @@ export default function Home() {
             <div>
               <h4 className="text-2xl font-bold mb-6">Fähigkeiten</h4>
               <ul className="text-slate-400 space-y-3">
-                <li>Microsoft Office</li>
-                <li>Kundenbetreuung</li>
-                <li>Teamarbeit</li>
-                <li>Organisation</li>
+                <li>Gute Computerkenntnisse (inkl. Microsoft Word, PowerPoint, Excel)</li>
+                <li>Freundlicher und respektvoller Umgang mit Menschen</li>
+                <li>Zuverlässige und pünktliche Arbeitsweise</li>
+                <li>Teamfähigkeit und Hilfsbereitschaft</li>
+                <li>Schnelles Auffassungsvermögen und Lernbereitschaft</li>
+                <li>Organisation und sorgfältiges Arbeiten</li>
               </ul>
             </div>
             <div>
