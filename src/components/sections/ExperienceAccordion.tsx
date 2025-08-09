@@ -45,11 +45,11 @@ export default function ExperienceAccordion({ items }: Props) {
           <h3 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">Erfahrungen und Schnupperlehren</h3>
         </motion.div>
 
-        <div className="space-y-3 md:flex md:flex-wrap md:gap-4">
+        <div className="space-y-3">
           {sorted.map((exp, idx) => {
             const isOpen = openIndex === idx;
             return (
-              <div key={`${exp.company}-${idx}`} className="w-full md:w-[calc(50%-0.5rem)] rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow">
+              <div key={`${exp.company}-${idx}`} className="w-full rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow">
                 {/* Header */}
                 <button
                   type="button"
