@@ -45,11 +45,11 @@ export default function ExperienceAccordion({ items }: Props) {
           <h3 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">Erfahrungen und Schnupperlehren</h3>
         </motion.div>
 
-        <div className="space-y-3">
+        <div className="space-y-3 md:flex md:flex-wrap md:gap-4">
           {sorted.map((exp, idx) => {
             const isOpen = openIndex === idx;
             return (
-              <div key={`${exp.company}-${idx}`} className="rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow">
+              <div key={`${exp.company}-${idx}`} className="w-full md:w-[calc(50%-0.5rem)] rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow">
                 {/* Header */}
                 <button
                   type="button"
@@ -57,10 +57,10 @@ export default function ExperienceAccordion({ items }: Props) {
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
                   className="w-full text-left bg-white dark:bg-slate-800 px-5 py-4 grid grid-cols-1 md:grid-cols-2 items-center gap-4 transition-colors duration-200 hover:bg-rose-50/60 dark:hover:bg-rose-900/20"
                 >
-                  <div className="flex flex-wrap items-center gap-3">
+                  <div className="min-w-0 flex flex-wrap items-center gap-3">
                     <span className="px-2 py-0.5 text-xs rounded bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-200">{exp.date}</span>
-                    <span className="font-semibold text-slate-900 dark:text-white">{exp.company}</span>
-                    <span className="text-sm text-slate-600 dark:text-slate-300">{exp.program}</span>
+                    <span className="font-semibold text-slate-900 dark:text-white truncate max-w-[14rem] md:max-w-[18rem]">{exp.company}</span>
+                    <span className="text-sm text-slate-600 dark:text-slate-300 truncate max-w-[12rem] md:max-w-[16rem]">{exp.program}</span>
                   </div>
                   <div className="flex items-center justify-end gap-3">
                     {exp.pdfUrl ? (
