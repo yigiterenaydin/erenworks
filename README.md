@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio - Max Mustermann
 
-## Getting Started
+Ein modernes, responsives Portfolio mit Next.js, TypeScript und Tailwind CSS.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Modern Design** - Glassmorphism ve Gradient-Effekte
+- **Dark Mode** - Automatischer Theme-Toggle
+- **Responsive** - Mobile-first Design
+- **Animations** - Framer Motion Integration
+- **Almanca** - Vollständig auf Deutsch
+- **SEO Optimiert** - Meta-Tags und Open Graph
+
+## 📁 Projektstruktur
+
+```
+portfolio/
+├── public/
+│   ├── assets/
+│   │   ├── bilder/          # Profilbilder, Screenshots
+│   │   ├── icons/           # Favicon, UI Icons
+│   │   ├── zertifikate/     # Zertifikate, Diplome
+│   │   ├── projekte/        # Projekt-Assets
+│   │   └── pdfs/            # Lebenslauf, Dokumente
+│   └── README.md
+├── src/
+│   ├── app/
+│   │   ├── contexts/        # React Context
+│   │   ├── globals.css      # Global Styles
+│   │   ├── layout.tsx       # Root Layout
+│   │   └── page.tsx         # Homepage
+│   ├── components/          # Wiederverwendbare Komponenten
+│   ├── lib/                 # Utility Libraries
+│   ├── types/               # TypeScript Types
+│   └── utils/               # Helper Functions
+├── tailwind.config.ts       # Tailwind Konfiguration
+├── postcss.config.js        # PostCSS Konfiguration
+└── package.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Technologien
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Next.js 15** - React Framework
+- **TypeScript** - Type Safety
+- **Tailwind CSS** - Utility-First CSS
+- **Framer Motion** - Animations
+- **Vercel** - Deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📦 Installation
 
-## Learn More
+```bash
+# Dependencies installieren
+npm install
 
-To learn more about Next.js, take a look at the following resources:
+# Development Server starten
+npm run dev
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Build erstellen
+npm run build
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Production starten
+npm start
+```
 
-## Deploy on Vercel
+## 🎨 Anpassung
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 1. Persönliche Informationen
+- `src/app/page.tsx` - Name, Beschreibung, Kontakt
+- `src/app/layout.tsx` - Meta-Tags und Titel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 2. Assets hinzufügen
+- **Profilbild**: `public/assets/bilder/profilbild.jpg`
+- **Zertifikate**: `public/assets/zertifikate/`
+- **Projekte**: `public/assets/projekte/`
+- **Lebenslauf**: `public/assets/pdfs/lebenslauf.pdf`
+
+### 3. Farben anpassen
+- `tailwind.config.ts` - Theme-Farben
+- `src/app/globals.css` - Custom CSS
+
+## 🚀 Deployment
+
+### Vercel (Empfohlen)
+1. Repository zu GitHub pushen
+2. Vercel-Projekt erstellen
+3. Automatisches Deployment
+
+### Andere Plattformen
+- Netlify
+- Railway
+- DigitalOcean
+
+## 📱 Responsive Design
+
+- **Mobile**: < 768px
+- **Tablet**: 768px - 1024px
+- **Desktop**: > 1024px
+
+## 🎯 SEO
+
+- Meta-Tags optimiert
+- Open Graph Images
+- Structured Data
+- Sitemap (automatisch)
+
+## 📄 Lizenz
+
+MIT License - Siehe LICENSE Datei für Details.
+
+## 🤝 Kontakt
+
+- **Email**: max@example.com
+- **LinkedIn**: [Max Mustermann](https://linkedin.com/in/maxmustermann)
+- **GitHub**: [@maxmustermann](https://github.com/maxmustermann)
