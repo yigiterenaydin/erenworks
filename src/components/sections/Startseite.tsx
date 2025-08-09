@@ -113,13 +113,16 @@ export default function Startseite({ name }: StartseiteProps) {
                 transition={{ duration: 0.8, delay: 1.2 }}
                 className="flex flex-col sm:flex-row gap-6"
               >
-                <motion.button 
+                <motion.a
+                  href="https://github.com/yigiterenaydin"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
                 >
                   Projekte ansehen
-                </motion.button>
+                </motion.a>
                 <motion.a
                   href="/assets/pdfs/ErenLebensL.pdf"
                   download="ErenLebensL.pdf"
