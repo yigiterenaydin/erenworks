@@ -43,7 +43,7 @@ export default function DetailCard({ title, subtitle, imageUrl, docUrl, children
             {subtitle && <p className="text-sm text-slate-500 dark:text-slate-400">{subtitle}</p>}
           </div>
 
-          <div className="text-sm leading-relaxed text-slate-700 dark:text-slate-200">
+          <div className="mt-4 md:mt-6 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
             {children}
           </div>
 
