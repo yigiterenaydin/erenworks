@@ -55,7 +55,7 @@ export default function ExperienceAccordion({ items }: Props) {
                   type="button"
                   aria-expanded={isOpen}
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
-                  className="w-full text-left bg-white dark:bg-slate-800 px-5 py-4 grid grid-cols-1 md:grid-cols-2 items-center gap-4 transition-colors duration-200 hover:bg-rose-50/60 dark:hover:bg-rose-900/20"
+                  className="w-full text-left bg-white dark:bg-slate-800 px-5 py-4 grid grid-cols-2 items-center gap-4 transition-colors duration-200 hover:bg-rose-50/60 dark:hover:bg-rose-900/20"
                 >
                   <div className="min-w-0 flex flex-wrap items-center gap-3">
                     <span className="px-2 py-0.5 text-xs rounded bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-200">{exp.date}</span>
@@ -64,11 +64,11 @@ export default function ExperienceAccordion({ items }: Props) {
                   </div>
                   <div className="flex items-center justify-end gap-3">
                     {exp.pdfUrl ? (
-                      <span className="hidden md:inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs hover:bg-rose-50/60 dark:hover:bg-rose-900/20">
+                      <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs hover:bg-rose-50/60 dark:hover:bg-rose-900/20">
                         <FiFileText className="w-4 h-4" /> PDF
                       </span>
                     ) : (
-                      <span className="hidden md:inline-flex h-8 min-w-[120px] items-center justify-center rounded-full border border-dashed border-slate-300/70 dark:border-slate-700/70 text-slate-400 text-xs">
+                      <span className="inline-flex h-8 min-w-[120px] items-center justify-center rounded-full border border-dashed border-slate-300/70 dark:border-slate-700/70 text-slate-400 text-xs">
                         Platz frei
                       </span>
                     )}
