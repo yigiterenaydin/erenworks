@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import dynamic from "next/dynamic";
 import { FiFileText } from "react-icons/fi";
 
 interface ExperienceItem {
@@ -31,6 +32,16 @@ function sortValue(dateString: string): number {
 export default function ExperienceAccordion({ items }: Props) {
   const sorted = useMemo(() => [...items].sort((a, b) => sortValue(b.date) - sortValue(a.date)), [items]);
   const [openIndex, setOpenIndex] = useState<number | null>(0); // ilk öğe açık
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(0);
+
+  const SelectedDetail = useMemo(() => {
+    if (selectedIndex == null) return null;
+    const item = sorted[selectedIndex];
+    if (item.company.includes('Kita')) {
+      return dynamic(() => import('../experience/Kita'), { ssr: false });
+    }
+    return null;
+  }, [selectedIndex, sorted]);
 
   return (
     <section id="experience" className="pt-16 md:pt-16 pb-16 bg-rose-50/60 dark:bg-slate-900/50 backdrop-blur-sm section-anchor">
@@ -45,7 +56,9 @@ export default function ExperienceAccordion({ items }: Props) {
           <h3 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">Erfahrungen und Schnupperlehren</h3>
         </motion.div>
 
-        <div className="space-y-3">
+        <div className="md:grid md:grid-cols-2 md:gap-8">
+          {/* Sol: Liste */}
+          <div className="space-y-3">
           {sorted.map((exp, idx) => {
             const isOpen = openIndex === idx;
             return (
@@ -54,7 +67,7 @@ export default function ExperienceAccordion({ items }: Props) {
                 <button
                   type="button"
                   aria-expanded={isOpen}
-                  onClick={() => setOpenIndex(isOpen ? null : idx)}
+                  onClick={() => { setOpenIndex(isOpen ? null : idx); setSelectedIndex(idx); }}
                   className="w-full text-left bg-white dark:bg-slate-800 px-5 py-4 grid grid-cols-2 items-center gap-4 transition-colors duration-200 hover:bg-rose-50/60 dark:hover:bg-rose-900/20"
                 >
                   <div className="min-w-0 flex flex-wrap items-center gap-3">
@@ -63,7 +76,11 @@ export default function ExperienceAccordion({ items }: Props) {
                     <span className="text-sm text-slate-600 dark:text-slate-300 truncate max-w-[12rem] md:max-w-[16rem]">{exp.program}</span>
                   </div>
                   <div className="flex items-center justify-end gap-3">
-                    {exp.pdfUrl ? (
+                    {exp.company.includes('Kita') ? (
+                      <a href="/kita" className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs hover:bg-rose-50/60 dark:hover:bg-rose-900/20">
+                        Beleg anzeigen
+                      </a>
+                    ) : exp.pdfUrl ? (
                       <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs hover:bg-rose-50/60 dark:hover:bg-rose-900/20">
                         <FiFileText className="w-4 h-4" /> PDF
                       </span>
@@ -102,6 +119,17 @@ export default function ExperienceAccordion({ items }: Props) {
               </div>
             );
           })}
+          </div>
+          {/* Sağ: Detay alanı */}
+          <div className="hidden md:block">
+            <div className="sticky top-28 rounded-xl border border-rose-200/70 dark:border-slate-700/70 bg-white/70 dark:bg-slate-900/40 backdrop-blur-sm min-h-[380px] p-5">
+              {SelectedDetail ? (
+                <SelectedDetail />
+              ) : (
+                <div className="h-full w-full flex items-center justify-center text-slate-400">Platz frei</div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </section>
