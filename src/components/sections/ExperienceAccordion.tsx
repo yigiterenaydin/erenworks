@@ -49,7 +49,7 @@ export default function ExperienceAccordion({ items }: Props) {
           {sorted.map((exp, idx) => {
             const isOpen = openIndex === idx;
             return (
-              <div key={`${exp.company}-${idx}`} className="w-full rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow">
+              <div key={`${exp.company}-${idx}`} className="w-full md:w-1/2 md:ml-0 md:mr-auto rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow">
                 {/* Header */}
                 <button
                   type="button"

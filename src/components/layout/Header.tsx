@@ -102,7 +102,7 @@ export default function Header({
             >
               {navigationItems.map((item, index) => {
                 const isActive = activeSection === item.href.replace('#', '');
-                const ItemIcon = item.Icon as (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
+                const ItemIcon = item.Icon;
                 return (
                   <Fragment key={item.name}>
                     <motion.a
