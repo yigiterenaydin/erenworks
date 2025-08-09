@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from "framer-motion";
-import Turnstile from "./Turnstile";
 import { useState } from "react";
 
 interface ContactInfo {
@@ -21,7 +20,6 @@ export default function Kontakt({ title, description, contactInfo }: KontaktProp
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [token, setToken] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -62,7 +60,7 @@ export default function Kontakt({ title, description, contactInfo }: KontaktProp
         setErrorMsg('Etwas ist schiefgelaufen. Bitte später erneut versuchen.');
         setIsSubmitted(false);
       }
-    } catch (err) {
+    } catch {
       setErrorMsg('Etwas ist schiefgelaufen. Bitte später erneut versuchen.');
       setIsSubmitted(false);
     } finally {
