@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import dynamic from "next/dynamic";
 
 interface ExperienceItem {
@@ -29,6 +29,7 @@ function sortValue(dateString: string): number {
 }
 
 export default function ExperienceAccordion({ items }: Props) {
+  const prefersReducedMotion = useReducedMotion();
   const sorted = useMemo(() => [...items].sort((a, b) => sortValue(b.date) - sortValue(a.date)), [items]);
   const [openIndex, setOpenIndex] = useState<number | null>(null); // masaüstünde sağ panel var, listede varsayılan olarak kapalı
   const [selectedIndex, setSelectedIndex] = useState<number | null>(0);
@@ -95,9 +96,9 @@ export default function ExperienceAccordion({ items }: Props) {
     <section id="experience" className="pt-16 md:pt-16 pb-16 bg-rose-50/60 dark:bg-slate-900/50 backdrop-blur-sm section-anchor">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 50 }}
+          whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+          transition={prefersReducedMotion ? undefined : { duration: 0.8 }}
           viewport={{ once: true }}
           className="text-center mb-8"
         >

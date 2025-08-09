@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from "framer-motion";
+import Turnstile from "./Turnstile";
 import { useState } from "react";
 
 interface ContactInfo {
@@ -18,9 +19,16 @@ interface KontaktProps {
 
 export default function Kontakt({ title, description, contactInfo }: KontaktProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // Yeni denemede önce önceki başarı durumunu ve hatayı temizle
+    setIsSubmitted(false);
+    setErrorMsg(null);
+    setIsSubmitting(true);
     
     const formData = new FormData(e.currentTarget);
     const data = {
@@ -29,23 +37,37 @@ export default function Kontakt({ title, description, contactInfo }: KontaktProp
       message: formData.get('message') as string,
     };
 
-    // Formspree'e gönder
-    fetch('https://formspree.io/f/mqalgvwn', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-    .then(response => {
-      if (response.ok) {
+    if (!data.name || !data.email || !data.message) {
+      setErrorMsg('Bitte alle Felder ausfüllen.');
+      setIsSubmitting(false);
+      return;
+    }
+    const emailPattern = /.+@.+\..+/;
+    if (!emailPattern.test(data.email)) {
+      setErrorMsg('Bitte eine gültige E‑Mail angeben.');
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      const response = await fetch('https://formspree.io/f/mqalgvwn', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (response.status < 400) {
+        setErrorMsg(null);
         setIsSubmitted(true);
-        e.currentTarget.reset();
+      } else {
+        setErrorMsg('Etwas ist schiefgelaufen. Bitte später erneut versuchen.');
+        setIsSubmitted(false);
       }
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
+    } catch (err) {
+      setErrorMsg('Etwas ist schiefgelaufen. Bitte später erneut versuchen.');
+      setIsSubmitted(false);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -79,7 +101,7 @@ export default function Kontakt({ title, description, contactInfo }: KontaktProp
             <div className="space-y-6">
               {contactInfo.map((info) => (
                 <div key={info.type} className="flex items-center space-x-6">
-                  <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center">
+                  <div className="w-16 h-16 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-2xl flex items-center justify-center">
                     {info.icon}
                   </div>
                   <div>
@@ -89,7 +111,8 @@ export default function Kontakt({ title, description, contactInfo }: KontaktProp
                         href="https://github.com/yigiterenaydin" 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-300"
+                        aria-label="GitHub – öffnet in neuem Tab"
+                        className="text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-800"
                       >
                         {info.value}
                       </a>
@@ -110,42 +133,57 @@ export default function Kontakt({ title, description, contactInfo }: KontaktProp
             className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-white/20 dark:border-slate-700/50"
           >
             <h4 className="text-3xl font-bold text-slate-900 dark:text-white mb-8">Nachricht senden</h4>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
+            <form onSubmit={handleSubmit} className="space-y-6" id="contact-form" autoComplete="off">
+              <div className="transition-base">
+                <label htmlFor="contact-name" className="sr-only">Ihr Name</label>
                 <input 
+                  id="contact-name"
                   type="text" 
                   name="name"
                   placeholder="Ihr Name" 
                   required
-                  className="w-full px-6 py-4 border border-slate-300 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white/50 dark:bg-slate-700/50 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 transition-all duration-300 backdrop-blur-sm" 
+                  autoComplete="off"
+                  className="w-full px-6 py-4 border border-slate-300 dark:border-slate-600 rounded-xl bg-white/50 dark:bg-slate-700/50 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 transition-all duration-300 backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-800" 
                 />
               </div>
-              <div>
+              <div className="transition-base">
+                <label htmlFor="contact-email" className="sr-only">Ihre Email</label>
                 <input 
+                  id="contact-email"
                   type="email" 
                   name="email"
                   placeholder="Ihre Email" 
                   required
-                  className="w-full px-6 py-4 border border-slate-300 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white/50 dark:bg-slate-700/50 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 transition-all duration-300 backdrop-blur-sm" 
+                  autoComplete="off"
+                  className="w-full px-6 py-4 border border-slate-300 dark:border-slate-600 rounded-xl bg-white/50 dark:bg-slate-700/50 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 transition-all duration-300 backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-800" 
                 />
               </div>
-              <div>
+              <div className="transition-base">
+                <label htmlFor="contact-message" className="sr-only">Ihre Nachricht</label>
                 <textarea 
+                  id="contact-message"
                   name="message"
                   placeholder="Ihre Nachricht" 
                   rows={4} 
                   required
-                  className="w-full px-6 py-4 border border-slate-300 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white/50 dark:bg-slate-700/50 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 transition-all duration-300 backdrop-blur-sm resize-none"
+                  autoComplete="off"
+                  className="w-full px-6 py-4 border border-slate-300 dark:border-slate-600 rounded-xl bg-white/50 dark:bg-slate-700/50 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 transition-all duration-300 backdrop-blur-sm resize-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-800"
                 ></textarea>
               </div>
               <motion.button 
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 type="submit" 
-                className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 px-8 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                disabled={isSubmitting}
+                aria-busy={isSubmitting}
+                className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 px-8 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/80 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-300/80 dark:focus-visible:ring-offset-slate-800 disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Nachricht senden
+                {isSubmitting ? 'Wird gesendet…' : 'Nachricht senden'}
               </motion.button>
+
+              {!isSubmitted && errorMsg && (
+                <p className="mt-2 text-sm text-red-400" role="alert">{errorMsg}</p>
+              )}
               
               {/* Vielen Dank Message */}
               {isSubmitted && (

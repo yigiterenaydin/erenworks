@@ -1,14 +1,16 @@
 'use client';
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 import ProfileCard from "../shared/ProfileCard";
+import erenPhoto from "../../../public/assets/bilder/eren-photo.png";
 
 interface StartseiteProps {
   name: string;
 }
 
 export default function Startseite({ name }: StartseiteProps) {
+  const prefersReducedMotion = useReducedMotion();
   return (
     <section id="home" className="relative pt-20 pb-16 bg-rose-50/60 dark:bg-slate-800/30 backdrop-blur-sm section-anchor">
 
@@ -16,15 +18,15 @@ export default function Startseite({ name }: StartseiteProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            initial={prefersReducedMotion ? false : { opacity: 0, x: -50 }}
+            animate={prefersReducedMotion ? undefined : { opacity: 1, x: 0 }}
+            transition={prefersReducedMotion ? undefined : { duration: 0.8, delay: 0.2 }}
           >
             <div className="max-w-2xl">
               <motion.h1 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
+                initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
+                animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+                transition={prefersReducedMotion ? undefined : { duration: 0.8, delay: 0.4 }}
                 className="text-base sm:text-lg font-medium text-slate-900 dark:text-white md:text-xl lg:text-2xl"
               >
                 Hallo, mein Name ist{" "}
@@ -34,16 +36,16 @@ export default function Startseite({ name }: StartseiteProps) {
               </motion.h1>
 
               <motion.div 
-                initial={{ opacity: 0, width: 0 }}
-                animate={{ opacity: 1, width: "100%" }}
-                transition={{ duration: 0.8, delay: 0.6 }}
+                initial={prefersReducedMotion ? false : { opacity: 0, width: 0 }}
+                animate={prefersReducedMotion ? undefined : { opacity: 1, width: "100%" }}
+                transition={prefersReducedMotion ? undefined : { duration: 0.8, delay: 0.6 }}
                 className="w-36 sm:w-20 lg:w-64 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full mb-6"
               ></motion.div>
 
               <motion.h2 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.8 }}
+                initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
+                animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+                transition={prefersReducedMotion ? undefined : { duration: 0.8, delay: 0.8 }}
                 className="font-light text-slate-900 dark:text-white text-base sm:text-lg mb-6 lg:text-2xl lg:mb-8 leading-relaxed"
               >
                 Ich bin {" "}
@@ -74,9 +76,9 @@ export default function Startseite({ name }: StartseiteProps) {
               </motion.h2>
 
               <motion.blockquote 
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 1.0 }}
+                initial={prefersReducedMotion ? false : { opacity: 0, x: -20 }}
+                animate={prefersReducedMotion ? undefined : { opacity: 1, x: 0 }}
+                transition={prefersReducedMotion ? undefined : { duration: 0.8, delay: 1.0 }}
                 className="relative p-6 sm:p-8 mb-6 sm:mb-8 rounded-2xl overflow-hidden"
               >
                 {/* Gradient Background */}
@@ -108,9 +110,9 @@ export default function Startseite({ name }: StartseiteProps) {
               </motion.blockquote>
 
               <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 1.2 }}
+                initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
+                animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+                transition={prefersReducedMotion ? undefined : { duration: 0.8, delay: 1.2 }}
                 className="flex flex-col sm:flex-row gap-6"
               >
                 <motion.a
@@ -119,7 +121,8 @@ export default function Startseite({ name }: StartseiteProps) {
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                  aria-label="Projekte ansehen – öffnet in neuem Tab"
+                  className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/80 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-300/80 dark:focus-visible:ring-offset-slate-900 transition-base"
                 >
                   Projekte ansehen
                 </motion.a>
@@ -128,7 +131,7 @@ export default function Startseite({ name }: StartseiteProps) {
                   download="ErenLebensL.pdf"
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
-                  className="relative border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 px-8 py-4 rounded-xl font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 animate-pulse"
+                  className="relative border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 px-8 py-4 rounded-xl font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/80 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-300/80 dark:focus-visible:ring-offset-slate-900 transition-base"
                 >
                   Lebenslauf herunterladen
                 </motion.a>
@@ -136,9 +139,9 @@ export default function Startseite({ name }: StartseiteProps) {
             </div>
           </motion.div>
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            initial={prefersReducedMotion ? false : { opacity: 0, x: 50 }}
+            animate={prefersReducedMotion ? undefined : { opacity: 1, x: 0 }}
+            transition={prefersReducedMotion ? undefined : { duration: 0.8, delay: 0.4 }}
             className="relative flex justify-center"
           >
             <ProfileCard
@@ -147,7 +150,10 @@ export default function Startseite({ name }: StartseiteProps) {
               handle="eren_aydin"
               status="Online"
               contactText="Kontakt"
-              avatarUrl="/assets/bilder/eren-photo.png"
+              avatarUrl={erenPhoto}
+              miniAvatarUrl={erenPhoto}
+              priority
+              sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 480px"
               showUserInfo={true}
               enableTilt={true}
               enableMobileTilt={false}

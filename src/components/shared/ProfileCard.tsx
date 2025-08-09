@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useCallback, useMemo } from "react";
-import Image from "next/image";
+import { useReducedMotion } from "framer-motion";
+import Image, { StaticImageData } from "next/image";
 import "./ProfileCard.css";
 
 interface ProfileCardProps {
-  avatarUrl?: string;
+  avatarUrl?: string | StaticImageData;
   iconUrl?: string;
   grainUrl?: string;
   behindGradient?: string;
@@ -13,7 +14,7 @@ interface ProfileCardProps {
   enableTilt?: boolean;
   enableMobileTilt?: boolean;
   mobileTiltSensitivity?: number;
-  miniAvatarUrl?: string;
+  miniAvatarUrl?: string | StaticImageData;
   name?: string;
   title?: string;
   handle?: string;
@@ -21,6 +22,8 @@ interface ProfileCardProps {
   contactText?: string;
   showUserInfo?: boolean;
   onContactClick?: () => void;
+  sizes?: string;
+  priority?: boolean;
 }
 
 const DEFAULT_BEHIND_GRADIENT =
@@ -73,9 +76,12 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   contactText = "Kontakt",
   showUserInfo = true,
   onContactClick,
+  sizes,
+  priority = false,
 }) => {
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const cardRef = useRef<HTMLElement | null>(null);
+  const prefersReducedMotion = useReducedMotion();
 
   const animationHandlers = useMemo(() => {
     if (!enableTilt) return null;
@@ -157,6 +163,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
 
   const handlePointerMove = useCallback(
     (event: PointerEvent) => {
+      if (prefersReducedMotion) return;
       const card = cardRef.current;
       const wrap = wrapRef.current;
 
@@ -170,10 +177,11 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
         wrap
       );
     },
-    [animationHandlers]
+    [animationHandlers, prefersReducedMotion]
   );
 
   const handlePointerEnter = useCallback(() => {
+    if (prefersReducedMotion) return;
     const card = cardRef.current;
     const wrap = wrapRef.current;
 
@@ -182,10 +190,11 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     animationHandlers.cancelAnimation();
     wrap.classList.add("active");
     card.classList.add("active");
-  }, [animationHandlers]);
+  }, [animationHandlers, prefersReducedMotion]);
 
   const handlePointerLeave = useCallback(
     (event: PointerEvent) => {
+      if (prefersReducedMotion) return;
       const card = cardRef.current;
       const wrap = wrapRef.current;
 
@@ -201,11 +210,12 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
       wrap.classList.remove("active");
       card.classList.remove("active");
     },
-    [animationHandlers]
+    [animationHandlers, prefersReducedMotion]
   );
 
   const handleDeviceOrientation = useCallback(
     (event: DeviceOrientationEvent) => {
+      if (prefersReducedMotion) return;
       const card = cardRef.current;
       const wrap = wrapRef.current;
 
@@ -221,11 +231,11 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
         wrap
       );
     },
-    [animationHandlers, mobileTiltSensitivity]
+    [animationHandlers, mobileTiltSensitivity, prefersReducedMotion]
   );
 
   useEffect(() => {
-    if (!enableTilt || !animationHandlers) return;
+    if (!enableTilt || !animationHandlers || prefersReducedMotion) return;
 
     const card = cardRef.current;
     const wrap = wrapRef.current;
@@ -291,6 +301,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     handlePointerEnter,
     handlePointerLeave,
     handleDeviceOrientation,
+    prefersReducedMotion,
   ]);
 
   const cardStyle = useMemo<React.CSSProperties & Record<string, string>>(
@@ -327,7 +338,11 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
               alt={`${name || "User"} avatar`}
               width={480}
               height={480}
-              loading="lazy"
+              sizes={sizes ?? "(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 480px"}
+              priority={priority}
+              loading={priority ? undefined : "lazy"}
+              placeholder={typeof avatarUrl === 'object' ? 'blur' : undefined}
+              blurDataURL={typeof avatarUrl === 'object' ? (avatarUrl as StaticImageData).blurDataURL : undefined}
               onError={(e) => {
                 const target = e.currentTarget as unknown as HTMLImageElement;
                 target.style.display = "none";
@@ -342,11 +357,14 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                       alt={`${name || "User"} mini avatar`}
                       width={48}
                       height={48}
+                      sizes="48px"
                       loading="lazy"
                       onError={(e) => {
                         const target = e.currentTarget as unknown as HTMLImageElement;
                         target.style.opacity = "0.5";
-                        target.src = avatarUrl;
+                        if (typeof avatarUrl === 'string') {
+                          target.src = avatarUrl;
+                        }
                       }}
                     />
                   </div>

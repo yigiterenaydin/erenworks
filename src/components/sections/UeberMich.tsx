@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from 'react';
 
 interface Skill {
@@ -16,13 +16,14 @@ interface UeberMichProps {
 }
 
 export default function UeberMich({ title, skills }: UeberMichProps) {
+  const prefersReducedMotion = useReducedMotion();
   return (
     <section id="about" className="pt-16 pb-16 bg-rose-50/60 dark:bg-slate-900/50 backdrop-blur-sm section-anchor">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 50 }}
+          whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+          transition={prefersReducedMotion ? undefined : { duration: 0.8 }}
           viewport={{ once: true }}
           className="text-center mb-8"
         >
@@ -32,25 +33,31 @@ export default function UeberMich({ title, skills }: UeberMichProps) {
         </motion.div>
         
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 50 }}
+          whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+          transition={prefersReducedMotion ? undefined : { duration: 0.8 }}
           viewport={{ once: true }}
           className="max-w-4xl mx-auto mb-20"
         >
-          <div className="space-y-6">
-            <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-              Ich bin Eren, zurzeit bin ich Schüler und habe die zweite Sekundarstufe abgeschlossen. 
-              Im neuen Schuljahr beginne ich die dritte Sekundarstufe an der Sekundarschule Zürich Rebhügel.
-            </p>
-            <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-              Ich bin freundlich und höflich und mache zurzeit viele Schnupperlehren. 
-              Ich aktualisiere ständig meinen Lebenslauf und versuche, mir ein klares Bild von verschiedenen Berufen zu machen.
-            </p>
-            <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-              Ich denke, dass mir der Beruf als KV-Mitarbeiter in einer Bank am meisten gefallen würde. 
-              Es wäre mein Wunsch, in diesem Bereich eine Lehrstelle zu finden und diesen wichtigen Schritt in meinem Leben erfolgreich abzuschließen.
-            </p>
+          <div className="space-y-6 text-left">
+            <div>
+              <h4 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">Über mich</h4>
+              <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+                Ich bin Eren und besuche die dritte Sekundarstufe an der Sekundarschule Zürich Rebhügel. Ich arbeite gern im Team, bin zuverlässig und organisiere mich gut.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">Interessen & Motivation</h4>
+              <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+                Ich absolviere aktuell Schnupperlehren, aktualisiere meinen Lebenslauf und verschaffe mir ein klares Bild von verschiedenen Berufen.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">Ziel</h4>
+              <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+                Besonders interessiert mich die KV‑Branche – idealerweise in einer Bank. Mein Ziel ist es, dort eine Lehrstelle zu finden und mich Schritt für Schritt weiterzuentwickeln.
+              </p>
+            </div>
           </div>
         </motion.div>
         
@@ -59,11 +66,11 @@ export default function UeberMich({ title, skills }: UeberMichProps) {
           {skills.map((skill, index) => (
             <motion.div
               key={skill.title}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 50 }}
+              whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+              transition={prefersReducedMotion ? undefined : { duration: 0.8, delay: index * 0.2 }}
               viewport={{ once: true }}
-              whileHover={{ y: -10, scale: 1.02 }}
+              whileHover={prefersReducedMotion ? undefined : { y: -10, scale: 1.02 }}
               className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-white/20 dark:border-slate-700/50 transition-all duration-300"
             >
               <div className={`w-16 h-16 bg-gradient-to-r ${skill.color} rounded-2xl flex items-center justify-center mb-6 text-2xl`}>

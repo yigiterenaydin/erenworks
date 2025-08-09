@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { FaUtensils, FaMusic, FaTree, FaCamera, FaFileWord, FaFileExcel, FaSwimmer } from 'react-icons/fa';
 import { FaPersonWalking } from 'react-icons/fa6';
 import { MdSportsMartialArts } from 'react-icons/md';
@@ -27,14 +27,15 @@ interface PortfolioColumnsProps {
 }
 
 export default function PortfolioColumns({ languages, references }: PortfolioColumnsProps) {
+  const prefersReducedMotion = useReducedMotion();
   return (
     <section id="projects" className="pt-16 pb-16 bg-rose-50/60 dark:bg-slate-800/30 backdrop-blur-sm section-anchor">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
+          whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={prefersReducedMotion ? undefined : { duration: 0.5 }}
           className="text-center mb-8"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">
@@ -45,7 +46,7 @@ export default function PortfolioColumns({ languages, references }: PortfolioCol
           {/* Sprachkenntnisse */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
             className="rounded-2xl border border-pink-900 bg-gradient-to-br from-pink-400 to-pink-700 p-6 text-white shadow"
@@ -73,7 +74,7 @@ export default function PortfolioColumns({ languages, references }: PortfolioCol
           {/* Interessen */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.05 }}
             className="rounded-2xl border border-blue-900 bg-gradient-to-br from-blue-600 to-blue-800 p-6 text-white shadow"
@@ -123,7 +124,7 @@ export default function PortfolioColumns({ languages, references }: PortfolioCol
           {/* Referenzen */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
             className="rounded-2xl border border-emerald-900 bg-gradient-to-br from-emerald-600 to-emerald-800 p-6 text-white shadow"
@@ -140,7 +141,12 @@ export default function PortfolioColumns({ languages, references }: PortfolioCol
                   <div className="space-y-2 pt-2">
                     <div className="flex flex-col gap-1">
                       <span className="text-sm font-semibold text-gray-400 group-hover:text-gray-200">E‑Mail:</span>
-                      <a className="text-blue-400 hover:text-blue-300 text-sm break-all transition-colors duration-200" href={`mailto:${ref.email}`}>{ref.email}</a>
+                      <a 
+                        className="text-blue-400 hover:text-blue-300 text-sm break-all transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                        href={`mailto:${ref.email}`}
+                      >
+                        {ref.email}
+                      </a>
                     </div>
                     {ref.phone && (
                       <div className="flex flex-col gap-1">

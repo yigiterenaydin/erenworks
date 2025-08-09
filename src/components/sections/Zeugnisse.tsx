@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { DocumentArrowDownIcon, EyeIcon, XMarkIcon } from '@heroicons/react/24/solid';
 
@@ -18,6 +18,7 @@ interface ZeugnisseProps {
 }
 
 export default function Zeugnisse({ title, reports }: ZeugnisseProps) {
+  const prefersReducedMotion = useReducedMotion();
   const [openFile, setOpenFile] = useState<string | null>(null);
 
   useEffect(() => {
@@ -32,9 +33,9 @@ export default function Zeugnisse({ title, reports }: ZeugnisseProps) {
     <section id="reports" className="pt-16 pb-16 scroll-mt-24 md:scroll-mt-28 lg:scroll-mt-32 bg-rose-50/60 dark:bg-slate-800/30 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 50 }}
+          whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+          transition={prefersReducedMotion ? undefined : { duration: 0.8 }}
           viewport={{ once: true }}
           className="text-center mb-8"
         >
@@ -48,9 +49,9 @@ export default function Zeugnisse({ title, reports }: ZeugnisseProps) {
           {reports.map((report, index) => (
             <motion.div
               key={`${report.term}-${report.date}`}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 40 }}
+              whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+              transition={prefersReducedMotion ? undefined : { duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
               className="relative bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-6 rounded-2xl shadow-xl border border-white/20 dark:border-slate-700/50 overflow-hidden"
             >
