@@ -1,9 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
-import { FiFileText } from "react-icons/fi";
 
 interface ExperienceItem {
   date: string; // e.g. 05/2025
@@ -31,14 +30,63 @@ function sortValue(dateString: string): number {
 
 export default function ExperienceAccordion({ items }: Props) {
   const sorted = useMemo(() => [...items].sort((a, b) => sortValue(b.date) - sortValue(a.date)), [items]);
-  const [openIndex, setOpenIndex] = useState<number | null>(0); // ilk öğe açık
+  const [openIndex, setOpenIndex] = useState<number | null>(null); // masaüstünde sağ panel var, listede varsayılan olarak kapalı
   const [selectedIndex, setSelectedIndex] = useState<number | null>(0);
 
   const SelectedDetail = useMemo(() => {
     if (selectedIndex == null) return null;
     const item = sorted[selectedIndex];
-    if (item.company.includes('Kita')) {
+    const company = (item.company || '').toLowerCase();
+    const program = (item.program || '').toLowerCase();
+
+    // Kita
+    if (company.includes('kita')) {
       return dynamic(() => import('../experience/Kita'), { ssr: false });
+    }
+
+    // ZKB mappings with precise intent
+    if (company.includes('zürcher kantonalbank')) {
+      const isSchnupper = program.includes('schnupper');
+      const hasKVBank = program.includes('kv branche bank');
+      const hasInformatik = program.includes('informatik');
+      const hasMediamatik = program.includes('mediamatik');
+      const hasEDB = program.includes('entwicklung digitales business') || program.includes('edb');
+
+      if (isSchnupper && hasKVBank) {
+        return dynamic(() => import('../experience/ZkbParcoursKVBank'), { ssr: false });
+      }
+      if (isSchnupper && hasInformatik) {
+        return dynamic(() => import('../experience/kantonalbankinfoschpark'), { ssr: false });
+      }
+      if (!isSchnupper && hasMediamatik) {
+        return dynamic(() => import('../experience/KBInfoKVMediamatik'), { ssr: false });
+      }
+      if (!isSchnupper && (hasEDB || (hasInformatik && program.includes('&')))) {
+        return dynamic(() => import('../experience/KBInforInformatikBus'), { ssr: false });
+      }
+    }
+
+    // Other companies
+    if (company.includes('ewz')) {
+      return dynamic(() => import('../experience/Ewz'), { ssr: false });
+    }
+    if (company.includes('ubs')) {
+      return dynamic(() => import('../experience/ubs'), { ssr: false });
+    }
+    if (company.includes('kornhaus')) {
+      return dynamic(() => import('../experience/kornhaus'), { ssr: false });
+    }
+    if (company.includes('ergon smart software')) {
+      return dynamic(() => import('../experience/ergon'), { ssr: false });
+    }
+    if (company.includes('e. weber & cie ag')) {
+      return dynamic(() => import('../experience/weber'), { ssr: false });
+    }
+    if (company.includes('sunrise')) {
+      return dynamic(() => import('../experience/sunrise'), { ssr: false });
+    }
+    if (company.includes('post immobilien')) {
+      return dynamic(() => import('../experience/post'), { ssr: false });
     }
     return null;
   }, [selectedIndex, sorted]);
@@ -56,66 +104,41 @@ export default function ExperienceAccordion({ items }: Props) {
           <h3 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">Erfahrungen und Schnupperlehren</h3>
         </motion.div>
 
-        <div className="md:grid md:grid-cols-2 md:gap-8">
+        <div className="md:grid md:grid-cols-[340px,1fr] md:gap-6">
           {/* Sol: Liste */}
           <div className="space-y-3">
           {sorted.map((exp, idx) => {
             const isOpen = openIndex === idx;
+            const isSelected = selectedIndex === idx;
             return (
-              <div key={`${exp.company}-${idx}`} className="w-full md:w-1/2 md:ml-0 md:mr-auto rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow">
+              <div key={`${exp.company}-${idx}`} className="w-full rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow">
                 {/* Header */}
                 <button
                   type="button"
                   aria-expanded={isOpen}
                   onClick={() => { setOpenIndex(isOpen ? null : idx); setSelectedIndex(idx); }}
-                  className="w-full text-left bg-white dark:bg-slate-800 px-5 py-4 grid grid-cols-2 items-center gap-4 transition-colors duration-200 hover:bg-rose-50/60 dark:hover:bg-rose-900/20"
+                  className={`w-full text-left px-5 py-4 flex items-center justify-between gap-4 transition-colors duration-200 ${isSelected ? 'bg-rose-50/80 dark:bg-rose-900/25' : 'bg-white dark:bg-slate-800'} hover:bg-rose-50/60 dark:hover:bg-rose-900/20`}
                 >
-                  <div className="min-w-0 flex flex-wrap items-center gap-3">
+                  <div className="min-w-0 flex-1 flex items-center gap-3">
                     <span className="px-2 py-0.5 text-xs rounded bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-200">{exp.date}</span>
-                    <span className="font-semibold text-slate-900 dark:text-white truncate max-w-[14rem] md:max-w-[18rem]">{exp.company}</span>
-                    <span className="text-sm text-slate-600 dark:text-slate-300 truncate max-w-[12rem] md:max-w-[16rem]">{exp.program}</span>
+                    <span className="font-semibold text-slate-900 dark:text-white truncate flex-1">{exp.company}</span>
                   </div>
-                  <div className="flex items-center justify-end gap-3">
-                    {exp.company.includes('Kita') ? (
-                      <a href="/kita" className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs hover:bg-rose-50/60 dark:hover:bg-rose-900/20">
-                        Beleg anzeigen
-                      </a>
-                    ) : exp.pdfUrl ? (
-                      <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs hover:bg-rose-50/60 dark:hover:bg-rose-900/20">
-                        <FiFileText className="w-4 h-4" /> PDF
-                      </span>
-                    ) : (
-                      <span className="inline-flex h-8 min-w-[120px] items-center justify-center rounded-full border border-dashed border-slate-300/70 dark:border-slate-700/70 text-slate-400 text-xs">
-                        Platz frei
-                      </span>
-                    )}
-                    <span className={`transition-transform ${isOpen ? 'rotate-180' : ''} text-slate-500`}>⌄</span>
+                  <div className="flex items-center justify-end gap-3 shrink-0">
+                    <svg className={`w-4 h-4 ${isSelected ? 'text-rose-600 dark:text-rose-300' : 'text-slate-500'}`} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      {isSelected ? (
+                        <path d="M13 5l-5 5 5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      ) : (
+                        <path d="M7 5l5 5-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      )}
+                    </svg>
                   </div>
                 </button>
-
-                {/* Content */}
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      key="content"
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.25 }}
-                      className="bg-white dark:bg-slate-900 px-5 pb-5"
-                    >
-                      <div className="flex flex-wrap items-center gap-2 mb-2 text-slate-600 dark:text-slate-300">
-                        <span>{exp.city}</span>
-                        {exp.pdfUrl && (
-                          <a href={exp.pdfUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-indigo-600 dark:text-indigo-300 hover:underline ml-2">
-                            <FiFileText /> PDF
-                          </a>
-                        )}
-                      </div>
-                      <p className="text-slate-700 dark:text-slate-200 leading-relaxed">{exp.description}</p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {/* Mobile detail: show selected item's component under the header */}
+                {selectedIndex === idx && SelectedDetail && (
+                  <div className="md:hidden bg-white dark:bg-slate-900 px-5 pb-5">
+                    <SelectedDetail />
+                  </div>
+                )}
               </div>
             );
           })}

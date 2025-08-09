@@ -1,20 +1,18 @@
 import Image from "next/image";
-import { FiFileText, FiExternalLink } from "react-icons/fi";
+import { FiExternalLink, FiFileText } from "react-icons/fi";
 
-export default function KitaDetail() {
-  const imageUrl = "/assets/bilder/kita.png";
-  // PDF dosyası: public/assets/pdfs/Kita Schnupperlehre.pdf
-  const docUrl = "/assets/pdfs/Kita%20Schnupperlehre.pdf";
+export default function ErgonDetail() {
+  const imageUrl = "/assets/bilder/ergon.png";
+  const docUrl = "/assets/pdfs/ergon.pdf";
 
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-[220px,1fr] gap-4 items-start">
-        {/* Küçük önizleme */}
         <div className="rounded-lg border border-rose-200/70 dark:border-slate-700/70 bg-white dark:bg-slate-900 p-2 shadow-sm flex justify-center">
-          <a href={imageUrl} target="_blank" rel="noopener noreferrer" aria-label="Bild in neuem Tab öffnen" className="block">
+          <a href={imageUrl} target="_blank" rel="noopener noreferrer" className="block" aria-label="Bild in neuem Tab öffnen">
             <Image
               src={imageUrl}
-              alt="Kita Nachweis"
+              alt="Ergon Nachweis"
               width={420}
               height={280}
               className="w-36 sm:w-44 md:w-full h-auto object-contain rounded-md"
@@ -24,15 +22,14 @@ export default function KitaDetail() {
           </a>
         </div>
 
-        {/* Başlık + Metin + Aksiyonlar */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-white">Kita Bärlis Oerlikon</h2>
-            <p className="text-sm text-slate-500 dark:text-slate-400">Nachweis und kurze Beschreibung</p>
+            <h2 className="text-xl font-semibold text-slate-900 dark:text-white">Ergon Smart Software – Informatiker EFZ</h2>
+            <p className="text-sm text-slate-500 dark:text-slate-400">Einblicke in ICT‑Lehrberufe und praktische Übungen</p>
           </div>
           <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-200">
-            Unterstützung bei der Betreuung von Kindern im Alter von 0 bis 3 Jahren; Mithilfe beim
-            Aufräumen sowie bei der Organisation von Materialien.
+            Mehrere Informationsveranstaltungen zu Informatik und digitalem Business; Kennenlernen der
+            Firma, Projekte, Voraussetzungen und Selektionsprozess, inkl. praktischen Übungen.
           </p>
 
           <div className="flex flex-wrap items-center gap-2">

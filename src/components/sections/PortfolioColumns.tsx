@@ -1,9 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { FaUtensils, FaMusic, FaTree, FaCamera, FaFileWord, FaFileExcel } from 'react-icons/fa';
-import { FaDumbbell, FaPersonWalking } from 'react-icons/fa6';
-import { FaSwimmer } from 'react-icons/fa';
+import { FaUtensils, FaMusic, FaTree, FaCamera, FaFileWord, FaFileExcel, FaSwimmer } from 'react-icons/fa';
+import { FaPersonWalking } from 'react-icons/fa6';
 import { MdSportsMartialArts } from 'react-icons/md';
 import { FiCode } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
