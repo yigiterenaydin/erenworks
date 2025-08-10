@@ -119,7 +119,10 @@ export default function ExperienceAccordion({ items }: Props) {
                   ref={(el) => (buttonRefs.current[idx] = el)}
                   type="button"
                   aria-expanded={isOpen}
-                  onClick={() => { 
+                  onClick={(e) => { 
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
                     setOpenIndex(isOpen ? null : idx); 
                     setSelectedIndex(idx); 
                     
@@ -138,7 +141,27 @@ export default function ExperienceAccordion({ items }: Props) {
                             behavior: 'smooth'
                           });
                         }
-                      }, 100); // Kısa bir gecikme ile içeriğin açılmasını bekle
+                      }, 150); // Biraz daha uzun gecikme
+                    }
+                  }}
+                  onTouchEnd={(e) => {
+                    // Touch event'ler için ek kontrol
+                    if (window.innerWidth < 768) {
+                      e.preventDefault();
+                      setTimeout(() => {
+                        const button = buttonRefs.current[idx];
+                        if (button) {
+                          const rect = button.getBoundingClientRect();
+                          const headerHeight = 80;
+                          const extraOffset = 20;
+                          const targetScroll = window.scrollY + rect.top - headerHeight - extraOffset;
+                          
+                          window.scrollTo({
+                            top: targetScroll,
+                            behavior: 'smooth'
+                          });
+                        }
+                      }, 200);
                     }
                   }}
                   className={`w-full text-left px-5 py-4 flex items-center justify-between gap-4 transition-colors duration-200 ${isSelected ? 'bg-rose-50/80 dark:bg-rose-900/25' : 'bg-white dark:bg-slate-800'} hover:bg-rose-50/60 dark:hover:bg-rose-900/20`}
