@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import dynamic from "next/dynamic";
 
@@ -33,6 +33,7 @@ export default function ExperienceAccordion({ items }: Props) {
   const sorted = useMemo(() => [...items].sort((a, b) => sortValue(b.date) - sortValue(a.date)), [items]);
   const [openIndex, setOpenIndex] = useState<number | null>(null); // masaüstünde sağ panel var, listede varsayılan olarak kapalı
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null); // Hiçbir kart seçili değil
+  const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const SelectedDetail = useMemo(() => {
     if (selectedIndex == null) return null;
@@ -115,6 +116,7 @@ export default function ExperienceAccordion({ items }: Props) {
               <div key={`${exp.company}-${idx}`} className="w-full rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow">
                 {/* Header */}
                 <button
+                  ref={(el) => (buttonRefs.current[idx] = el)}
                   type="button"
                   aria-expanded={isOpen}
                   onClick={() => { 
@@ -124,7 +126,7 @@ export default function ExperienceAccordion({ items }: Props) {
                     // Mobilde scroll pozisyonunu ayarla
                     if (window.innerWidth < 768) {
                       setTimeout(() => {
-                        const button = document.activeElement as HTMLElement;
+                        const button = buttonRefs.current[idx];
                         if (button) {
                           const rect = button.getBoundingClientRect();
                           const headerHeight = 80; // Header yüksekliği
