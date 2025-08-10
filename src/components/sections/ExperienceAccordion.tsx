@@ -150,6 +150,11 @@ export default function ExperienceAccordion({ items }: Props) {
                     // Touch event'ler için ek kontrol
                     if (window.innerWidth < 768) {
                       e.preventDefault();
+                      
+                      // Kart durumunu güncelle
+                      setOpenIndex(isOpen ? null : idx);
+                      setSelectedIndex(idx);
+                      
                       setTimeout(() => {
                         const button = buttonRefs.current[idx];
                         if (button) {
