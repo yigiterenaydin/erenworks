@@ -116,7 +116,9 @@ export default function ExperienceAccordion({ items }: Props) {
               <div key={`${exp.company}-${idx}`} className="w-full rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow">
                 {/* Header */}
                 <button
-                  ref={(el) => (buttonRefs.current[idx] = el)}
+                  ref={(el) => {
+                    buttonRefs.current[idx] = el;
+                  }}
                   type="button"
                   aria-expanded={isOpen}
                   onClick={(e) => { 
