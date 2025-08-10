@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NPM Komutları Rehberi</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        .content {
+            padding: 30px;
+        }
+        .section {
+            margin-bottom: 40px;
+            border-left: 4px solid #667eea;
+            padding-left: 20px;
+        }
+        .section h2 {
+            color: #667eea;
+            margin-top: 0;
+            font-size: 1.8em;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        .command {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .command-name {
+            font-weight: bold;
+            color: #495057;
+            font-size: 1.1em;
+        }
+        .command-desc {
+            color: #6c757d;
+            margin: 8px 0;
+        }
+        .command-usage {
+            color: #28a745;
+            font-style: italic;
+        }
+        .command-example {
+            background: #e9ecef;
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin-top: 8px;
+            font-family: 'Courier New', monospace;
+        }
+        .troubleshooting {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .troubleshooting h3 {
+            color: #856404;
+            margin-top: 0;
+        }
+        .notes {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .notes h3 {
+            color: #0c5460;
+            margin-top: 0;
+        }
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📦 NPM Komutları Rehberi</h1>
+            <p>Next.js projenizde kullanabileceğiniz tüm npm komutları ve açıklamaları</p>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <h2>🚀 Temel NPM Komutları</h2>
+                
+                <div class="command">
+                    <div class="command-name">npm install (veya npm i)</div>
+                    <div class="command-desc"><strong>Ne işe yarar:</strong> package.json dosyasında belirtilen tüm bağımlılıkları yükler</div>
+                    <div class="command-usage"><strong>Kullanım:</strong> Proje ilk kez çalıştırılırken veya yeni bağımlılık eklendiğinde</div>
+                    <div class="command-example">npm install</div>
+                </div>
+
+                <div class="command">
+                    <div class="command-name">npm install [paket-adı]</div>
+                    <div class="command-desc"><strong>Ne işe yarar:</strong> Belirtilen paketi projeye ekler ve package.json'a kaydeder</div>
+                    <div class="command-usage"><strong>Kullanım:</strong> Yeni bir kütüphane eklemek istediğinizde</div>
+                    <div class="command-example">npm install react-router-dom</div>
+                </div>
+
+                <div class="command">
+                    <div class="command-name">npm install [paket-adı] --save-dev (veya -D)</div>
+                    <div class="command-desc"><strong>Ne işe yarar:</strong> Paketi sadece geliştirme ortamında kullanmak üzere ekler</div>
+                    <div class="command-usage"><strong>Kullanım:</strong> Test araçları, linter'lar gibi sadece geliştirme sırasında kullanılan paketler için</div>
+                    <div class="command-example">npm install eslint --save-dev</div>
+                </div>
+
+                <div class="command">
+                    <div class="command-name">npm uninstall [paket-adı]</div>
+                    <div class="command-desc"><strong>Ne işe yarar:</strong> Belirtilen paketi projeden kaldırır</div>
+                    <div class="command-usage"><strong>Kullanım:</strong> Artık kullanılmayan paketleri temizlemek için</div>
+                    <div class="command-example">npm uninstall lodash</div>
+                </div>
+
+                <div class="command">
+                    <div class="command-name">npm update</div>
+                    <div class="command-desc"><strong>Ne işe yarar:</strong> Tüm paketleri en son sürümlerine günceller</div>
+                    <div class="command-usage"><strong>Kullanım:</strong> Güvenlik güncellemeleri ve yeni özellikler için</div>
+                    <div class="command-example">npm update</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>⚡ Proje Çalıştırma Komutları</h2>
+                
+                <div class="command">
+                    <div class="command-name">npm run dev</div>
+                    <div class="command-desc"><strong>Ne işe yarar:</strong> Next.js development server'ını başlatır (hot reload ile)</div>
+                    <div class="command-usage"><strong>Kullanım:</strong> Geliştirme yaparken, değişiklikleri anında görmek için</div>
+                    <div class="command-example">npm run dev</div>
+                    <div class="command-desc"><strong>Sonuç:</strong> http://localhost:3000 adresinde site açılır</div>
+                </div>
+
+                <div class="command">
+                    <div class="command-name">npm run build</div>
+                    <div class="command-desc"><strong>Ne işe yarar:</strong> Projeyi production için optimize edilmiş dosyalara dönüştürür</div>
+                    <div class="command-usage"><strong>Kullanım:</strong> Siteyi canlıya almadan önce, performans için</div>
+                    <div class="command-example">npm run build</div>
+                </div>
+
+                <div class="command">
+                    <div class="command-name">npm run start</div>
+                    <div class="command-desc"><strong>Ne işe yarar:</strong> Production build'ini çalıştırır</div>
+                    <div class="command-usage"><strong>Kullanım:</strong> Build edilmiş projeyi test etmek veya canlıya almak için</div>
+                    <div class="command-example">npm run start</div>
+                    <div class="command-desc"><strong>Not:</strong> Önce npm run build çalıştırılmalı</div>
+                </div>
+
+                <div class="command">
+                    <div class="command-name">npm run lint</div>
+                    <div class="command-desc"><strong>Ne işe yarar:</strong> Kod kalitesini kontrol eder, hataları ve uyarıları gösterir</div>
+                    <div class="command-usage"><strong>Kullanım:</strong> Kod yazarken standartlara uygunluğu kontrol etmek için</div>
+                    <div class="command-example">npm run lint</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🧹 Cache ve Temizlik Komutları</h2>
+                
+                <div class="command">
+                    <div class="command-name">npm cache clean --force</div>
+                    <div class="command-desc"><strong>Ne işe yarar:</strong> npm cache'ini tamamen temizler</div>
+                    <div class="command-usage"><strong>Kullanım:</strong> Paket yükleme sorunları yaşandığında</div>
+                    <div class="command-example">npm cache clean --force</div>
+                </div>
+
+                <div class="command">
+                    <div class="command-name">npm cache verify</div>
+                    <div class="command-desc"><strong>Ne işe yarar:</strong> Cache'in bütünlüğünü kontrol eder</div>
+                    <div class="command-usage"><strong>Kullanım:</strong> Cache sorunlarını tespit etmek için</div>
+                    <div class="command-example">npm cache verify</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>ℹ️ Bilgi Komutları</h2>
+                
+                <div class="command">
+                    <div class="command-name">npm list</div>
+                    <div class="command-desc"><strong>Ne işe yarar:</strong> Yüklü tüm paketleri ve sürümlerini listeler</div>
+                    <div class="command-usage"><strong>Kullanım:</strong> Hangi paketlerin yüklü olduğunu görmek için</div>
+                    <div class="command-example">npm list</div>
+                </div>
+
+                <div class="command">
+                    <div class="command-name">npm outdated</div>
+                    <div class="command-desc"><strong>Ne işe yarar:</strong> Güncellenebilir paketleri gösterir</div>
+                    <div class="command-usage"><strong>Kullanım:</strong> Hangi paketlerin eski olduğunu öğrenmek için</div>
+                    <div class="command-example">npm outdated</div>
+                </div>
+
+                <div class="command">
+                    <div class="command-name">npm info [paket-adı]</div>
+                    <div class="command-desc"><strong>Ne işe yarar:</strong> Belirtilen paket hakkında detaylı bilgi verir</div>
+                    <div class="command-usage"><strong>Kullanım:</strong> Paket hakkında bilgi almak için</div>
+                    <div class="command-example">npm info react</div>
+                </div>
+
+                <div class="command">
+                    <div class="command-name">npm search [arama-terimi]</div>
+                    <div class="command-desc"><strong>Ne işe yarar:</strong> npm registry'de paket arar</div>
+                    <div class="command-usage"><strong>Kullanım:</strong> İhtiyacınız olan paketi bulmak için</div>
+                    <div class="command-example">npm search animation</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🔒 Güvenlik Komutları</h2>
+                
+                <div class="command">
+                    <div class="command-name">npm audit</div>
+                    <div class="command-desc"><strong>Ne işe yarar:</strong> Güvenlik açıklarını kontrol eder</div>
+                    <div class="command-usage"><strong>Kullanım:</strong> Projenin güvenliğini kontrol etmek için</div>
+                    <div class="command-example">npm audit</div>
+                </div>
+
+                <div class="command">
+                    <div class="command-name">npm audit fix</div>
+                    <div class="command-desc"><strong>Ne işe yarar:</strong> Güvenlik açıklarını otomatik olarak düzeltir</div>
+                    <div class="command-usage"><strong>Kullanım:</strong> Güvenlik sorunlarını çözmek için</div>
+                    <div class="command-example">npm audit fix</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🪟 Windows PowerShell Özel Komutları</h2>
+                
+                <div class="command">
+                    <div class="command-name">Remove-Item -Recurse -Force node_modules</div>
+                    <div class="command-desc"><strong>Ne işe yarar:</strong> node_modules klasörünü tamamen siler</div>
+                    <div class="command-usage"><strong>Kullanım:</strong> Bağımlılık sorunlarını çözmek için temiz başlangıç yapmak</div>
+                    <div class="command-example">Remove-Item -Recurse -Force node_modules</div>
+                </div>
+            </div>
+
+            <div class="troubleshooting">
+                <h3>🔧 Sorun Giderme Sırası</h3>
+                <ol>
+                    <li>npm cache clean --force</li>
+                    <li>Remove-Item -Recurse -Force node_modules (Windows için)</li>
+                    <li>npm install</li>
+                    <li>npm run dev</li>
+                </ol>
+                
+                <h4>Eğer hala sorun varsa:</h4>
+                <ol>
+                    <li>package-lock.json dosyasını sil</li>
+                    <li>node_modules klasörünü sil</li>
+                    <li>npm install</li>
+                    <li>npm run dev</li>
+                </ol>
+            </div>
+
+            <div class="notes">
+                <h3>📝 Önemli Notlar</h3>
+                <ul>
+                    <li>Her zaman proje ana dizininde (package.json'ın bulunduğu yerde) komutları çalıştırın</li>
+                    <li>Hata mesajlarını dikkatle okuyun, genellikle çözüm önerisi içerirler</li>
+                    <li><span class="highlight">npm run dev</span> komutu en çok kullanılan komuttur</li>
+                    <li>Production'a almadan önce mutlaka npm run build çalıştırın</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

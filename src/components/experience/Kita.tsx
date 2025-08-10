@@ -1,60 +1,20 @@
-import Image from "next/image";
-import { FiFileText, FiExternalLink } from "react-icons/fi";
+import DetailCard from "./DetailCard";
 
 export default function KitaDetail() {
   const imageUrl = "/assets/bilder/kita.png";
-  // PDF dosyası: public/assets/pdfs/Kita Schnupperlehre.pdf
   const docUrl = "/assets/pdfs/Kita%20Schnupperlehre.pdf";
 
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-1 md:grid-cols-[220px,1fr] gap-4 items-start">
-        {/* Küçük önizleme */}
-        <div className="rounded-lg border border-rose-200/70 dark:border-slate-700/70 bg-white dark:bg-slate-900 p-2 shadow-sm flex justify-center">
-          <a href={imageUrl} target="_blank" rel="noopener noreferrer" aria-label="Bild in neuem Tab öffnen" className="block">
-            <Image
-              src={imageUrl}
-              alt="Kita Nachweis"
-              width={420}
-              height={280}
-              className="w-36 sm:w-44 md:w-full h-auto object-contain rounded-md"
-              sizes="(max-width: 768px) 9rem, (max-width: 1024px) 11rem, 220px"
-              priority
-            />
-          </a>
-        </div>
-
-        {/* Başlık + Metin + Aksiyonlar */}
-        <div className="space-y-3">
-          <div>
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-white">Kita Bärlis Oerlikon</h2>
-            <p className="text-sm text-slate-500 dark:text-slate-400">Nachweis und kurze Beschreibung</p>
-          </div>
-          <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-200">
-            Unterstützung bei der Betreuung von Kindern im Alter von 0 bis 3 Jahren; Mithilfe beim
-            Aufräumen sowie bei der Organisation von Materialien.
-          </p>
-
-          <div className="flex flex-wrap items-center gap-2">
-            <a
-              href={docUrl}
-              download
-              className="inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-full border border-slate-300/70 dark:border-slate-700 hover:bg-rose-50/60 dark:hover:bg-slate-800/60"
-            >
-              <FiFileText /> Beleg herunterladen
-            </a>
-            <a
-              href={imageUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-full border border-slate-300/70 dark:border-slate-700 hover:bg-rose-50/60 dark:hover:bg-slate-800/60"
-            >
-              <FiExternalLink /> Im neuen Tab öffnen
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+    <DetailCard
+      title="Kita Bärlis Oerlikon"
+      subtitle="Nachweis und kurze Beschreibung"
+      imageUrl={imageUrl}
+      docUrl={docUrl}
+    >
+      Unterstützung bei der Betreuung von Kindern im Alter von 0 bis 3 Jahren;
+      <br />
+      Mithilfe beim Aufräumen sowie bei der Organisation von Materialien.
+    </DetailCard>
   );
 }
 

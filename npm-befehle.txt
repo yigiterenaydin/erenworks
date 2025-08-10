@@ -1,0 +1,146 @@
+NPM BEFEHLE ANLEITUNG
+=====================
+
+Diese Datei erklärt alle npm-Befehle, die Sie in Ihrem Projekt verwenden können und wofür sie verwendet werden.
+
+GRUNDLEGENDE NPM BEFEHLE
+------------------------
+
+npm install (oder npm i)
+- Was es macht: Installiert alle Abhängigkeiten, die in der package.json-Datei angegeben sind
+- Verwendung: Beim ersten Start des Projekts oder wenn neue Abhängigkeiten hinzugefügt wurden
+- Beispiel: npm install
+
+npm install [paket-name]
+- Was es macht: Fügt das angegebene Paket zum Projekt hinzu und speichert es in package.json
+- Verwendung: Wenn Sie eine neue Bibliothek hinzufügen möchten
+- Beispiel: npm install react-router-dom
+
+npm install [paket-name] --save-dev (oder -D)
+- Was es macht: Fügt das Paket nur für die Entwicklungsumgebung hinzu
+- Verwendung: Für Test-Tools, Linter und andere Pakete, die nur während der Entwicklung verwendet werden
+- Beispiel: npm install eslint --save-dev
+
+npm uninstall [paket-name]
+- Was es macht: Entfernt das angegebene Paket aus dem Projekt
+- Verwendung: Um nicht mehr verwendete Pakete zu bereinigen
+- Beispiel: npm uninstall lodash
+
+npm update
+- Was es macht: Aktualisiert alle Pakete auf die neuesten Versionen
+- Verwendung: Für Sicherheitsupdates und neue Funktionen
+- Beispiel: npm update
+
+PROJEKT AUSFÜHRUNGSBEFEHLE
+--------------------------
+
+npm run dev
+- Was es macht: Startet den Next.js Development Server (mit Hot Reload)
+- Verwendung: Während der Entwicklung, um Änderungen sofort zu sehen
+- Beispiel: npm run dev
+- Ergebnis: Die Website öffnet sich unter http://localhost:3000
+
+npm run build
+- Was es macht: Konvertiert das Projekt in für die Produktion optimierte Dateien
+- Verwendung: Vor dem Live-Schalten der Website, für bessere Leistung
+- Beispiel: npm run build
+
+npm run start
+- Was es macht: Führt den Production Build aus
+- Verwendung: Um den gebauten Build zu testen oder live zu schalten
+- Beispiel: npm run start
+- Hinweis: Zuerst muss npm run build ausgeführt werden
+
+npm run lint
+- Was es macht: Überprüft die Code-Qualität und zeigt Fehler und Warnungen an
+- Verwendung: Um beim Codieren die Einhaltung von Standards zu kontrollieren
+- Beispiel: npm run lint
+
+CACHE UND BEREINIGUNGSBEFEHLE
+-----------------------------
+
+npm cache clean --force
+- Was es macht: Löscht den npm Cache vollständig
+- Verwendung: Bei Problemen beim Installieren von Paketen
+- Beispiel: npm cache clean --force
+
+npm cache verify
+- Was es macht: Überprüft die Integrität des Caches
+- Verwendung: Um Cache-Probleme zu erkennen
+- Beispiel: npm cache verify
+
+INFORMATIONSBEFEHLE
+------------------
+
+npm list
+- Was es macht: Listet alle installierten Pakete und ihre Versionen auf
+- Verwendung: Um zu sehen, welche Pakete installiert sind
+- Beispiel: npm list
+
+npm outdated
+- Was es macht: Zeigt aktualisierbare Pakete an
+- Verwendung: Um zu erfahren, welche Pakete veraltet sind
+- Beispiel: npm outdated
+
+npm info [paket-name]
+- Was es macht: Gibt detaillierte Informationen über das angegebene Paket
+- Verwendung: Um Informationen über ein Paket zu erhalten
+- Beispiel: npm info react
+
+npm search [suchbegriff]
+- Was es macht: Durchsucht die npm Registry nach Paketen
+- Verwendung: Um das benötigte Paket zu finden
+- Beispiel: npm search animation
+
+SICHERHEITSBEFEHLE
+------------------
+
+npm audit
+- Was es macht: Überprüft auf Sicherheitslücken
+- Verwendung: Um die Sicherheit des Projekts zu kontrollieren
+- Beispiel: npm audit
+
+npm audit fix
+- Was es macht: Behebt Sicherheitslücken automatisch
+- Verwendung: Um Sicherheitsprobleme zu lösen
+- Beispiel: npm audit fix
+
+WINDOWS POWERSHELL SPEZIELLE BEFEHLE
+-----------------------------------
+
+Remove-Item -Recurse -Force node_modules
+- Was es macht: Löscht den node_modules Ordner vollständig
+- Verwendung: Für einen sauberen Neustart bei Abhängigkeitsproblemen
+- Beispiel: Remove-Item -Recurse -Force node_modules
+
+PROBLEMLÖSUNGSREIHENFOLGE
+-------------------------
+
+1. npm cache clean --force
+2. Remove-Item -Recurse -Force node_modules (für Windows)
+3. npm install
+4. npm run dev
+
+Falls das Problem weiterhin besteht:
+1. package-lock.json Datei löschen
+2. node_modules Ordner löschen
+3. npm install
+4. npm run dev
+
+HINWEISE:
+- Führen Sie Befehle immer im Hauptverzeichnis des Projekts aus (wo sich package.json befindet)
+- Lesen Sie Fehlermeldungen sorgfältig, sie enthalten oft Lösungsvorschläge
+- npm run dev ist der am häufigsten verwendete Befehl
+- Führen Sie vor dem Live-Schalten unbedingt npm run build aus
+
+WICHTIGE BEFEHLE FÜR DIE ENTWICKLUNG:
+- npm run dev - Startet den Development Server
+- npm install - Installiert Abhängigkeiten
+- npm run build - Erstellt Production Build
+- npm run lint - Überprüft Code-Qualität
+
+TROUBLESHOOTING TIPPS:
+- Bei Problemen immer zuerst Cache löschen
+- node_modules bei hartnäckigen Problemen neu installieren
+- package-lock.json bei Versionskonflikten löschen
+- Immer im richtigen Verzeichnis arbeiten

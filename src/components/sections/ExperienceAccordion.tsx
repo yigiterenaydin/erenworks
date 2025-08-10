@@ -32,7 +32,7 @@ export default function ExperienceAccordion({ items }: Props) {
   const prefersReducedMotion = useReducedMotion();
   const sorted = useMemo(() => [...items].sort((a, b) => sortValue(b.date) - sortValue(a.date)), [items]);
   const [openIndex, setOpenIndex] = useState<number | null>(null); // masaüstünde sağ panel var, listede varsayılan olarak kapalı
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(0);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null); // Hiçbir kart seçili değil
 
   const SelectedDetail = useMemo(() => {
     if (selectedIndex == null) return null;
@@ -117,7 +117,28 @@ export default function ExperienceAccordion({ items }: Props) {
                 <button
                   type="button"
                   aria-expanded={isOpen}
-                  onClick={() => { setOpenIndex(isOpen ? null : idx); setSelectedIndex(idx); }}
+                  onClick={() => { 
+                    setOpenIndex(isOpen ? null : idx); 
+                    setSelectedIndex(idx); 
+                    
+                    // Mobilde scroll pozisyonunu ayarla
+                    if (window.innerWidth < 768) {
+                      setTimeout(() => {
+                        const button = document.activeElement as HTMLElement;
+                        if (button) {
+                          const rect = button.getBoundingClientRect();
+                          const headerHeight = 80; // Header yüksekliği
+                          const extraOffset = 20; // Ekstra boşluk
+                          const targetScroll = window.scrollY + rect.top - headerHeight - extraOffset;
+                          
+                          window.scrollTo({
+                            top: targetScroll,
+                            behavior: 'smooth'
+                          });
+                        }
+                      }, 100); // Kısa bir gecikme ile içeriğin açılmasını bekle
+                    }
+                  }}
                   className={`w-full text-left px-5 py-4 flex items-center justify-between gap-4 transition-colors duration-200 ${isSelected ? 'bg-rose-50/80 dark:bg-rose-900/25' : 'bg-white dark:bg-slate-800'} hover:bg-rose-50/60 dark:hover:bg-rose-900/20`}
                 >
                   <div className="min-w-0 flex-1 flex items-center gap-3">

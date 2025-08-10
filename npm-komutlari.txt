@@ -1,0 +1,134 @@
+NPM KOMUTLARI REHBERİ
+=====================
+
+Bu dosya, projenizde kullanabileceğiniz tüm npm komutlarını ve ne işe yaradıklarını açıklar.
+
+TEMEL NPM KOMUTLARI
+-------------------
+
+npm install (veya npm i)
+- Ne işe yarar: package.json dosyasında belirtilen tüm bağımlılıkları yükler
+- Kullanım: Proje ilk kez çalıştırılırken veya yeni bağımlılık eklendiğinde
+- Örnek: npm install
+
+npm install [paket-adı]
+- Ne işe yarar: Belirtilen paketi projeye ekler ve package.json'a kaydeder
+- Kullanım: Yeni bir kütüphane eklemek istediğinizde
+- Örnek: npm install react-router-dom
+
+npm install [paket-adı] --save-dev (veya -D)
+- Ne işe yarar: Paketi sadece geliştirme ortamında kullanmak üzere ekler
+- Kullanım: Test araçları, linter'lar gibi sadece geliştirme sırasında kullanılan paketler için
+- Örnek: npm install eslint --save-dev
+
+npm uninstall [paket-adı]
+- Ne işe yarar: Belirtilen paketi projeden kaldırır
+- Kullanım: Artık kullanılmayan paketleri temizlemek için
+- Örnek: npm uninstall lodash
+
+npm update
+- Ne işe yarar: Tüm paketleri en son sürümlerine günceller
+- Kullanım: Güvenlik güncellemeleri ve yeni özellikler için
+- Örnek: npm update
+
+PROJE ÇALIŞTIRMA KOMUTLARI
+-------------------------
+
+npm run dev
+- Ne işe yarar: Next.js development server'ını başlatır (hot reload ile)
+- Kullanım: Geliştirme yaparken, değişiklikleri anında görmek için
+- Örnek: npm run dev
+- Sonuç: http://localhost:3000 adresinde site açılır
+
+npm run build
+- Ne işe yarar: Projeyi production için optimize edilmiş dosyalara dönüştürür
+- Kullanım: Siteyi canlıya almadan önce, performans için
+- Örnek: npm run build
+
+npm run start
+- Ne işe yarar: Production build'ini çalıştırır
+- Kullanım: Build edilmiş projeyi test etmek veya canlıya almak için
+- Örnek: npm run start
+- Not: Önce npm run build çalıştırılmalı
+
+npm run lint
+- Ne işe yarar: Kod kalitesini kontrol eder, hataları ve uyarıları gösterir
+- Kullanım: Kod yazarken standartlara uygunluğu kontrol etmek için
+- Örnek: npm run lint
+
+CACHE VE TEMİZLİK KOMUTLARI
+---------------------------
+
+npm cache clean --force
+- Ne işe yarar: npm cache'ini tamamen temizler
+- Kullanım: Paket yükleme sorunları yaşandığında
+- Örnek: npm cache clean --force
+
+npm cache verify
+- Ne işe yarar: Cache'in bütünlüğünü kontrol eder
+- Kullanım: Cache sorunlarını tespit etmek için
+- Örnek: npm cache verify
+
+BİLGİ KOMUTLARI
+---------------
+
+npm list
+- Ne işe yarar: Yüklü tüm paketleri ve sürümlerini listeler
+- Kullanım: Hangi paketlerin yüklü olduğunu görmek için
+- Örnek: npm list
+
+npm outdated
+- Ne işe yarar: Güncellenebilir paketleri gösterir
+- Kullanım: Hangi paketlerin eski olduğunu öğrenmek için
+- Örnek: npm outdated
+
+npm info [paket-adı]
+- Ne işe yarar: Belirtilen paket hakkında detaylı bilgi verir
+- Kullanım: Paket hakkında bilgi almak için
+- Örnek: npm info react
+
+npm search [arama-terimi]
+- Ne işe yarar: npm registry'de paket arar
+- Kullanım: İhtiyacınız olan paketi bulmak için
+- Örnek: npm search animation
+
+GÜVENLİK KOMUTLARI
+------------------
+
+npm audit
+- Ne işe yarar: Güvenlik açıklarını kontrol eder
+- Kullanım: Projenin güvenliğini kontrol etmek için
+- Örnek: npm audit
+
+npm audit fix
+- Ne işe yarar: Güvenlik açıklarını otomatik olarak düzeltir
+- Kullanım: Güvenlik sorunlarını çözmek için
+- Örnek: npm audit fix
+
+WINDOWS POWERSHELL ÖZEL KOMUTLARI
+--------------------------------
+
+Remove-Item -Recurse -Force node_modules
+- Ne işe yarar: node_modules klasörünü tamamen siler
+- Kullanım: Bağımlılık sorunlarını çözmek için temiz başlangıç yapmak
+- Örnek: Remove-Item -Recurse -Force node_modules
+
+SORUN GİDERME SIRASI
+--------------------
+
+1. npm cache clean --force
+2. Remove-Item -Recurse -Force node_modules (Windows için)
+3. npm install
+4. npm run dev
+
+Eğer hala sorun varsa:
+1. package-lock.json dosyasını sil
+2. node_modules klasörünü sil
+3. npm install
+4. npm run dev
+
+NOTLAR:
+- Her zaman proje ana dizininde (package.json'ın bulunduğu yerde) komutları çalıştırın
+- Hata mesajlarını dikkatle okuyun, genellikle çözüm önerisi içerirler
+- npm run dev komutu en çok kullanılan komuttur
+- Production'a almadan önce mutlaka npm run build çalıştırın

@@ -1,0 +1,205 @@
+DOSYA ÖZELLİKLERİ VE AÇIKLAMALARI
+====================================
+
+Bu dosya, projenizde bulunan dosyaların özelliklerini ve ne işe yaradıklarını açıklar.
+
+PROJE DOSYA YAPISI
+==================
+
+📁 ANA KLASÖRLER:
+- src/: Kaynak kodların bulunduğu ana klasör
+- public/: Statik dosyalar (resimler, ikonlar, PDF'ler)
+- backups/: Yedek dosyalar
+- components/: React bileşenleri
+
+📁 SRC KLASÖRÜ İÇERİĞİ:
+- app/: Next.js 13+ App Router dosyaları
+- components/: Yeniden kullanılabilir React bileşenleri
+- lib/: Yardımcı fonksiyonlar ve kütüphaneler
+- types/: TypeScript tip tanımlamaları
+- utils/: Genel yardımcı fonksiyonlar
+
+📁 PUBLIC KLASÖRÜ İÇERİĞİ:
+- assets/: Tüm medya dosyaları
+  ├── bilder/: Resim dosyaları
+  ├── icons/: İkon dosyaları
+  ├── pdfs/: PDF belgeleri
+  ├── projekte/: Proje dosyaları
+  └── zertifikate/: Sertifika dosyaları
+
+KONFİGÜRASYON DOSYALARI
+=======================
+
+package.json
+- Ne işe yarar: Proje bağımlılıklarını ve script'lerini tanımlar
+- İçerik: npm paketleri, versiyonlar, çalıştırma komutları
+- Önem: Projenin temel yapılandırma dosyası
+
+package-lock.json
+- Ne işe yarar: Tam paket versiyonlarını kilitleyerek tutarlılık sağlar
+- İçerik: Her paketin kesin versiyonu ve bağımlılıkları
+- Önem: Farklı ortamlarda aynı paket versiyonlarını kullanır
+
+tsconfig.json
+- Ne işe yarar: TypeScript derleyici ayarlarını yapılandırır
+- İçerik: Derleme seçenekleri, dosya yolları, tip kontrolleri
+- Önem: TypeScript kodunun nasıl derleneceğini belirler
+
+tailwind.config.ts
+- Ne işe yarar: Tailwind CSS framework'ünün ayarlarını yapılandırır
+- İçerik: Renk paletleri, boyutlar, özel sınıflar
+- Önem: CSS stillerinin nasıl oluşturulacağını belirler
+
+next.config.ts
+- Ne işe yarar: Next.js framework'ünün yapılandırma ayarları
+- İçerik: Build ayarları, optimizasyonlar, plugin'ler
+- Önem: Next.js uygulamasının nasıl çalışacağını belirler
+
+eslint.config.mjs
+- Ne işe yarar: ESLint kod kalitesi kontrol ayarları
+- İçerik: Kod standartları, kurallar, kural dışı bırakmalar
+- Önem: Kod kalitesini ve tutarlılığını sağlar
+
+postcss.config.js
+- Ne işe yarar: PostCSS CSS işleme ayarları
+- İçerik: CSS plugin'leri, dönüştürme kuralları
+- Önem: CSS'in nasıl işleneceğini belirler
+
+vercel.json
+- Ne işe yarar: Vercel deployment ayarları
+- İçerik: Build komutları, yönlendirmeler, environment variables
+- Önem: Canlı siteye nasıl yayınlanacağını belirler
+
+DÖKÜMANTASYON DOSYALARI
+=======================
+
+README.md
+- Ne işe yarar: Proje hakkında genel bilgi ve kullanım talimatları
+- İçerik: Proje açıklaması, kurulum adımları, kullanım örnekleri
+- Önem: Projeyi anlamak için ilk okunması gereken dosya
+
+npm-komutlari.txt/html
+- Ne işe yarar: NPM komutları rehberi
+- İçerik: Tüm npm komutları, açıklamaları ve örnekleri
+- Önem: Proje yönetimi için gerekli komutları öğretir
+
+paket-listesi.txt/html
+- Ne işe yarar: Proje paketlerinin detaylı açıklaması
+- İçerik: Her paketin ne işe yaradığı, kullanımı ve örnekleri
+- Önem: Hangi paketlerin neden kullanıldığını anlamak için
+
+DOSYA TÜRLERİ VE UZANTILARI
+============================
+
+📄 METİN DOSYALARI:
+- .txt: Düz metin dosyaları (basit dokümantasyon)
+- .md: Markdown dosyaları (formatlanmış dokümantasyon)
+- .json: JavaScript Object Notation (yapılandırma verileri)
+- .js: JavaScript dosyaları (eski format)
+- .mjs: ES6 modül JavaScript dosyaları
+
+📄 TYPESCRIPT DOSYALARI:
+- .ts: TypeScript dosyaları (tip güvenli JavaScript)
+- .tsx: TypeScript React dosyaları (JSX içeren)
+- .d.ts: TypeScript tip tanımlama dosyaları
+
+📄 STİL DOSYALARI:
+- .css: Cascading Style Sheets (stil tanımları)
+- .scss: SASS CSS (gelişmiş CSS özellikleri)
+- .sass: SASS CSS (eski format)
+
+📄 YAPILANDIRMA DOSYALARI:
+- .config.js: JavaScript yapılandırma dosyaları
+- .config.ts: TypeScript yapılandırma dosyaları
+- .config.mjs: ES6 modül yapılandırma dosyaları
+
+📄 MEDYA DOSYALARI:
+- .png: Portable Network Graphics (şeffaf resimler)
+- .jpg/.jpeg: Joint Photographic Experts Group (sıkıştırılmış resimler)
+- .svg: Scalable Vector Graphics (ölçeklenebilir vektör grafikleri)
+- .pdf: Portable Document Format (belge formatı)
+- .ico: Icon dosyaları (favicon)
+
+DOSYA ORGANİZASYONU PRENSİPLERİ
+===============================
+
+📂 KLASÖR YAPISI:
+- Mantıksal gruplandırma: Benzer dosyalar aynı klasörde
+- Hiyerarşik düzen: Ana klasörler alt klasörlere ayrılır
+- Açıklayıcı isimler: Klasör adları içeriği yansıtır
+
+📂 DOSYA İSİMLENDİRME:
+- camelCase: JavaScript/TypeScript dosyaları
+- kebab-case: CSS dosyaları ve klasörler
+- PascalCase: React bileşen dosyaları
+- lowercase: Yapılandırma dosyaları
+
+📂 İÇERİK ORGANİZASYONU:
+- Tek sorumluluk: Her dosya tek bir işlevi yerine getirir
+- Modüler yapı: Bileşenler yeniden kullanılabilir
+- Bağımlılık yönetimi: İçe aktarmalar düzenli
+
+DOSYA GÜVENLİĞİ VE YEDEKLEME
+=============================
+
+🔒 GÜVENLİK:
+- .gitignore: Git'e dahil edilmeyecek dosyalar
+- Environment variables: Hassas bilgiler ayrı dosyalarda
+- Backup klasörü: Önemli dosyaların yedekleri
+
+💾 YEDEKLEME:
+- backups/ klasörü: Manuel yedekler
+- Git history: Versiyon kontrolü ile otomatik yedekleme
+- Cloud storage: Uzak sunucu yedekleri
+
+DOSYA BOYUTU VE PERFORMANS
+===========================
+
+📊 BOYUT OPTİMİZASYONU:
+- Resim sıkıştırma: PNG, JPG optimizasyonu
+- Code splitting: Büyük dosyaların bölünmesi
+- Tree shaking: Kullanılmayan kodların çıkarılması
+- Minification: Üretim dosyalarının küçültülmesi
+
+⚡ PERFORMANS:
+- Lazy loading: Dosyaların ihtiyaç duyulduğunda yüklenmesi
+- Caching: Tarayıcı önbelleği stratejileri
+- CDN: İçerik dağıtım ağları
+- Compression: Dosya sıkıştırma
+
+DOSYA BAKIMI VE TEMİZLİK
+=========================
+
+🧹 TEMİZLİK:
+- Kullanılmayan dosyaların silinmesi
+- Duplicate dosyaların kaldırılması
+- Eski versiyonların arşivlenmesi
+- Geçici dosyaların temizlenmesi
+
+🔧 BAKIM:
+- Düzenli güncellemeler
+- Güvenlik yamaları
+- Performans optimizasyonları
+- Kod refactoring
+
+ÖNEMLİ NOTLAR
+=============
+
+⚠️ DİKKAT EDİLMESİ GEREKENLER:
+1. package-lock.json dosyasını manuel olarak düzenlemeyin
+2. .env dosyalarını Git'e commit etmeyin
+3. node_modules klasörünü manuel olarak silmeyin
+4. Build dosyalarını kaynak kodla karıştırmayın
+
+💡 İPUÇLARI:
+1. Dosya isimlerini açıklayıcı yapın
+2. Klasör yapısını mantıklı organize edin
+3. Düzenli yedekleme yapın
+4. Dosya boyutlarını kontrol edin
+5. Güvenlik güncellemelerini takip edin
+
+🔄 GÜNCELLEME ÖNERİLERİ:
+- Haftalık: Kullanılmayan dosyaları temizleyin
+- Aylık: Güvenlik güncellemelerini kontrol edin
+- Üç aylık: Performans optimizasyonu yapın
+- Yıllık: Büyük refactoring planlayın

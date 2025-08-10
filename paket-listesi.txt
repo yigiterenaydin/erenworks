@@ -1,0 +1,159 @@
+PROJE PAKET LİSTESİ VE AÇIKLAMALARI
+====================================
+
+Bu dosya, projenizde kullanılan tüm npm paketlerini ve ne işe yaradıklarını açıklar.
+
+PRODUCTION BAĞIMLILIKLARI (dependencies)
+========================================
+
+@heroicons/react (2.2.0)
+- Ne işe yarar: Heroicons'dan gelen güzel SVG ikonları React bileşenleri olarak kullanmanızı sağlar
+- Kullanım: Butonlar, menüler, navigasyon için profesyonel ikonlar
+- Örnek: <HomeIcon className="h-6 w-6" />
+
+@vercel/analytics (1.5.0)
+- Ne işe yarar: Vercel Analytics ile web sitenizin ziyaretçi istatistiklerini takip eder
+- Kullanım: Hangi sayfaların daha çok ziyaret edildiğini, kullanıcı davranışlarını analiz eder
+- Örnek: import { Analytics } from '@vercel/analytics/react'
+
+@vercel/speed-insights (1.2.0)
+- Ne işe yarar: Web sitenizin performansını ve hızını ölçer
+- Kullanım: Sayfa yükleme süreleri, Core Web Vitals metriklerini takip eder
+- Örnek: import { SpeedInsights } from '@vercel/speed-insights/next'
+
+framer-motion (12.23.12)
+- Ne işe yarar: React için gelişmiş animasyon kütüphanesi
+- Kullanım: Sayfa geçişleri, hover efektleri, loading animasyonları
+- Örnek: motion.div animate={{ opacity: 1 }} transition={{ duration: 0.5 }}
+
+next (15.4.6)
+- Ne işe yarar: React tabanlı full-stack web framework'ü
+- Kullanım: Server-side rendering, routing, API routes, optimizasyon
+- Örnek: Next.js ile sayfa oluşturma, API endpoint'leri
+
+ogl (1.0.11)
+- Ne işe yarar: WebGL için hafif ve hızlı 3D grafik kütüphanesi
+- Kullanım: 3D animasyonlar, interaktif grafikler, görsel efektler
+- Örnek: 3D arka plan animasyonları, parçacık efektleri
+
+react (19.1.0)
+- Ne işe yarar: Kullanıcı arayüzü oluşturmak için JavaScript kütüphanesi
+- Kullanım: Bileşen tabanlı UI geliştirme, state yönetimi
+- Örnek: React bileşenleri, hooks, JSX
+
+react-dom (19.1.0)
+- Ne işe yarar: React'i web tarayıcısında çalıştırmak için DOM renderer
+- Kullanım: React bileşenlerini HTML DOM'a dönüştürür
+- Örnek: ReactDOM.render() ile bileşenleri DOM'a bağlama
+
+react-hot-toast (2.5.2)
+- Ne işe yarar: Kullanıcı dostu bildirim (toast) kütüphanesi
+- Kullanım: Başarı, hata, uyarı mesajları göstermek
+- Örnek: toast.success('İşlem başarılı!'), toast.error('Hata oluştu!')
+
+react-icons (5.5.0)
+- Ne işe yarar: Popüler ikon setlerini React bileşenleri olarak sağlar
+- Kullanım: Font Awesome, Material Design, Feather Icons gibi ikonlar
+- Örnek: <FaHome />, <MdEmail />, <FiUser />
+
+react-type-animation (3.2.0)
+- Ne işe yarar: Yazı makinesi (typewriter) animasyonu efekti
+- Kullanım: Metinlerin harfler halinde yazılması animasyonu
+- Örnek: TypeAnimation component ile animasyonlu metin
+
+GELİŞTİRME BAĞIMLILIKLARI (devDependencies)
+============================================
+
+@eslint/eslintrc (3.x)
+- Ne işe yarar: ESLint konfigürasyon dosyalarını yönetmek için
+- Kullanım: Kod kalitesi kurallarını tanımlamak
+- Örnek: .eslintrc.js dosyasında kuralları yapılandırma
+
+@types/node (20.x)
+- Ne işe yarar: Node.js için TypeScript tip tanımlamaları
+- Kullanım: TypeScript ile Node.js API'lerini kullanırken tip güvenliği
+- Örnek: fs, path gibi Node.js modüllerinin tiplerini sağlar
+
+@types/react (19.x)
+- Ne işe yarar: React için TypeScript tip tanımlamaları
+- Kullanım: React bileşenlerinde tip güvenliği
+- Örnek: useState, useEffect gibi hook'ların tiplerini sağlar
+
+@types/react-dom (19.x)
+- Ne işe yarar: React DOM için TypeScript tip tanımlamaları
+- Kullanım: ReactDOM API'lerinde tip güvenliği
+- Örnek: render, hydrate gibi fonksiyonların tiplerini sağlar
+
+autoprefixer (10.4.21)
+- Ne işe yarar: CSS'te vendor prefix'leri otomatik ekler
+- Kullanım: Farklı tarayıcılarda CSS uyumluluğu sağlar
+- Örnek: -webkit-, -moz-, -ms- prefix'lerini otomatik ekler
+
+eslint (9.x)
+- Ne işe yarar: JavaScript/TypeScript kod kalitesi kontrol aracı
+- Kullanım: Kod standartlarını kontrol eder, hataları bulur
+- Örnek: npm run lint ile kod kalitesini kontrol etme
+
+eslint-config-next (15.4.6)
+- Ne işe yarar: Next.js için özel ESLint konfigürasyonu
+- Kullanım: Next.js projelerinde önerilen kod kuralları
+- Örnek: Next.js'e özel linting kuralları
+
+postcss (8.5.6)
+- Ne işe yarar: CSS'i işlemek ve dönüştürmek için araç
+- Kullanım: CSS optimizasyonu, vendor prefix'ler, minification
+- Örnek: Tailwind CSS ile birlikte CSS işleme
+
+tailwindcss (3.4.17)
+- Ne işe yarar: Utility-first CSS framework'ü
+- Kullanım: Hızlı UI geliştirme, responsive tasarım
+- Örnek: className="bg-blue-500 text-white p-4 rounded-lg"
+
+typescript (5.x)
+- Ne işe yarar: JavaScript'e tip güvenliği ekleyen programlama dili
+- Kullanım: Kod kalitesi, hata önleme, daha iyi IDE desteği
+- Örnek: .tsx dosyalarında tip tanımlamaları
+
+PAKET KATEGORİLERİ
+==================
+
+UI VE ANİMASYON:
+- framer-motion: Gelişmiş animasyonlar
+- react-hot-toast: Bildirimler
+- react-icons: İkon kütüphanesi
+- @heroicons/react: Profesyonel ikonlar
+
+ANALİTİK VE PERFORMANS:
+- @vercel/analytics: Ziyaretçi analizi
+- @vercel/speed-insights: Performans takibi
+
+3D VE GÖRSEL:
+- ogl: WebGL 3D grafikleri
+
+CORE FRAMEWORK:
+- next: Full-stack React framework
+- react: UI kütüphanesi
+- react-dom: DOM renderer
+
+GELİŞTİRME ARAÇLARI:
+- typescript: Tip güvenliği
+- eslint: Kod kalitesi
+- tailwindcss: CSS framework
+- postcss: CSS işleme
+
+ÖNEMLİ NOTLAR:
+==============
+
+1. Production paketleri (dependencies) canlı sitede kullanılır
+2. Development paketleri (devDependencies) sadece geliştirme sırasında kullanılır
+3. Paket versiyonları ^ işareti ile başlıyorsa minor güncellemelere izin verir
+4. Sabit versiyonlar (örn: 2.2.0) tam olarak o versiyonu kullanır
+5. Yeni paket eklerken dikkatli olun, proje boyutunu artırır
+
+GÜNCELLEME ÖNERİLERİ:
+=====================
+
+- Güvenlik güncellemeleri için: npm audit fix
+- Tüm paketleri güncellemek için: npm update
+- Belirli paketi güncellemek için: npm update [paket-adı]
+- Eski paketleri kontrol etmek için: npm outdated

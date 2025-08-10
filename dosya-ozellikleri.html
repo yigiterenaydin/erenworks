@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dosya Özellikleri Rehberi</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        .content {
+            padding: 30px;
+        }
+        .section {
+            margin-bottom: 40px;
+            border-left: 4px solid #667eea;
+            padding-left: 20px;
+        }
+        .section h2 {
+            color: #667eea;
+            margin-top: 0;
+            font-size: 1.8em;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        .file-type {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            transition: transform 0.2s;
+        }
+        .file-type:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .file-name {
+            font-weight: bold;
+            color: #495057;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .file-ext {
+            background: #e9ecef;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #6c757d;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        .file-desc {
+            color: #6c757d;
+            margin: 10px 0;
+        }
+        .file-usage {
+            color: #28a745;
+            font-style: italic;
+            margin: 8px 0;
+        }
+        .file-example {
+            background: #e9ecef;
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            border-left: 3px solid #667eea;
+        }
+        .category {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .category h3 {
+            color: #856404;
+            margin-top: 0;
+        }
+        .category ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .category li {
+            margin: 5px 0;
+        }
+        .notes {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .notes h3 {
+            color: #0c5460;
+            margin-top: 0;
+        }
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .config {
+            border-left-color: #28a745;
+        }
+        .doc {
+            border-left-color: #17a2b8;
+        }
+        .media {
+            border-left-color: #ffc107;
+        }
+        .code {
+            border-left-color: #dc3545;
+        }
+        .folder-structure {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        .folder-structure .folder {
+            color: #007bff;
+            font-weight: bold;
+        }
+        .folder-structure .file {
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📁 Dosya Özellikleri Rehberi</h1>
+            <p>Proje dosyalarının detaylı açıklamaları ve kullanım kılavuzu</p>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <h2>📂 Proje Dosya Yapısı</h2>
+                
+                <div class="folder-structure">
+                    <div class="folder">📁 ANA KLASÖRLER:</div>
+                    <div class="file">├── src/: Kaynak kodların bulunduğu ana klasör</div>
+                    <div class="file">├── public/: Statik dosyalar (resimler, ikonlar, PDF'ler)</div>
+                    <div class="file">├── backups/: Yedek dosyalar</div>
+                    <div class="file">└── components/: React bileşenleri</div>
+                    <br>
+                    <div class="folder">📁 SRC KLASÖRÜ İÇERİĞİ:</div>
+                    <div class="file">├── app/: Next.js 13+ App Router dosyaları</div>
+                    <div class="file">├── components/: Yeniden kullanılabilir React bileşenleri</div>
+                    <div class="file">├── lib/: Yardımcı fonksiyonlar ve kütüphaneler</div>
+                    <div class="file">├── types/: TypeScript tip tanımlamaları</div>
+                    <div class="file">└── utils/: Genel yardımcı fonksiyonlar</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>⚙️ Konfigürasyon Dosyaları</h2>
+                
+                <div class="file-type config">
+                    <div class="file-name">package.json<span class="file-ext">.json</span></div>
+                    <div class="file-desc"><strong>Ne işe yarar:</strong> Proje bağımlılıklarını ve script'lerini tanımlar</div>
+                    <div class="file-usage"><strong>İçerik:</strong> npm paketleri, versiyonlar, çalıştırma komutları</div>
+                    <div class="file-example">Projenin temel yapılandırma dosyası</div>
+                </div>
+
+                <div class="file-type config">
+                    <div class="file-name">package-lock.json<span class="file-ext">.json</span></div>
+                    <div class="file-desc"><strong>Ne işe yarar:</strong> Tam paket versiyonlarını kilitleyerek tutarlılık sağlar</div>
+                    <div class="file-usage"><strong>İçerik:</strong> Her paketin kesin versiyonu ve bağımlılıkları</div>
+                    <div class="file-example">Farklı ortamlarda aynı paket versiyonlarını kullanır</div>
+                </div>
+
+                <div class="file-type config">
+                    <div class="file-name">tsconfig.json<span class="file-ext">.json</span></div>
+                    <div class="file-desc"><strong>Ne işe yarar:</strong> TypeScript derleyici ayarlarını yapılandırır</div>
+                    <div class="file-usage"><strong>İçerik:</strong> Derleme seçenekleri, dosya yolları, tip kontrolleri</div>
+                    <div class="file-example">TypeScript kodunun nasıl derleneceğini belirler</div>
+                </div>
+
+                <div class="file-type config">
+                    <div class="file-name">tailwind.config.ts<span class="file-ext">.ts</span></div>
+                    <div class="file-desc"><strong>Ne işe yarar:</strong> Tailwind CSS framework'ünün ayarlarını yapılandırır</div>
+                    <div class="file-usage"><strong>İçerik:</strong> Renk paletleri, boyutlar, özel sınıflar</div>
+                    <div class="file-example">CSS stillerinin nasıl oluşturulacağını belirler</div>
+                </div>
+
+                <div class="file-type config">
+                    <div class="file-name">next.config.ts<span class="file-ext">.ts</span></div>
+                    <div class="file-desc"><strong>Ne işe yarar:</strong> Next.js framework'ünün yapılandırma ayarları</div>
+                    <div class="file-usage"><strong>İçerik:</strong> Build ayarları, optimizasyonlar, plugin'ler</div>
+                    <div class="file-example">Next.js uygulamasının nasıl çalışacağını belirler</div>
+                </div>
+
+                <div class="file-type config">
+                    <div class="file-name">eslint.config.mjs<span class="file-ext">.mjs</span></div>
+                    <div class="file-desc"><strong>Ne işe yarar:</strong> ESLint kod kalitesi kontrol ayarları</div>
+                    <div class="file-usage"><strong>İçerik:</strong> Kod standartları, kurallar, kural dışı bırakmalar</div>
+                    <div class="file-example">Kod kalitesini ve tutarlılığını sağlar</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📄 Dosya Türleri ve Uzantıları</h2>
+                
+                <div class="file-type code">
+                    <div class="file-name">TypeScript Dosyaları<span class="file-ext">.ts/.tsx</span></div>
+                    <div class="file-desc"><strong>Ne işe yarar:</strong> Tip güvenli JavaScript geliştirme</div>
+                    <div class="file-usage"><strong>Kullanım:</strong> React bileşenleri, API fonksiyonları, yardımcı fonksiyonlar</div>
+                    <div class="file-example">Button.tsx, api.ts, utils.ts</div>
+                </div>
+
+                <div class="file-type code">
+                    <div class="file-name">JavaScript Dosyaları<span class="file-ext">.js/.mjs</span></div>
+                    <div class="file-desc"><strong>Ne işe yarar:</strong> Dinamik web uygulamaları geliştirme</div>
+                    <div class="file-usage"><strong>Kullanım:</strong> Konfigürasyon dosyaları, eski format dosyalar</div>
+                    <div class="file-example">postcss.config.js, eslint.config.mjs</div>
+                </div>
+
+                <div class="file-type code">
+                    <div class="file-name">CSS Dosyaları<span class="file-ext">.css</span></div>
+                    <div class="file-desc"><strong>Ne işe yarar:</strong> Web sayfalarının görsel stillerini tanımlama</div>
+                    <div class="file-usage"><strong>Kullanım:</strong> Özel stiller, global CSS, animasyonlar</div>
+                    <div class="file-example">globals.css, components.css</div>
+                </div>
+
+                <div class="file-type doc">
+                    <div class="file-name">Markdown Dosyaları<span class="file-ext">.md</span></div>
+                    <div class="file-desc"><strong>Ne işe yarar:</strong> Formatlanmış dokümantasyon ve açıklamalar</div>
+                    <div class="file-usage"><strong>Kullanım:</strong> README dosyaları, proje dokümantasyonu</div>
+                    <div class="file-example">README.md, CHANGELOG.md</div>
+                </div>
+
+                <div class="file-type doc">
+                    <div class="file-name">Metin Dosyaları<span class="file-ext">.txt</span></div>
+                    <div class="file-desc"><strong>Ne işe yarar:</strong> Basit metin dokümantasyonu</div>
+                    <div class="file-usage"><strong>Kullanım:</strong> Hızlı notlar, basit açıklamalar</div>
+                    <div class="file-example">npm-komutlari.txt, paket-listesi.txt</div>
+                </div>
+
+                <div class="file-type media">
+                    <div class="file-name">Resim Dosyaları<span class="file-ext">.png/.jpg/.svg</span></div>
+                    <div class="file-desc"><strong>Ne işe yarar:</strong> Web sitesi görselleri ve ikonları</div>
+                    <div class="file-usage"><strong>Kullanım:</strong> Logo, fotoğraflar, ikonlar, arka plan görselleri</div>
+                    <div class="file-example">eren-photo.png, globe.svg, favicon.ico</div>
+                </div>
+
+                <div class="file-type media">
+                    <div class="file-name">PDF Dosyaları<span class="file-ext">.pdf</span></div>
+                    <div class="file-desc"><strong>Ne işe yarar:</strong> Belgeler ve sertifikalar</div>
+                    <div class="file-usage"><strong>Kullanım:</strong> CV, sertifikalar, proje belgeleri</div>
+                    <div class="file-example">ErenLebensL.pdf, ergon.pdf</div>
+                </div>
+            </div>
+
+            <div class="category">
+                <h3>📂 Dosya Organizasyonu Prensipleri</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                    <div>
+                        <h4>📂 Klasör Yapısı:</h4>
+                        <ul>
+                            <li>Mantıksal gruplandırma: Benzer dosyalar aynı klasörde</li>
+                            <li>Hiyerarşik düzen: Ana klasörler alt klasörlere ayrılır</li>
+                            <li>Açıklayıcı isimler: Klasör adları içeriği yansıtır</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>📝 Dosya İsimlendirme:</h4>
+                        <ul>
+                            <li>camelCase: JavaScript/TypeScript dosyaları</li>
+                            <li>kebab-case: CSS dosyaları ve klasörler</li>
+                            <li>PascalCase: React bileşen dosyaları</li>
+                            <li>lowercase: Yapılandırma dosyaları</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>🔧 İçerik Organizasyonu:</h4>
+                        <ul>
+                            <li>Tek sorumluluk: Her dosya tek bir işlevi yerine getirir</li>
+                            <li>Modüler yapı: Bileşenler yeniden kullanılabilir</li>
+                            <li>Bağımlılık yönetimi: İçe aktarmalar düzenli</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category">
+                <h3>🔒 Dosya Güvenliği ve Yedekleme</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                    <div>
+                        <h4>🔒 Güvenlik:</h4>
+                        <ul>
+                            <li>.gitignore: Git'e dahil edilmeyecek dosyalar</li>
+                            <li>Environment variables: Hassas bilgiler ayrı dosyalarda</li>
+                            <li>Backup klasörü: Önemli dosyaların yedekleri</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>💾 Yedekleme:</h4>
+                        <ul>
+                            <li>backups/ klasörü: Manuel yedekler</li>
+                            <li>Git history: Versiyon kontrolü ile otomatik yedekleme</li>
+                            <li>Cloud storage: Uzak sunucu yedekleri</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>📊 Performans:</h4>
+                        <ul>
+                            <li>Resim sıkıştırma: PNG, JPG optimizasyonu</li>
+                            <li>Code splitting: Büyük dosyaların bölünmesi</li>
+                            <li>Tree shaking: Kullanılmayan kodların çıkarılması</li>
+                            <li>Minification: Üretim dosyalarının küçültülmesi</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="notes">
+                <h3>⚠️ Önemli Notlar</h3>
+                <ul>
+                    <li><span class="highlight">package-lock.json</span> dosyasını manuel olarak düzenlemeyin</li>
+                    <li><span class="highlight">.env</span> dosyalarını Git'e commit etmeyin</li>
+                    <li><span class="highlight">node_modules</span> klasörünü manuel olarak silmeyin</li>
+                    <li>Build dosyalarını kaynak kodla karıştırmayın</li>
+                </ul>
+                
+                <h4>💡 İpuçları:</h4>
+                <ul>
+                    <li>Dosya isimlerini açıklayıcı yapın</li>
+                    <li>Klasör yapısını mantıklı organize edin</li>
+                    <li>Düzenli yedekleme yapın</li>
+                    <li>Dosya boyutlarını kontrol edin</li>
+                    <li>Güvenlik güncellemelerini takip edin</li>
+                </ul>
+
+                <h4>🔄 Güncelleme Önerileri:</h4>
+                <ul>
+                    <li><strong>Haftalık:</strong> Kullanılmayan dosyaları temizleyin</li>
+                    <li><strong>Aylık:</strong> Güvenlik güncellemelerini kontrol edin</li>
+                    <li><strong>Üç aylık:</strong> Performans optimizasyonu yapın</li>
+                    <li><strong>Yıllık:</strong> Büyük refactoring planlayın</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
