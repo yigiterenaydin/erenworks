@@ -292,9 +292,43 @@ export default function Home() {
                    </div>
             </div>
           </div>
-          <div className="border-t border-slate-800 mt-12 pt-8 text-center text-slate-400">
-            <p>&copy; {new Date().getFullYear()} Eren Portfolio. Alle Rechte vorbehalten.</p>
-          </div>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="border-t border-slate-800 mt-12 pt-8 text-center"
+          >
+            <div className="flex flex-col items-center space-y-4">
+              <motion.div
+                initial={{ scale: 0.8 }}
+                whileInView={{ scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                viewport={{ once: true }}
+                className="w-12 h-12 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 flex items-center justify-center"
+              >
+                <span className="text-white text-lg font-bold">E</span>
+              </motion.div>
+              
+              <motion.p 
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                viewport={{ once: true }}
+                className="text-slate-400 text-sm font-medium"
+              >
+                &copy; {new Date().getFullYear()} Eren Portfolio. Alle Rechte vorbehalten.
+              </motion.p>
+              
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: "100px" }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                viewport={{ once: true }}
+                className="h-px bg-gradient-to-r from-transparent via-slate-600 to-transparent"
+              />
+            </div>
+          </motion.div>
         </div>
       </footer>
     </AppShell>
