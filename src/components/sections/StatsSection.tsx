@@ -67,7 +67,7 @@ export default function StatsSection() {
     },
     {
       number: 8,
-      label: "Bewerbungen",
+      label: "Lehrstellenbewerbungen",
       description: " für eine Lehrstelle habe ich bisher abgeschickt.",
       color: "bg-gradient-to-br from-emerald-600 to-teal-700"
     }
