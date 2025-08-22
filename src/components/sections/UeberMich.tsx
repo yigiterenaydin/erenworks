@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from 'react';
+import { PencilIcon, FlagIcon, RocketLaunchIcon } from '@heroicons/react/24/outline';
 
 interface Skill {
   icon: ReactNode;
@@ -17,9 +18,25 @@ interface UeberMichProps {
 
 export default function UeberMich({ title, skills }: UeberMichProps) {
   const prefersReducedMotion = useReducedMotion();
+  
+  // Background icons for each card
+  const backgroundIcons = [
+    <PencilIcon key="pencil" className="w-full h-full text-blue-400 dark:text-blue-500 opacity-30" />,
+    <FlagIcon key="flag" className="w-full h-full text-purple-400 dark:text-purple-500 opacity-30" />,
+    <RocketLaunchIcon key="rocket" className="w-full h-full text-green-400 dark:text-green-500 opacity-30" />
+  ];
+
   return (
-    <section id="about" className="pt-16 pb-16 bg-rose-50/60 dark:bg-slate-900/50 backdrop-blur-sm section-anchor">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+         <section id="about" className="relative pt-16 pb-16 bg-rose-50/60 dark:bg-slate-900/50 backdrop-blur-sm section-anchor overflow-hidden">
+       {/* Background Image */}
+       <div className="absolute inset-0 z-0">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               <img 
+                 src="/assets/bilder/schule-bg.png" 
+                 alt="Schule Hintergrund" 
+                 className="w-full h-full object-cover object-top opacity-5 sm:opacity-3 dark:opacity-3 sm:dark:opacity-2"
+               />
+       </div>
+             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           initial={prefersReducedMotion ? false : { opacity: 0, y: 50 }}
           whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
@@ -39,26 +56,14 @@ export default function UeberMich({ title, skills }: UeberMichProps) {
           viewport={{ once: true }}
           className="max-w-4xl mx-auto mb-20"
         >
-          <div className="space-y-6 text-left">
-            <div>
-              <h4 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">Über mich</h4>
-              <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-                Ich bin Eren und besuche die dritte Sekundarstufe an der Sekundarschule Zürich Rebhügel. Ich arbeite gern im Team, bin zuverlässig und organisiere mich gut.
-              </p>
+                                           <div className="space-y-6 text-left">
+              <div>
+                                 <h4 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">Wer bin ich & was mach ich? 🤔</h4>
+                <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+                  Ich heiße <span className="text-blue-600 dark:text-blue-400 font-semibold">Eren</span>, bin <span className="text-green-600 dark:text-green-400 font-semibold">15 Jahre alt</span> und besuche die dritte Sekundarstufe an der <span className="text-purple-600 dark:text-purple-400 font-semibold">Sekundarschule Zürich Rebhügel</span>. Meine Freunde und Lehrer beschreiben mich als <span className="text-indigo-600 dark:text-indigo-400 font-semibold">hilfsbereit</span>, <span className="text-teal-600 dark:text-teal-400 font-semibold">zuverlässig</span> und <span className="text-pink-600 dark:text-pink-400 font-semibold">offen für Neues</span>. Besonders im <span className="text-orange-600 dark:text-orange-400 font-semibold">Team</span> arbeite ich gerne, aber ich kann auch <span className="text-cyan-600 dark:text-cyan-400 font-semibold">eigenständig</span> Aufgaben gut organisieren und <span className="text-amber-600 dark:text-amber-400 font-semibold">Verantwortung</span> übernehmen. Zurzeit absolviere ich <span className="text-blue-600 dark:text-blue-400 font-semibold">Schnupperlehren</span>, um verschiedene <span className="text-green-600 dark:text-green-400 font-semibold">Berufe</span> und <span className="text-purple-600 dark:text-purple-400 font-semibold">Arbeitsumfelder</span> kennenzulernen. Dabei arbeite ich regelmäßig an meinem <span className="text-indigo-600 dark:text-indigo-400 font-semibold">Lebenslauf</span> und sammle neue <span className="text-teal-600 dark:text-teal-400 font-semibold">Erfahrungen</span>, um meine <span className="text-pink-600 dark:text-pink-400 font-semibold">beruflichen Ziele</span> besser einschätzen zu können. Besonders interessiert mich die <span className="text-orange-600 dark:text-orange-400 font-semibold">KV-Branche</span>, vor allem eine <span className="text-cyan-600 dark:text-cyan-400 font-semibold">Lehrstelle in einer Bank</span>. Mein Ziel ist es, dort eine <span className="text-amber-600 dark:text-amber-400 font-semibold">Ausbildung</span> zu beginnen, viele <span className="text-blue-600 dark:text-blue-400 font-semibold">Fähigkeiten</span> zu erlernen und mich <span className="text-green-600 dark:text-green-400 font-semibold">persönlich</span> sowie <span className="text-purple-600 dark:text-purple-400 font-semibold">beruflich</span> weiterzuentwickeln. Ich freue mich darauf, neue <span className="text-indigo-600 dark:text-indigo-400 font-semibold">Herausforderungen</span> anzunehmen und meine <span className="text-teal-600 dark:text-teal-400 font-semibold">Zukunft</span> aktiv zu gestalten.
+                </p>
+              </div>
             </div>
-            <div>
-              <h4 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">Interessen & Motivation</h4>
-              <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-                Ich absolviere aktuell Schnupperlehren, aktualisiere meinen Lebenslauf und verschaffe mir ein klares Bild von verschiedenen Berufen.
-              </p>
-            </div>
-            <div>
-              <h4 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">Ziel</h4>
-              <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-                Besonders interessiert mich die KV‑Branche – idealerweise in einer Bank. Mein Ziel ist es, dort eine Lehrstelle zu finden und mich Schritt für Schritt weiterzuentwickeln.
-              </p>
-            </div>
-          </div>
         </motion.div>
         
         {/* Skills Grid */}
@@ -71,13 +76,25 @@ export default function UeberMich({ title, skills }: UeberMichProps) {
               transition={prefersReducedMotion ? undefined : { duration: 0.8, delay: index * 0.2 }}
               viewport={{ once: true }}
               whileHover={prefersReducedMotion ? undefined : { y: -10, scale: 1.02 }}
-              className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-white/20 dark:border-slate-700/50 transition-all duration-300"
+              className="relative bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-white/20 dark:border-slate-700/50 transition-all duration-300 overflow-hidden"
             >
-              <div className={`w-16 h-16 bg-gradient-to-r ${skill.color} rounded-2xl flex items-center justify-center mb-6 text-2xl`}>
-                {skill.icon}
-              </div>
-              <h4 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">{skill.title}</h4>
-              <p className="text-slate-600 dark:text-slate-300">{skill.description}</p>
+                             {/* Background Icon */}
+               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                 {backgroundIcons[index]}
+               </div>
+              
+                             {/* Content */}
+               <div className="relative z-10">
+                                   <div className="bg-slate-100/80 dark:bg-slate-700/60 backdrop-blur-sm rounded-xl p-4 mb-4">
+                    <div className="flex items-center gap-4">
+                      <div className={`w-10 h-10 bg-gradient-to-r ${skill.color} rounded-lg flex items-center justify-center text-lg`}>
+                        {skill.icon}
+                      </div>
+                      <h4 className="text-lg font-bold text-slate-900 dark:text-white">{skill.title}</h4>
+                    </div>
+                  </div>
+                 <p className="text-slate-600 dark:text-slate-300">{skill.description}</p>
+               </div>
             </motion.div>
           ))}
         </div>
