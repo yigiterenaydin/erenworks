@@ -75,13 +75,13 @@ export default function UeberMich({ title, skills }: UeberMichProps) {
               whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
               transition={prefersReducedMotion ? undefined : { duration: 0.8, delay: index * 0.2 }}
               viewport={{ once: true }}
-              whileHover={prefersReducedMotion ? undefined : { y: -10, scale: 1.02 }}
-              className="relative bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-white/20 dark:border-slate-700/50 transition-all duration-300 overflow-hidden"
+                             whileHover={prefersReducedMotion ? undefined : { y: -8, scale: 1.03, rotateY: 2 }}
+               className="group relative bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-white/20 dark:border-slate-700/50 transition-all duration-500 overflow-hidden hover:shadow-2xl hover:shadow-blue-500/10 dark:hover:shadow-blue-400/10"
             >
                              {/* Background Icon */}
-               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                 {backgroundIcons[index]}
-               </div>
+                               <div className="absolute inset-0 flex items-center justify-center pointer-events-none group-hover:scale-110 transition-transform duration-700">
+                  {backgroundIcons[index]}
+                </div>
               
                              {/* Content */}
                <div className="relative z-10">
