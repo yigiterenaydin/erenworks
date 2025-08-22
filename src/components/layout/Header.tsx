@@ -45,10 +45,21 @@ export default function Header({
     const id = hash.replace('#', '');
     const el = document.getElementById(id);
     if (!el) return;
+    
+    // Header yüksekliğini al
     const headerHeight = headerRef.current?.offsetHeight ?? 80;
-    const extra = 32; // mobile header + güvenli boşluk
-    const top = el.getBoundingClientRect().top + window.scrollY - headerHeight - extra;
-    window.scrollTo({ top, behavior: 'smooth' });
+    
+    // Element'in pozisyonunu hesapla
+    const elementTop = el.offsetTop;
+    
+    // Scroll pozisyonunu hesapla (header'ın altında kalacak şekilde)
+    const scrollTop = elementTop - headerHeight - 20; // 20px ekstra boşluk
+    
+    // Smooth scroll yap
+    window.scrollTo({ 
+      top: Math.max(0, scrollTop), 
+      behavior: 'smooth' 
+    });
   }, []);
 
   useEffect(() => {
@@ -63,7 +74,7 @@ export default function Header({
       },
       {
         root: null,
-        rootMargin: '-40% 0px -40% 0px',
+        rootMargin: '-20% 0px -60% 0px',
         threshold: 0.1,
       }
     );
@@ -226,7 +237,12 @@ export default function Header({
                 >
                   <motion.a
                     href={item.href}
-                    onClick={(e) => { e.preventDefault(); onMobileMenuClose(); scrollToHash(item.href); }}
+                    onClick={(e) => { 
+                      e.preventDefault(); 
+                      onMobileMenuClose(); 
+                      // Menü kapanması için kısa bir gecikme
+                      setTimeout(() => scrollToHash(item.href), 100);
+                    }}
                     aria-current={activeSection === item.href.replace('#', '') ? 'page' : undefined}
                     className={`block text-xl font-semibold transition-all duration-300 py-4 px-4 rounded-xl border-b border-slate-200/50 dark:border-slate-700/50 last:border-b-0 group ${
                       activeSection === item.href.replace('#', '')
