@@ -31,24 +31,14 @@ export default function PortfolioColumns({ languages, references }: PortfolioCol
   return (
     <section id="projects" className="pt-16 pb-16 bg-rose-50/60 dark:bg-slate-800/30 backdrop-blur-sm section-anchor">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
-          whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={prefersReducedMotion ? undefined : { duration: 0.5 }}
-          className="text-center mb-8"
-        >
+        <div className="text-center mb-8">
           <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">
             Hier sind meine Fähigkeiten und Kompetenzen.
           </h2>
-        </motion.div>
+        </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Sprachkenntnisse */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+          <div
             className="rounded-2xl border border-pink-900 bg-gradient-to-br from-pink-400 to-pink-700 p-6 text-white shadow"
           >
             <h3 className="text-2xl font-bold mb-6">Sprachkenntnisse</h3>
@@ -69,14 +59,10 @@ export default function PortfolioColumns({ languages, references }: PortfolioCol
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
           {/* Interessen */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.05 }}
+          <div
             className="rounded-2xl border border-blue-900 bg-gradient-to-br from-blue-600 to-blue-800 p-6 text-white shadow"
           >
             <h3 className="text-2xl font-bold mb-6">Interessen</h3>
@@ -119,14 +105,10 @@ export default function PortfolioColumns({ languages, references }: PortfolioCol
                 </button>
               ))}
             </div>
-          </motion.div>
+          </div>
 
           {/* Referenzen */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+          <div
             className="rounded-2xl border border-emerald-900 bg-gradient-to-br from-emerald-600 to-emerald-800 p-6 text-white shadow"
           >
             <h3 className="text-2xl font-bold mb-6">Referenzen</h3>
@@ -158,7 +140,7 @@ export default function PortfolioColumns({ languages, references }: PortfolioCol
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
