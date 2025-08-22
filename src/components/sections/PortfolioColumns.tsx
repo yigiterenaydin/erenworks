@@ -38,9 +38,14 @@ export default function PortfolioColumns({ languages, references }: PortfolioCol
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Sprachkenntnisse */}
-          <div
-            className="rounded-2xl border border-pink-900 bg-gradient-to-br from-pink-400 to-pink-700 p-6 text-white shadow"
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            viewport={{ once: true }}
+            className="relative group"
           >
+            <div className="relative overflow-hidden rounded-2xl border border-pink-900 bg-gradient-to-br from-pink-400 to-pink-700 p-6 text-white shadow-xl transition-all duration-500 hover:shadow-2xl hover:scale-105 hover:rotate-1 group-hover:shadow-pink-500/20">
             <h3 className="text-2xl font-bold mb-6">Sprachkenntnisse</h3>
             <div className="space-y-6">
               {languages.map((lang, idx) => (
@@ -59,12 +64,21 @@ export default function PortfolioColumns({ languages, references }: PortfolioCol
                 </div>
               ))}
             </div>
+            
+            {/* Animated border */}
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/30 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
           </div>
+        </motion.div>
 
           {/* Interessen */}
-          <div
-            className="rounded-2xl border border-blue-900 bg-gradient-to-br from-blue-600 to-blue-800 p-6 text-white shadow"
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="relative group"
           >
+            <div className="relative overflow-hidden rounded-2xl border border-blue-900 bg-gradient-to-br from-blue-600 to-blue-800 p-6 text-white shadow-xl transition-all duration-500 hover:shadow-2xl hover:scale-105 hover:rotate-1 group-hover:shadow-blue-500/20">
             <h3 className="text-2xl font-bold mb-6">Interessen</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
               {(
@@ -105,12 +119,21 @@ export default function PortfolioColumns({ languages, references }: PortfolioCol
                 </button>
               ))}
             </div>
+            
+            {/* Animated border */}
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/30 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
           </div>
+        </motion.div>
 
           {/* Referenzen */}
-          <div
-            className="rounded-2xl border border-emerald-900 bg-gradient-to-br from-emerald-600 to-emerald-800 p-6 text-white shadow"
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            viewport={{ once: true }}
+            className="relative group"
           >
+            <div className="relative overflow-hidden rounded-2xl border border-emerald-900 bg-gradient-to-br from-emerald-600 to-emerald-800 p-6 text-white shadow-xl transition-all duration-500 hover:shadow-2xl hover:scale-105 hover:rotate-1 group-hover:shadow-emerald-500/20">
             <h3 className="text-2xl font-bold mb-6">Referenzen</h3>
             <div className="space-y-4">
               {references.map((ref) => (
@@ -140,7 +163,11 @@ export default function PortfolioColumns({ languages, references }: PortfolioCol
                 </div>
               ))}
             </div>
+            
+            {/* Animated border */}
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/30 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
           </div>
+        </motion.div>
         </div>
       </div>
     </section>

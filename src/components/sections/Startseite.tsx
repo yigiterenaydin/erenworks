@@ -38,7 +38,7 @@ export default function Startseite({ name }: StartseiteProps) {
                 initial={prefersReducedMotion ? false : { opacity: 0, width: 0 }}
                 animate={prefersReducedMotion ? undefined : { opacity: 1, width: "100%" }}
                 transition={prefersReducedMotion ? undefined : { duration: 0.8, delay: 0.6 }}
-                className="w-36 sm:w-20 lg:w-64 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full mb-6"
+                className="w-full h-1 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full mb-6"
               ></motion.div>
 
               <motion.h2 
@@ -93,26 +93,26 @@ export default function Startseite({ name }: StartseiteProps) {
                 transition={prefersReducedMotion ? undefined : { duration: 0.8, delay: 1.2 }}
                 className="flex flex-col sm:flex-row gap-6"
               >
-                <motion.a
-                  href="https://github.com/yigiterenaydin"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  aria-label="Projekte ansehen – öffnet in neuem Tab"
-                  className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/80 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-300/80 dark:focus-visible:ring-offset-slate-900 transition-base"
-                >
-                  Projekte ansehen
-                </motion.a>
-                <motion.a
-                  href="/assets/pdfs/ErenLebensL.pdf"
-                  download="ErenLebensL.pdf"
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="relative border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 px-8 py-4 rounded-xl font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/80 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-300/80 dark:focus-visible:ring-offset-slate-900 transition-base"
-                >
-                  Lebenslauf herunterladen
-                </motion.a>
+                                 <motion.a
+                   href="https://github.com/yigiterenaydin"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   whileHover={{ scale: 1.05, y: -2 }}
+                   whileTap={{ scale: 0.95 }}
+                   aria-label="Projekte ansehen – öffnet in neuem Tab"
+                   className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/80 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-300/80 dark:focus-visible:ring-offset-slate-900 transition-base text-center"
+                 >
+                   Projekte ansehen
+                 </motion.a>
+                 <motion.a
+                   href="/assets/pdfs/ErenLebensL.pdf"
+                   download="ErenLebensL.pdf"
+                   whileHover={{ scale: 1.05, y: -2 }}
+                   whileTap={{ scale: 0.95 }}
+                   className="flex-1 relative border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 px-8 py-4 rounded-xl font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/80 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-300/80 dark:focus-visible:ring-offset-slate-900 transition-base text-center"
+                 >
+                   Lebenslauf herunterladen
+                 </motion.a>
               </motion.div>
             </div>
           </motion.div>
