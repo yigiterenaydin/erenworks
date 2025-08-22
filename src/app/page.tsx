@@ -9,7 +9,8 @@ import ExperienceAccordion from "@/components/sections/ExperienceAccordion";
 import PortfolioColumns from "@/components/sections/PortfolioColumns";
 import Zeugnisse from "@/components/sections/Zeugnisse";
 import Kontakt from "@/components/shared/Kontakt";
-import { AcademicCapIcon, BriefcaseIcon, RocketLaunchIcon } from "@heroicons/react/24/solid";
+import { AcademicCapIcon, BriefcaseIcon, RocketLaunchIcon, UserGroupIcon, DocumentTextIcon } from "@heroicons/react/24/solid";
+import StatsSection from "@/components/sections/StatsSection";
 
 export default function Home() {
   return (
@@ -42,6 +43,8 @@ export default function Home() {
           }
         ]}
       />
+
+      <StatsSection />
 
       <Zeugnisse
         title="Schulische Unterlagen"
