@@ -32,7 +32,7 @@ export default function PortfolioColumns({ languages, references }: PortfolioCol
     <section id="projects" className="pt-16 pb-16 bg-rose-50/60 dark:bg-slate-800/30 backdrop-blur-sm section-anchor">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8">
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">
             Hier sind meine Fähigkeiten und Kompetenzen.
           </h2>
         </div>

@@ -1,7 +1,6 @@
 'use client';
 
 import { motion, useReducedMotion } from "framer-motion";
-import { TypeAnimation } from "react-type-animation";
 import ProfileCard from "../shared/ProfileCard";
 import erenPhoto from "../../../public/assets/bilder/eren-photo.png";
 
@@ -30,9 +29,9 @@ export default function Startseite({ name }: StartseiteProps) {
                 className="text-base sm:text-lg font-medium text-slate-900 dark:text-white md:text-xl lg:text-2xl"
               >
                 Hallo, mein Name ist{" "}
-                          <span className="block font-bold text-transparent text-3xl sm:text-4xl mt-2 mb-3 lg:text-6xl lg:mt-3 lg:mb-4 bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 leading-tight">
-            {name} Aydin.
-          </span>
+                                 <span className="block font-bold text-transparent text-3xl sm:text-4xl mt-2 mb-3 lg:text-6xl lg:mt-3 lg:mb-4 bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 leading-tight">
+                   {name} Aydin.
+                 </span>
               </motion.h1>
 
               <motion.div 
@@ -49,30 +48,9 @@ export default function Startseite({ name }: StartseiteProps) {
                 className="font-light text-slate-900 dark:text-white text-base sm:text-lg mb-6 lg:text-2xl lg:mb-8 leading-relaxed"
               >
                 Ich bin {" "}
-                <span className="text-indigo-600 dark:text-indigo-400 font-semibold text-base sm:text-lg lg:text-2xl">
-                  <TypeAnimation
-                    sequence={[
-                      "freundlich und höflich.",
-                      1500,
-                      "mit anderen respektvoll und fair.",
-                      1500,
-                      "bei wichtigen Themen offen.",
-                      1500,
-                      "gut darin, mit Menschen aus verschiedenen Kulturen auszukommen.",
-                      1500,
-                      "sorgfältig und aufmerksam bei der Erledigung von Aufgaben.",
-                      1500,
-                      "offen für Neues und kann mich gut anpassen.",
-                      1500,
-                      "auch in stressigen Situationen ruhig.",
-                      1500,
-                    ]}
-                    wrapper="span"
-                    speed={70}
-                    repeat={Infinity}
-                    cursor={true}
-                  />
-                </span>
+                                 <span className="text-indigo-600 dark:text-indigo-400 font-semibold text-base sm:text-lg lg:text-2xl">
+                   freundlich und höflich.
+                 </span>
               </motion.h2>
 
               <motion.blockquote 

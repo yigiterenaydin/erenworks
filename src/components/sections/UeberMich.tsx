@@ -27,16 +27,17 @@ export default function UeberMich({ title, skills }: UeberMichProps) {
   ];
 
   return (
-         <section id="about" className="relative pt-16 pb-16 bg-rose-50/60 dark:bg-slate-900/50 backdrop-blur-sm section-anchor overflow-hidden">
-       {/* Background Image */}
-       <div className="absolute inset-0 z-0">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               <img 
-                 src="/assets/bilder/schule-bg.png" 
-                 alt="Schule Hintergrund" 
-                 className="w-full h-full object-cover object-top opacity-5 sm:opacity-3 dark:opacity-3 sm:dark:opacity-2"
-               />
-       </div>
-             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="about" className="relative pt-16 pb-16 bg-rose-50/60 dark:bg-slate-900/50 backdrop-blur-sm section-anchor overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <img 
+          src="/assets/bilder/schule-bg.png" 
+          alt="Schule Hintergrund" 
+          className="w-full h-full object-cover object-top opacity-5 sm:opacity-3 dark:opacity-3 sm:dark:opacity-2"
+        />
+      </div>
+      
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           initial={prefersReducedMotion ? false : { opacity: 0, y: 50 }}
           whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
@@ -44,9 +45,9 @@ export default function UeberMich({ title, skills }: UeberMichProps) {
           viewport={{ once: true }}
           className="text-center mb-8"
         >
-          <h3 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">
-            {title}
-          </h3>
+                     <h3 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-4">
+             {title}
+           </h3>
         </motion.div>
         
         <motion.div

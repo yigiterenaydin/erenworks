@@ -30,6 +30,8 @@ export default function Header({
 }: HeaderProps) {
   const prefersReducedMotion = useReducedMotion();
   const headerRef = useRef<HTMLElement | null>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  
   const navigationItems = [
     { name: 'Startseite', href: '#home', Icon: HomeIcon },
     { name: 'Persönliches Profil', href: '#about', Icon: UserCircleIcon },
@@ -40,6 +42,21 @@ export default function Header({
   ];
 
   const [activeSection, setActiveSection] = useState<string>('home');
+
+  // Scroll progress calculation
+  useEffect(() => {
+    const updateScrollProgress = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      setScrollProgress(Math.min(progress, 100));
+    };
+
+    window.addEventListener('scroll', updateScrollProgress);
+    updateScrollProgress(); // Initial calculation
+
+    return () => window.removeEventListener('scroll', updateScrollProgress);
+  }, []);
 
   const scrollToHash = useCallback((hash: string) => {
     const id = hash.replace('#', '');
@@ -90,13 +107,29 @@ export default function Header({
   }, []);
 
   return (
-    <motion.header 
-      ref={headerRef}
-      initial={prefersReducedMotion ? false : { y: -100, opacity: 0 }}
-      animate={prefersReducedMotion ? undefined : { y: 0, opacity: 1 }}
-      transition={prefersReducedMotion ? undefined : { duration: 0.8, ease: "easeOut" }}
-      className="relative bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-white/20 dark:border-slate-700/50 sticky top-0 z-50"
-    >
+    <>
+      {/* Scroll Progress Bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 z-[60] origin-left"
+        style={{ 
+          transform: `scaleX(${scrollProgress / 100})`,
+          transformOrigin: 'left'
+        }}
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: scrollProgress / 100 }}
+        transition={{ 
+          duration: prefersReducedMotion ? 0 : 0.1,
+          ease: "easeOut"
+        }}
+      />
+      
+      <motion.header 
+        ref={headerRef}
+        initial={prefersReducedMotion ? false : { y: -100, opacity: 0 }}
+        animate={prefersReducedMotion ? undefined : { y: 0, opacity: 1 }}
+        transition={prefersReducedMotion ? undefined : { duration: 0.8, ease: "easeOut" }}
+        className="relative bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-white/20 dark:border-slate-700/50 sticky top-0 z-50"
+      >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-6">
                      <motion.h1 
@@ -140,39 +173,227 @@ export default function Header({
                 );
               })}
               <span className="h-6 w-px bg-slate-200/80 dark:bg-slate-700/70" />
-              <motion.button
-                whileHover={prefersReducedMotion ? undefined : { rotate: 10 }}
-                whileTap={prefersReducedMotion ? undefined : { scale: 0.95 }}
-                onClick={onThemeToggle}
-                aria-label="Theme toggle"
-                className="ml-1 inline-flex h-9 w-9 items-center justify-center rounded-full text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-900"
-              >
-                {theme === 'light' ? (
-                  <MoonIcon className="w-5 h-5" />
-                ) : (
-                  <SunIcon className="w-5 h-5 text-yellow-400" />
-                )}
-              </motion.button>
+                             <motion.button
+                 whileHover={prefersReducedMotion ? undefined : { 
+                   scale: 1.15, 
+                   rotate: 360,
+                   boxShadow: "0 0 30px rgba(99, 102, 241, 0.5)"
+                 }}
+                 whileTap={prefersReducedMotion ? undefined : { scale: 0.85 }}
+                 onClick={onThemeToggle}
+                 aria-label="Theme toggle"
+                 className="ml-1 relative inline-flex h-9 w-9 items-center justify-center rounded-full text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-900 overflow-hidden"
+               >
+                 {/* Enhanced background glow effect */}
+                 <motion.div
+                   className="absolute inset-0 rounded-full"
+                   animate={{
+                     background: theme === 'light' 
+                       ? "radial-gradient(circle, rgba(99, 102, 241, 0.3) 0%, rgba(168, 85, 247, 0.2) 50%, transparent 80%)"
+                       : "radial-gradient(circle, rgba(251, 191, 36, 0.4) 0%, rgba(245, 158, 11, 0.3) 50%, transparent 80%)"
+                   }}
+                   transition={{ duration: 0.8 }}
+                 />
+                 
+                 {/* Particle effects */}
+                 <motion.div
+                   className="absolute inset-0"
+                   animate={{
+                     background: theme === 'light' 
+                       ? "radial-gradient(circle at 30% 30%, rgba(99, 102, 241, 0.2) 0%, transparent 50%), radial-gradient(circle at 70% 70%, rgba(168, 85, 247, 0.2) 0%, transparent 50%)"
+                       : "radial-gradient(circle at 30% 30%, rgba(251, 191, 36, 0.3) 0%, transparent 50%), radial-gradient(circle at 70% 70%, rgba(245, 158, 11, 0.3) 0%, transparent 50%)"
+                   }}
+                   transition={{ duration: 1 }}
+                 />
+                 
+                 {/* Icon with morphing animation */}
+                 <motion.div
+                   key={theme}
+                   initial={{ 
+                     scale: 0, 
+                     rotate: -180, 
+                     opacity: 0,
+                     filter: "blur(4px)"
+                   }}
+                   animate={{ 
+                     scale: 1, 
+                     rotate: 0, 
+                     opacity: 1,
+                     filter: "blur(0px)"
+                   }}
+                   exit={{ 
+                     scale: 0, 
+                     rotate: 180, 
+                     opacity: 0,
+                     filter: "blur(4px)"
+                   }}
+                   transition={{ 
+                     duration: 1.2, 
+                     ease: "easeInOut",
+                     type: "spring",
+                     stiffness: 150,
+                     damping: 15
+                   }}
+                   className="relative z-10"
+                 >
+                   {theme === 'light' ? (
+                     <motion.div
+                       initial={{ pathLength: 0 }}
+                       animate={{ pathLength: 1 }}
+                       transition={{ duration: 0.8, delay: 0.2 }}
+                     >
+                       <MoonIcon className="w-5 h-5" />
+                     </motion.div>
+                   ) : (
+                     <motion.div
+                       initial={{ pathLength: 0 }}
+                       animate={{ pathLength: 1 }}
+                       transition={{ duration: 0.8, delay: 0.2 }}
+                     >
+                       <SunIcon className="w-5 h-5 text-yellow-400" />
+                     </motion.div>
+                   )}
+                 </motion.div>
+                 
+                 {/* Enhanced ripple effect */}
+                 <motion.div
+                   className="absolute inset-0 rounded-full bg-indigo-500/30 dark:bg-yellow-400/30"
+                   initial={{ scale: 0, opacity: 0 }}
+                   whileTap={{ scale: 2, opacity: 0 }}
+                   transition={{ duration: 0.6 }}
+                 />
+                 
+                 {/* Success pulse effect */}
+                 <motion.div
+                   className="absolute inset-0 rounded-full border-2 border-indigo-500/50 dark:border-yellow-400/50"
+                   initial={{ scale: 1, opacity: 0 }}
+                   animate={{ 
+                     scale: [1, 1.5, 1], 
+                     opacity: [0, 0.5, 0] 
+                   }}
+                   transition={{ 
+                     duration: 2, 
+                     repeat: Infinity, 
+                     repeatDelay: 3 
+                   }}
+                 />
+               </motion.button>
             </nav>
           </div>
 
           <div className="flex items-center space-x-4">
             {/* Theme Toggle (mobile) */}
             <motion.button
-              whileHover={prefersReducedMotion ? undefined : { scale: 1.1, rotate: 180 }}
+              whileHover={prefersReducedMotion ? undefined : { 
+                scale: 1.1, 
+                rotate: 360,
+                boxShadow: "0 0 35px rgba(99, 102, 241, 0.6)"
+              }}
               whileTap={prefersReducedMotion ? undefined : { scale: 0.9 }}
               onClick={onThemeToggle}
-              className="md:hidden p-3 rounded-xl bg-gradient-to-r from-indigo-100 to-purple-100 dark:from-slate-800 dark:to-indigo-800 hover:from-indigo-200 hover:to-purple-200 dark:hover:from-slate-700 dark:hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-900"
+              className="md:hidden relative p-3 rounded-xl bg-gradient-to-r from-indigo-100 to-purple-100 dark:from-slate-800 dark:to-indigo-800 hover:from-indigo-200 hover:to-purple-200 dark:hover:from-slate-700 dark:hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-900 overflow-hidden"
             >
-              {theme === 'light' ? (
-                <svg className="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                </svg>
-              ) : (
-                <svg className="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-              )}
+              {/* Enhanced animated background */}
+              <motion.div
+                className="absolute inset-0 rounded-xl"
+                animate={{
+                  background: theme === 'light' 
+                    ? "linear-gradient(45deg, rgba(99, 102, 241, 0.3), rgba(168, 85, 247, 0.2), rgba(99, 102, 241, 0.1))"
+                    : "linear-gradient(45deg, rgba(251, 191, 36, 0.4), rgba(245, 158, 11, 0.3), rgba(251, 191, 36, 0.2))"
+                }}
+                transition={{ duration: 1 }}
+              />
+              
+              {/* Particle effects */}
+              <motion.div
+                className="absolute inset-0 rounded-xl"
+                animate={{
+                  background: theme === 'light' 
+                    ? "radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.3) 0%, transparent 40%), radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.3) 0%, transparent 40%)"
+                    : "radial-gradient(circle at 20% 20%, rgba(251, 191, 36, 0.4) 0%, transparent 40%), radial-gradient(circle at 80% 80%, rgba(245, 158, 11, 0.4) 0%, transparent 40%)"
+                }}
+                transition={{ duration: 1.2 }}
+              />
+              
+              {/* Icon with morphing animation */}
+              <motion.div
+                key={theme}
+                initial={{ 
+                  scale: 0, 
+                  rotate: -180, 
+                  opacity: 0,
+                  filter: "blur(6px)"
+                }}
+                animate={{ 
+                  scale: 1, 
+                  rotate: 0, 
+                  opacity: 1,
+                  filter: "blur(0px)"
+                }}
+                exit={{ 
+                  scale: 0, 
+                  rotate: 180, 
+                  opacity: 0,
+                  filter: "blur(6px)"
+                }}
+                transition={{ 
+                  duration: 1.5, 
+                  ease: "easeInOut",
+                  type: "spring",
+                  stiffness: 120,
+                  damping: 12
+                }}
+                className="relative z-10"
+              >
+                {theme === 'light' ? (
+                  <motion.svg 
+                    className="w-6 h-6 text-slate-700" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 1, delay: 0.3 }}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                  </motion.svg>
+                ) : (
+                  <motion.svg 
+                    className="w-6 h-6 text-yellow-400" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 1, delay: 0.3 }}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                  </motion.svg>
+                )}
+              </motion.div>
+              
+              {/* Enhanced ripple effect */}
+              <motion.div
+                className="absolute inset-0 rounded-xl bg-indigo-500/40 dark:bg-yellow-400/40"
+                initial={{ scale: 0, opacity: 0 }}
+                whileTap={{ scale: 2.5, opacity: 0 }}
+                transition={{ duration: 0.8 }}
+              />
+              
+              {/* Success pulse effect */}
+              <motion.div
+                className="absolute inset-0 rounded-xl border-2 border-indigo-500/60 dark:border-yellow-400/60"
+                initial={{ scale: 1, opacity: 0 }}
+                animate={{ 
+                  scale: [1, 1.8, 1], 
+                  opacity: [0, 0.6, 0] 
+                }}
+                transition={{ 
+                  duration: 2.5, 
+                  repeat: Infinity, 
+                  repeatDelay: 2 
+                }}
+              />
             </motion.button>
 
             {/* Mobile Menu Button */}
@@ -331,6 +552,7 @@ export default function Header({
         )}
       </AnimatePresence>
     </motion.header>
+    </>
   );
 }
 

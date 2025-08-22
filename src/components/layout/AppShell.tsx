@@ -28,9 +28,20 @@ export default function AppShell({ children }: AppShellProps) {
   useEffect(() => {
     if (!mounted) return;
     const root = document.documentElement;
+    
+    // Smooth transition for theme change
+    root.style.transition = 'background-color 0.5s ease, color 0.5s ease';
+    
     root.classList.remove('light', 'dark');
     root.classList.add(theme);
     localStorage.setItem('theme', theme);
+    
+    // Remove transition after animation completes
+    const timer = setTimeout(() => {
+      root.style.transition = '';
+    }, 500);
+    
+    return () => clearTimeout(timer);
   }, [theme, mounted]);
 
   const toggleTheme = () => setTheme(prev => prev === 'light' ? 'dark' : 'light');

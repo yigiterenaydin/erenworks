@@ -39,7 +39,7 @@ export default function Zeugnisse({ title, reports }: ZeugnisseProps) {
           viewport={{ once: true }}
           className="text-center mb-8"
         >
-          <h3 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6">{title}</h3>
+          <h3 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-6">{title}</h3>
           <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
             Schulzeugnisse nach Semester mit direktem Download als PDF
           </p>

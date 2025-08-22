@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 
@@ -56,6 +56,7 @@ function AnimatedCounter({ value, isInView }: { value: number; isInView: boolean
 export default function StatsSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
+  const prefersReducedMotion = useReducedMotion();
 
   // Burada rakamları güncelleyebilirsiniz
   const stats = [
@@ -83,9 +84,9 @@ export default function StatsSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
-            Meine Bewerbungsstatistiken
-          </h2>
+                     <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-4">
+             Meine Bewerbungsstatistiken
+           </h2>
           <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
             Aktuelle Zahlen zu meinen Schnupperlehren und Bewerbungen
           </p>
