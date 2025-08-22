@@ -1,6 +1,7 @@
 'use client';
 
 import { motion, useReducedMotion } from "framer-motion";
+import { TypeAnimation } from "react-type-animation";
 import ProfileCard from "../shared/ProfileCard";
 import erenPhoto from "../../../public/assets/bilder/eren-photo.png";
 
@@ -48,9 +49,30 @@ export default function Startseite({ name }: StartseiteProps) {
                 className="font-light text-slate-900 dark:text-white text-base sm:text-lg mb-6 lg:text-2xl lg:mb-8 leading-relaxed"
               >
                 Ich bin {" "}
-                                 <span className="text-indigo-600 dark:text-indigo-400 font-semibold text-base sm:text-lg lg:text-2xl">
-                   freundlich und höflich.
-                 </span>
+                <span className="text-indigo-600 dark:text-indigo-400 font-semibold text-base sm:text-lg lg:text-2xl">
+                  <TypeAnimation
+                    sequence={[
+                      "freundlich und höflich.",
+                      1500,
+                      "mit anderen respektvoll und fair.",
+                      1500,
+                      "bei wichtigen Themen offen.",
+                      1500,
+                      "gut darin, mit Menschen aus verschiedenen Kulturen auszukommen.",
+                      1500,
+                      "sorgfältig und aufmerksam bei der Erledigung von Aufgaben.",
+                      1500,
+                      "offen für Neues und kann mich gut anpassen.",
+                      1500,
+                      "auch in stressigen Situationen ruhig.",
+                      1500,
+                    ]}
+                    wrapper="span"
+                    speed={50}
+                    repeat={Infinity}
+                    cursor={true}
+                  />
+                </span>
               </motion.h2>
 
               <motion.blockquote 
