@@ -26,14 +26,14 @@ export default function StatsSection() {
     {
       number: 12,
       label: "Schnupperlehren",
-      description: "An denen ich bisher teilnehmen durfte",
+      description: "so viele Schnupperlehren habe ich bisher besucht.",
       color: "bg-gradient-to-br from-blue-600 to-indigo-700",
       icon: <UserGroupIcon />
     },
     {
       number: 8,
       label: "Bewerbungen",
-      description: "Bisher von mir versandte Bewerbungen für Lehrstellen",
+      description: "Bewerbungen für eine Lehrstelle habe ich bisher abgeschickt.",
       color: "bg-gradient-to-br from-emerald-600 to-teal-700",
       icon: <DocumentTextIcon />
     }
