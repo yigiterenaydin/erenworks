@@ -33,7 +33,7 @@ export default function StatsSection() {
     {
       number: 8,
       label: "Bewerbungen",
-      description: "Bewerbungen für eine Lehrstelle habe ich bisher abgeschickt.",
+      description: " für eine Lehrstelle habe ich bisher abgeschickt.",
       color: "bg-gradient-to-br from-emerald-600 to-teal-700",
       icon: <DocumentTextIcon />
     }
