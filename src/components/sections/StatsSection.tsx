@@ -2,19 +2,55 @@
 
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { useRef } from 'react';
-import { UserGroupIcon, DocumentTextIcon } from '@heroicons/react/24/solid';
+import { useRef, useState, useEffect } from 'react';
+
 
 interface StatItem {
   number: number;
   label: string;
   description: string;
   color: string;
-  icon: React.ReactNode;
 }
 
 interface StatsSectionProps {
   stats: StatItem[];
+}
+
+// Animated Counter Component
+function AnimatedCounter({ value, isInView }: { value: number; isInView: boolean }) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (isInView) {
+      const duration = 2000; // 2 seconds
+      const steps = 60;
+      const increment = value / steps;
+      let current = 0;
+      
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= value) {
+          setCount(value);
+          clearInterval(timer);
+        } else {
+          setCount(Math.floor(current));
+        }
+      }, duration / steps);
+
+      return () => clearInterval(timer);
+    }
+  }, [value, isInView]);
+
+  return (
+    <motion.span
+      className="inline-block"
+      initial={{ scale: 0.5, opacity: 0 }}
+      animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0.5, opacity: 0 }}
+      transition={{ duration: 0.5, delay: 0.3 }}
+    >
+      {count}
+    </motion.span>
+  );
 }
 
 export default function StatsSection() {
@@ -27,15 +63,13 @@ export default function StatsSection() {
       number: 12,
       label: "Schnupperlehren",
       description: "so viele Schnupperlehren habe ich bisher besucht.",
-      color: "bg-gradient-to-br from-blue-600 to-indigo-700",
-      icon: <UserGroupIcon />
+      color: "bg-gradient-to-br from-blue-600 to-indigo-700"
     },
     {
       number: 8,
       label: "Bewerbungen",
       description: " für eine Lehrstelle habe ich bisher abgeschickt.",
-      color: "bg-gradient-to-br from-emerald-600 to-teal-700",
-      icon: <DocumentTextIcon />
+      color: "bg-gradient-to-br from-emerald-600 to-teal-700"
     }
   ];
 
@@ -66,21 +100,18 @@ export default function StatsSection() {
               transition={{ duration: 0.6, delay: index * 0.2 }}
               className="relative group"
             >
-              <div className={`relative overflow-hidden rounded-2xl p-8 text-white shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-105 ${stat.color}`}>
-                {/* Background Pattern */}
-                <div className="absolute inset-0 opacity-10">
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent"></div>
-                </div>
+              <div className={`relative overflow-hidden rounded-2xl p-8 text-white shadow-xl transition-all duration-500 hover:shadow-2xl hover:scale-105 hover:rotate-1 ${stat.color} group-hover:shadow-blue-500/20 dark:group-hover:shadow-blue-400/20`}>
+                
                 
                 {/* Content */}
                 <div className="relative z-10">
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="text-4xl md:text-5xl font-bold">
-                      {stat.number}
+                  <div className="text-center mb-6">
+                    <div className="text-4xl md:text-5xl font-bold relative inline-block">
+                      <AnimatedCounter value={stat.number} isInView={isInView} />
+                      {/* Glow effect */}
+                      <div className="absolute inset-0 bg-white/20 blur-xl rounded-full animate-pulse"></div>
                     </div>
-                    <div className="text-3xl md:text-4xl opacity-80">
-                      {stat.icon}
-                    </div>
+                    
                   </div>
                   
                   <h3 className="text-xl md:text-2xl font-semibold mb-3">

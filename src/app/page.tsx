@@ -174,7 +174,7 @@ export default function Home() {
       
 
              <Kontakt
-         title="Verbindung aufnehmen"
+         title="Kontaktieren Sie mich über"
          description=""
                  contactInfo={[
            {
