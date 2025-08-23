@@ -76,7 +76,7 @@ export default function Kontakt({ title, description, contactInfo }: KontaktProp
     }
 
     try {
-      const response = await fetch('https://formspree.io/f/mqalgvwn', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify(data),
