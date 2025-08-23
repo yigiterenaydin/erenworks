@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 interface ContactInfo {
   type: 'email' | 'phone' | 'github';
@@ -22,6 +22,7 @@ export default function Kontakt({ title, description, contactInfo }: KontaktProp
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [copiedNumber, setCopiedNumber] = useState<string | null>(null);
   const [copiedEmail, setCopiedEmail] = useState<string | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleCopyNumber = async (phoneNumber: string) => {
     try {
@@ -51,7 +52,6 @@ export default function Kontakt({ title, description, contactInfo }: KontaktProp
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Yeni denemede önce önceki başarı durumunu ve hatayı temizle
     setIsSubmitted(false);
     setErrorMsg(null);
     setIsSubmitting(true);
@@ -68,6 +68,7 @@ export default function Kontakt({ title, description, contactInfo }: KontaktProp
       setIsSubmitting(false);
       return;
     }
+    
     const emailPattern = /.+@.+\..+/;
     if (!emailPattern.test(data.email)) {
       setErrorMsg('Bitte eine gültige E‑Mail angeben.');
@@ -81,9 +82,14 @@ export default function Kontakt({ title, description, contactInfo }: KontaktProp
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify(data),
       });
+      
       if (response.status < 400) {
         setErrorMsg(null);
         setIsSubmitted(true);
+        // Form'u temizle
+        if (formRef.current) {
+          formRef.current.reset();
+        }
       } else {
         setErrorMsg('Etwas ist schiefgelaufen. Bitte später erneut versuchen.');
         setIsSubmitted(false);
@@ -197,80 +203,95 @@ export default function Kontakt({ title, description, contactInfo }: KontaktProp
           </div>
           
           <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-white/20 dark:border-slate-700/50">
-            <h4 className="text-3xl font-bold text-slate-900 dark:text-white mb-8">Nachricht senden</h4>
-            <form onSubmit={handleSubmit} className="space-y-6" id="contact-form" autoComplete="off">
-              <div className="transition-base">
-                <label htmlFor="contact-name" className="sr-only">Ihr Name</label>
-                <input 
-                  id="contact-name"
-                  type="text" 
-                  name="name"
-                  placeholder="Ihr Name" 
-                  required
-                  autoComplete="off"
-                  className="w-full px-6 py-4 border border-slate-300 dark:border-slate-600 rounded-xl bg-white/50 dark:bg-slate-700/50 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 transition-all duration-300 backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-800" 
-                />
-              </div>
-              <div className="transition-base">
-                <label htmlFor="contact-email" className="sr-only">Ihre Email</label>
-                <input 
-                  id="contact-email"
-                  type="email" 
-                  name="email"
-                  placeholder="Ihre Email" 
-                  required
-                  autoComplete="off"
-                  className="w-full px-6 py-4 border border-slate-300 dark:border-slate-600 rounded-xl bg-white/50 dark:bg-slate-700/50 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 transition-all duration-300 backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-800" 
-                />
-              </div>
-              <div className="transition-base">
-                <label htmlFor="contact-message" className="sr-only">Ihre Nachricht</label>
-                <textarea 
-                  id="contact-message"
-                  name="message"
-                  placeholder="Ihre Nachricht" 
-                  rows={4} 
-                  required
-                  autoComplete="off"
-                  className="w-full px-6 py-4 border border-slate-300 dark:border-slate-600 rounded-xl bg-white/50 dark:bg-slate-700/50 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 transition-all duration-300 backdrop-blur-sm resize-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-800"
-                ></textarea>
-              </div>
-              <motion.button 
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                type="submit" 
-                disabled={isSubmitting}
-                aria-busy={isSubmitting}
-                className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 px-8 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/80 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-300/80 dark:focus-visible:ring-offset-slate-800 disabled:opacity-60 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? 'Wird gesendet…' : 'Nachricht senden'}
-              </motion.button>
-
-              {!isSubmitted && errorMsg && (
-                <p className="mt-2 text-sm text-red-400" role="alert">{errorMsg}</p>
-              )}
-              
-              {/* Vielen Dank Message */}
-              {isSubmitted && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  className="mt-6 p-8 bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50 dark:from-indigo-900/20 dark:via-purple-900/20 dark:to-pink-900/20 border border-indigo-200/50 dark:border-indigo-700/50 rounded-3xl text-center backdrop-blur-sm"
-                >
-                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center">
-                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
+            {!isSubmitted ? (
+              <>
+                <h4 className="text-3xl font-bold text-slate-900 dark:text-white mb-8">Nachricht senden</h4>
+                <form ref={formRef} onSubmit={handleSubmit} className="space-y-6" id="contact-form" autoComplete="off">
+                  <div className="transition-base">
+                    <label htmlFor="contact-name" className="sr-only">Ihr Name</label>
+                    <input 
+                      id="contact-name"
+                      type="text" 
+                      name="name"
+                      placeholder="Ihr Name" 
+                      required
+                      autoComplete="off"
+                      className="w-full px-6 py-4 border border-slate-300 dark:border-slate-600 rounded-xl bg-white/50 dark:bg-slate-700/50 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 transition-all duration-300 backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-800" 
+                    />
                   </div>
-                  <h3 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-3">
-                    Vielen Dank!
-                  </h3>
-                  <p className="text-slate-600 dark:text-slate-300 text-lg">
-                    Ihre Nachricht wurde erfolgreich gesendet. Ich werde mich bald bei Ihnen melden!
-                  </p>
-                </motion.div>
-              )}
-            </form>
+                  <div className="transition-base">
+                    <label htmlFor="contact-email" className="sr-only">Ihre Email</label>
+                    <input 
+                      id="contact-email"
+                      type="email" 
+                      name="email"
+                      placeholder="Ihre Email" 
+                      required
+                      autoComplete="off"
+                      className="w-full px-6 py-4 border border-slate-300 dark:border-slate-600 rounded-xl bg-white/50 dark:bg-slate-700/50 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 transition-all duration-300 backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-800" 
+                    />
+                  </div>
+                  <div className="transition-base">
+                    <label htmlFor="contact-message" className="sr-only">Ihre Nachricht</label>
+                    <textarea 
+                      id="contact-message"
+                      name="message"
+                      placeholder="Ihre Nachricht" 
+                      rows={4} 
+                      required
+                      autoComplete="off"
+                      className="w-full px-6 py-4 border border-slate-300 dark:border-slate-600 rounded-xl bg-white/50 dark:bg-slate-700/50 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 transition-all duration-300 backdrop-blur-sm resize-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-800"
+                    ></textarea>
+                  </div>
+                  <motion.button 
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    type="submit" 
+                    disabled={isSubmitting}
+                    aria-busy={isSubmitting}
+                    className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 px-8 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/80 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-300/80 dark:focus-visible:ring-offset-slate-800 disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? 'Wird gesendet…' : 'Nachricht senden'}
+                  </motion.button>
+
+                  {errorMsg && (
+                    <p className="mt-2 text-sm text-red-400" role="alert">{errorMsg}</p>
+                  )}
+                </form>
+              </>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                className="p-8 bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50 dark:from-indigo-900/20 dark:via-purple-900/20 dark:to-pink-900/20 border border-indigo-200/50 dark:border-indigo-700/50 rounded-3xl text-center backdrop-blur-sm"
+              >
+                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h3 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-3">
+                  Vielen Dank!
+                </h3>
+                <p className="text-slate-600 dark:text-slate-300 text-lg mb-6">
+                  Ihre Nachricht wurde erfolgreich gesendet. Ich werde mich bald bei Ihnen melden!
+                </p>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => {
+                    setIsSubmitted(false);
+                    setErrorMsg(null);
+                    if (formRef.current) {
+                      formRef.current.reset();
+                    }
+                  }}
+                  className="bg-gradient-to-r from-green-500 to-green-600 text-white py-3 px-6 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400/80 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-green-300/80 dark:focus-visible:ring-offset-slate-800"
+                >
+                  Neue Nachricht senden
+                </motion.button>
+              </motion.div>
+            )}
           </div>
         </div>
       </div>
