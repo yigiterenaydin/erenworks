@@ -9,6 +9,7 @@ import ExperienceAccordion from "@/components/sections/ExperienceAccordion";
 import PortfolioColumns from "@/components/sections/PortfolioColumns";
 import Zeugnisse from "@/components/sections/Zeugnisse";
 import Kontakt from "@/components/shared/Kontakt";
+import Technologies from "@/components/shared/Technologies";
 import { AcademicCapIcon, BriefcaseIcon, RocketLaunchIcon, UserGroupIcon, DocumentTextIcon } from "@heroicons/react/24/solid";
 import StatsSection from "@/components/sections/StatsSection";
 
@@ -225,17 +226,7 @@ export default function Home() {
                 </ul>
               </div>
             </div>
-            <div>
-              <h4 className="text-2xl font-bold mb-6">Fähigkeiten</h4>
-              <ul className="text-slate-400 space-y-3">
-                <li>Gute Computerkenntnisse (inkl. Microsoft Word, PowerPoint, Excel)</li>
-                <li>Freundlicher und respektvoller Umgang mit Menschen</li>
-                <li>Zuverlässige und pünktliche Arbeitsweise</li>
-                <li>Teamfähigkeit und Hilfsbereitschaft</li>
-                <li>Schnelles Auffassungsvermögen und Lernbereitschaft</li>
-                <li>Organisation und sorgfältiges Arbeiten</li>
-              </ul>
-            </div>
+            <Technologies />
             <div>
               <h4 className="text-2xl font-bold mb-6">Kontakt</h4>
                                                     <div className="flex space-x-4">
