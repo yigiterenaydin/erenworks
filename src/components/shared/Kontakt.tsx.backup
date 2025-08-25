@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from "framer-motion";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 
 interface ContactInfo {
   type: 'email' | 'phone' | 'github';
@@ -16,37 +16,13 @@ interface KontaktProps {
   contactInfo: ContactInfo[];
 }
 
-// Matematik sorusu üretme fonksiyonu
-const generateMathQuestion = () => {
-  const operations = [
-    { op: '+', func: (a: number, b: number) => a + b },
-    { op: '-', func: (a: number, b: number) => a - b },
-    { op: '×', func: (a: number, b: number) => a * b },
-  ];
-  
-  const operation = operations[Math.floor(Math.random() * operations.length)];
-  const num1 = Math.floor(Math.random() * 10) + 1; // 1-10
-  const num2 = Math.floor(Math.random() * 10) + 1; // 1-10
-  
-  const answer = operation.func(num1, num2);
-  const question = `${num1} ${operation.op} ${num2} = ?`;
-  
-  return { question, answer };
-};
-
 export default function Kontakt({ title, description, contactInfo }: KontaktProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [copiedNumber, setCopiedNumber] = useState<string | null>(null);
   const [copiedEmail, setCopiedEmail] = useState<string | null>(null);
-  const [mathQuestion, setMathQuestion] = useState<{ question: string; answer: number }>({ question: '', answer: 0 });
   const formRef = useRef<HTMLFormElement>(null);
-
-  // Sayfa yüklendiğinde matematik sorusu üret
-  useEffect(() => {
-    setMathQuestion(generateMathQuestion());
-  }, []);
 
   const handleCopyNumber = async (phoneNumber: string) => {
     try {
@@ -85,7 +61,6 @@ export default function Kontakt({ title, description, contactInfo }: KontaktProp
       name: formData.get('name') as string,
       email: formData.get('email') as string,
       message: formData.get('message') as string,
-      mathAnswer: parseInt(formData.get('mathAnswer') as string) || 0,
     };
 
     if (!data.name || !data.email || !data.message) {
@@ -101,34 +76,20 @@ export default function Kontakt({ title, description, contactInfo }: KontaktProp
       return;
     }
 
-    // Matematik sorusu kontrolü
-    if (data.mathAnswer !== mathQuestion.answer) {
-      setErrorMsg(`❌ Falsche Antwort! ${mathQuestion.question.replace(' = ?', '')} = ${mathQuestion.answer}`);
-      // Yeni matematik sorusu üret
-      setMathQuestion(generateMathQuestion());
-      setIsSubmitting(false);
-      return;
-    }
-
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          name: data.name,
-          email: data.email,
-          message: data.message,
-        }),
+        body: JSON.stringify(data),
       });
       
       if (response.status < 400) {
         setErrorMsg(null);
         setIsSubmitted(true);
-        // Form'u temizle ve yeni matematik sorusu üret
+        // Form'u temizle
         if (formRef.current) {
           formRef.current.reset();
         }
-        setMathQuestion(generateMathQuestion());
       } else {
         setErrorMsg('Etwas ist schiefgelaufen. Bitte später erneut versuchen.');
         setIsSubmitted(false);
@@ -282,28 +243,6 @@ export default function Kontakt({ title, description, contactInfo }: KontaktProp
                       className="w-full px-6 py-4 border border-slate-300 dark:border-slate-600 rounded-xl bg-white/50 dark:bg-slate-700/50 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 transition-all duration-300 backdrop-blur-sm resize-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-800"
                     ></textarea>
                   </div>
-                  
-                  {/* Matematik Sorusu */}
-                  <div className="transition-base">
-                    <div className="bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 border border-amber-200 dark:border-amber-700 rounded-xl p-4">
-                      <label htmlFor="contact-math" className="block text-sm font-medium text-amber-800 dark:text-amber-200 mb-2">
-                        🔢 Sicherheitsfrage: {mathQuestion.question}
-                      </label>
-                      <input 
-                        id="contact-math"
-                        type="number" 
-                        name="mathAnswer"
-                        placeholder="Ihre Antwort" 
-                        required
-                        autoComplete="off"
-                        className="w-full px-4 py-3 border border-amber-300 dark:border-amber-600 rounded-lg bg-white/70 dark:bg-slate-700/70 text-slate-900 dark:text-white placeholder-amber-500 dark:placeholder-amber-400 transition-all duration-300 backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-amber-400/70 dark:focus-visible:ring-offset-slate-800" 
-                      />
-                      <p className="text-xs text-amber-600 dark:text-amber-300 mt-1">
-                        Bitte lösen Sie diese einfache Rechenaufgabe, um Spam zu verhindern.
-                      </p>
-                    </div>
-                  </div>
-                  
                   <motion.button 
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -346,7 +285,6 @@ export default function Kontakt({ title, description, contactInfo }: KontaktProp
                     if (formRef.current) {
                       formRef.current.reset();
                     }
-                    setMathQuestion(generateMathQuestion());
                   }}
                   className="bg-gradient-to-r from-green-500 to-green-600 text-white py-3 px-6 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400/80 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-green-300/80 dark:focus-visible:ring-offset-slate-800"
                 >

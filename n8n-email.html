@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>n8n Email Entegrasyonu - Sıfırdan Kurulum</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            border-left: 5px solid #3498db;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        
+        .step {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .step h3 {
+            color: #3498db;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+        
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .note {
+            background: #e3f2fd;
+            border: 1px solid #bbdefb;
+            color: #1976d2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .checklist li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .checklist li:before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+            color: #27ae60;
+        }
+        
+        .file-structure {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📧 n8n Email Entegrasyonu</h1>
+            <p>Sıfırdan Tam Kurulum Rehberi - Render + GitHub + n8n</p>
+        </div>
+        
+        <div class="content">
+            <!-- 1. Render Hesap Oluşturma -->
+            <div class="section">
+                <h2>🚀 1. Render Hesap Oluşturma</h2>
+                
+                <div class="step">
+                    <h3>1.1 Render.com'a Kayıt</h3>
+                    <ul class="checklist">
+                        <li>render.com adresine gidin</li>
+                        <li>"Get Started" butonuna tıklayın</li>
+                        <li>GitHub hesabınızla giriş yapın</li>
+                        <li>Email adresinizi doğrulayın</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h3>1.2 Render Dashboard</h3>
+                    <ul class="checklist">
+                        <li>Dashboard'a giriş yapın</li>
+                        <li>Sol menüde "New" butonunu görün</li>
+                        <li>Ücretsiz plan seçin</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 2. GitHub Dosyaları -->
+            <div class="section">
+                <h2>📁 2. GitHub'da n8n Dosyaları Oluşturma</h2>
+                
+                <div class="step">
+                    <h3>2.1 Yeni Repository</h3>
+                    <ul class="checklist">
+                        <li>GitHub.com'a gidin</li>
+                        <li>"New repository" butonuna tıklayın</li>
+                        <li>Repository adı: "n8n-render"</li>
+                        <li>Public seçin</li>
+                        <li>"Create repository" tıklayın</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h3>2.2 package.json Dosyası</h3>
+                    <p>Repository'de "Add file" → "Create new file" → "package.json":</p>
+                    <div class="code-block">
+{
+  "name": "n8n-render",
+  "version": "1.0.0",
+  "description": "n8n for Render deployment",
+  "main": "index.js",
+  "scripts": {
+    "start": "n8n start"
+  },
+  "dependencies": {
+    "n8n": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h3>2.3 railway.json Dosyası</h3>
+                    <p>"Add file" → "Create new file" → "railway.json":</p>
+                    <div class="code-block">
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "NIXPACKS"
+  },
+  "deploy": {
+    "startCommand": "n8n start",
+    "healthcheckPath": "/",
+    "healthcheckTimeout": 100,
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
+  }
+}
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h3>2.4 README.md Dosyası</h3>
+                    <p>"Add file" → "Create new file" → "README.md":</p>
+                    <div class="code-block">
+# n8n Render Deployment
+
+n8n automation platform deployed on Render.
+
+## Environment Variables
+
+- N8N_BASIC_AUTH_ACTIVE=true
+- N8N_BASIC_AUTH_USER=admin
+- N8N_BASIC_AUTH_PASSWORD=your_password
+- N8N_HOST=0.0.0.0
+- N8N_PORT=3000
+- N8N_PROTOCOL=https
+
+## Usage
+
+1. Deploy to Render
+2. Set environment variables
+3. Access n8n dashboard
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h3>2.5 Dosyaları Commit</h3>
+                    <ul class="checklist">
+                        <li>Her dosyayı oluşturduktan sonra "Commit new file" tıklayın</li>
+                        <li>3 dosya da repository'de görünmeli</li>
+                        <li>Repository URL'ini kopyalayın</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 3. Render'da n8n Deploy -->
+            <div class="section">
+                <h2>⚙️ 3. Render'da n8n Deploy</h2>
+                
+                <div class="step">
+                    <h3>3.1 New Web Service</h3>
+                    <ul class="checklist">
+                        <li>Render Dashboard'da "New" → "Web Service"</li>
+                        <li>"Connect a repository" → GitHub'ı seçin</li>
+                        <li>n8n-render repository'sini seçin</li>
+                        <li>"Connect" tıklayın</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h3>3.2 Service Ayarları</h3>
+                    <ul class="checklist">
+                        <li>Name: "n8n-render"</li>
+                        <li>Region: Frankfurt (EU Central)</li>
+                        <li>Branch: main</li>
+                        <li>Root Directory: (boş bırakın)</li>
+                        <li>Runtime: Node</li>
+                        <li>Build Command: npm install</li>
+                        <li>Start Command: npm start</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h3>3.3 Environment Variables</h3>
+                    <p>"Environment" sekmesinde şu değişkenleri ekleyin:</p>
+                    <div class="code-block">
+N8N_BASIC_AUTH_ACTIVE=true
+N8N_BASIC_AUTH_USER=admin
+N8N_BASIC_AUTH_PASSWORD=your_secure_password
+N8N_HOST=0.0.0.0
+N8N_PORT=3000
+N8N_PROTOCOL=https
+                    </div>
+                    <div class="warning">
+                        ⚠️ N8N_BASIC_AUTH_PASSWORD için güçlü bir şifre kullanın!
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h3>3.4 Deploy</h3>
+                    <ul class="checklist">
+                        <li>"Create Web Service" butonuna tıklayın</li>
+                        <li>Deploy işlemini bekleyin (5-10 dakika)</li>
+                        <li>"Live" durumunu görün</li>
+                        <li>URL'i kopyalayın (örn: https://n8n-render-pkzu.onrender.com)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 4. n8n'e Giriş -->
+            <div class="section">
+                <h2>🔐 4. n8n'e Giriş</h2>
+                
+                <div class="step">
+                    <h3>4.1 n8n Dashboard</h3>
+                    <ul class="checklist">
+                        <li>Render'dan aldığınız URL'e gidin</li>
+                        <li>n8n login sayfası açılacak</li>
+                        <li>Username: admin</li>
+                        <li>Password: N8N_BASIC_AUTH_PASSWORD'ta yazdığınız şifre</li>
+                        <li>"Sign In" tıklayın</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h3>4.2 n8n Arayüzü</h3>
+                    <ul class="checklist">
+                        <li>Dashboard'a erişin</li>
+                        <li>Sol menüde "Workflows" görün</li>
+                        <li>Üst menüde "Editor", "Executions" sekmeleri var</li>
+                        <li>Sağ üstte "Create Workflow" butonu var</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 5. Gmail SMTP Ayarları -->
+            <div class="section">
+                <h2>📧 5. Gmail SMTP Ayarları</h2>
+                
+                <div class="step">
+                    <h3>5.1 Gmail App Password</h3>
+                    <ul class="checklist">
+                        <li>Google Hesabınıza gidin</li>
+                        <li>Güvenlik → 2 Adımlı Doğrulama açın</li>
+                        <li>Uygulama Şifreleri → Diğer</li>
+                        <li>İsim: "n8n"</li>
+                        <li>16 haneli şifreyi kopyalayın</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h3>5.2 n8n'de SMTP Credential</h3>
+                    <ul class="checklist">
+                        <li>n8n'de sol menüden "Credentials" tıklayın</li>
+                        <li>"Add Credential" → "SMTP"</li>
+                        <li>Aşağıdaki bilgileri girin:</li>
+                    </ul>
+                    <div class="code-block">
+User: eren.yigit.aydin@gmail.com
+Password: [Gmail App Password - 16 haneli]
+Host: smtp.gmail.com
+Port: 465
+SSL/TLS: Enabled
+                    </div>
+                    <div class="success">
+                        ✅ "Connection tested successfully" mesajını görmelisiniz
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Workflow Oluşturma -->
+            <div class="section">
+                <h2>⚙️ 6. Email Workflow Oluşturma</h2>
+                
+                <div class="step">
+                    <h3>6.1 Yeni Workflow</h3>
+                    <ul class="checklist">
+                        <li>"Create Workflow" butonuna tıklayın</li>
+                        <li>Workflow'a isim verin: "Contact Form Email"</li>
+                        <li>Editor'a gidin</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h3>6.2 Webhook Node'u</h3>
+                    <ul class="checklist">
+                        <li>"Webhook" node'u ekleyin</li>
+                        <li>HTTP Method: POST</li>
+                        <li>Path: contact-form</li>
+                        <li>Authentication: None</li>
+                        <li>Respond: "Immediately" (ÖNEMLİ!)</li>
+                    </ul>
+                    <div class="warning">
+                        ⚠️ "Using 'Respond to Webhook' Node" seçmeyin!
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h3>6.3 Send Email Node'u</h3>
+                    <ul class="checklist">
+                        <li>"Send Email" node'u ekleyin</li>
+                        <li>Credential: SMTP account (az önce oluşturduğunuz)</li>
+                        <li>Operation: Send</li>
+                        <li>From Email: eren.yigit.aydin@gmail.com</li>
+                        <li>To Email: eren.yigit.aydin@gmail.com</li>
+                        <li>Subject: Neuen Portfolio Email</li>
+                        <li>Email Format: HTML</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h3>6.4 Email Template (KRİTİK!)</h3>
+                    <div class="code-block">
+İsim: {{$json.body.name}}&lt;br&gt;<br>
+Email: {{$json.body.email}}&lt;br&gt;<br>
+Mesaj: {{$json.body.message}}
+                    </div>
+                    <div class="warning">
+                        ⚠️ {{$json.name}} değil, {{$json.body.name}} kullanın!
+                        <br>Veri "body" objesi içinde geliyor.
+                        <br><strong>ÖNEMLİ:</strong> <br> etiketleri olmadan email tek satırda gelir!
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h3>6.5 Node'ları Bağlama</h3>
+                    <ul class="checklist">
+                        <li>Webhook node'undan Send Email node'una ok çekin</li>
+                        <li>Bağlantı: [Webhook] → [Send Email]</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h3>6.6 Workflow Aktifleştirme</h3>
+                    <ul class="checklist">
+                        <li>Sağ üst köşedeki "Toggle" butonuna tıklayın</li>
+                        <li>Workflow yeşil olmalı (Active)</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h3>6.7 Webhook URL'ini Alma</h3>
+                    <ul class="checklist">
+                        <li>Webhook node'una tıklayın</li>
+                        <li>"Production URL" butonuna tıklayın</li>
+                        <li>URL'i kopyalayın</li>
+                    </ul>
+                    <div class="code-block">
+https://n8n-render-pkzu.onrender.com/webhook/contact-form
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. Next.js API Route -->
+            <div class="section">
+                <h2>🔗 7. Next.js API Route Güncelleme</h2>
+                
+                <div class="step">
+                    <h3>7.1 API Route Dosyası</h3>
+                    <p>src/app/api/contact/route.ts dosyasını açın ve şu şekilde güncelleyin:</p>
+                    <div class="code-block">
+import { NextRequest, NextResponse } from 'next/server';
+
+export async function POST(request: NextRequest) {
+  try {
+    const data = await request.json();
+    console.log('API route received data:', data);
+    
+    // n8n webhook'a istek gönder
+    const response = await fetch('https://n8n-render-pkzu.onrender.com/webhook/contact-form', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    console.log('n8n response status:', response.status);
+    console.log('n8n response ok:', response.ok);
+
+    if (response.ok) {
+      const responseData = await response.text();
+      console.log('n8n response data:', responseData);
+      return NextResponse.json({ success: true });
+    } else {
+      const errorText = await response.text();
+      console.error('n8n webhook error:', response.status, response.statusText, errorText);
+      return NextResponse.json(
+        { error: 'Webhook error', details: errorText },
+        { status: 500 }
+      );
+    }
+  } catch (error) {
+    console.error('API route error:', error);
+    return NextResponse.json(
+      { error: 'Internal server error', details: error instanceof Error ? error.message : 'Unknown error' },
+      { status: 500 }
+    );
+  }
+}
+                    </div>
+                    <div class="warning">
+                        ⚠️ URL'deki "n8n-render-pkzu" kısmını kendi Render URL'inizle değiştirin!
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. Test -->
+            <div class="section">
+                <h2>🧪 8. Test ve Doğrulama</h2>
+                
+                <div class="step">
+                    <h3>8.1 Kontakt Formu Testi</h3>
+                    <ul class="checklist">
+                        <li>Portfolio sitenizde kontakt formunu doldurun</li>
+                        <li>Formu gönderin</li>
+                        <li>Terminal'de API response'u kontrol edin</li>
+                        <li>"n8n response status: 200" görmelisiniz</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h3>8.2 Email Kontrolü</h3>
+                    <ul class="checklist">
+                        <li>Gmail'inizi kontrol edin</li>
+                        <li>Email'in geldiğini doğrulayın</li>
+                        <li>İçeriğin alt alta geldiğini kontrol edin</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h3>8.3 n8n Executions</h3>
+                    <ul class="checklist">
+                        <li>n8n'de "Executions" sekmesine gidin</li>
+                        <li>Workflow'un çalıştığını kontrol edin</li>
+                        <li>Yeşil tick işareti görmelisiniz</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 9. Backup -->
+            <div class="section">
+                <h2>💾 9. Backup ve Güvenlik</h2>
+                
+                <div class="step">
+                    <h3>9.1 Workflow Backup</h3>
+                    <ul class="checklist">
+                        <li>n8n'de workflow'unuzu seçin</li>
+                        <li>Sağ üstte üç nokta → "Duplicate"</li>
+                        <li>Kopya workflow'u pasif tutun</li>
+                        <li>Bu kopya sizin backup'ınız</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h3>9.2 Önemli Bilgiler</h3>
+                    <div class="code-block">
+Render URL: https://n8n-render-pkzu.onrender.com
+n8n Login: admin / [şifreniz]
+Gmail: eren.yigit.aydin@gmail.com
+SMTP: smtp.gmail.com:465
+Webhook Path: contact-form
+                    </div>
+                </div>
+
+                                 <div class="step">
+                     <h3>9.3 Email Template</h3>
+                     <div class="code-block">
+ İsim: {{$json.body.name}}&lt;br&gt;<br>
+ Email: {{$json.body.email}}&lt;br&gt;<br>
+ Mesaj: {{$json.body.message}}
+                     </div>
+                     <div class="note">
+                         <strong>Not:</strong> <br> etiketleri olmadan email tek satırda gelir!
+                     </div>
+                 </div>
+            </div>
+
+            <!-- Sonuç -->
+            <div class="section">
+                <h2>🎉 Başarı!</h2>
+                <p>Artık portfolio sitenizdeki kontakt formundan gelen tüm mesajlar otomatik olarak email'inize gelecek!</p>
+                
+                <div class="success">
+                    <strong>✅ Tamamlanan İşlemler:</strong>
+                    <ul class="checklist">
+                        <li>Render hesabı oluşturuldu</li>
+                        <li>GitHub'da 3 dosya oluşturuldu</li>
+                        <li>n8n Render'da deploy edildi</li>
+                        <li>Gmail SMTP bağlantısı yapıldı</li>
+                        <li>Webhook workflow'u oluşturuldu</li>
+                        <li>Email template'i ayarlandı</li>
+                        <li>Next.js API route güncellendi</li>
+                        <li>Test başarılı</li>
+                        <li>Backup alındı</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
