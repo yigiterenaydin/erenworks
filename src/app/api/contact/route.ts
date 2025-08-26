@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     // Resend ile email gönder
     const { data: emailData, error } = await resend.emails.send({
       from: 'Contact Form <contact@jes.ch>',
-      to: ['erenyigitaydin@gmail.com'], // Kendi email'inizi buraya yazın
+      to: ['erenyigitaydin@gmail.com'],
       subject: `Yeni İletişim Formu - ${data.name}`,
       html: `
         <h2>Yeni İletişim Formu Mesajı</h2>
