@@ -1,34 +1,40 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { Resend } from 'resend';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
     console.log('API route received data:', data);
     
-    // n8n webhook'a istek gönder
-    const response = await fetch('https://n8n-render-pkzu.onrender.com/webhook/contact-form', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
+    // Resend ile email gönder
+    const { data: emailData, error } = await resend.emails.send({
+      from: 'Contact Form <contact@jes.ch>',
+      to: ['erenyigitaydin@gmail.com'], // Kendi email'inizi buraya yazın
+      subject: `Yeni İletişim Formu - ${data.name}`,
+      html: `
+        <h2>Yeni İletişim Formu Mesajı</h2>
+        <p><strong>İsim:</strong> ${data.name}</p>
+        <p><strong>Email:</strong> ${data.email}</p>
+        <p><strong>Mesaj:</strong></p>
+        <p>${data.message}</p>
+        <hr>
+        <p><small>Bu mesaj jes.ch contact form'undan gönderildi.</small></p>
+      `,
     });
 
-    console.log('n8n response status:', response.status);
-    console.log('n8n response ok:', response.ok);
-
-    if (response.ok) {
-      const responseData = await response.text();
-      console.log('n8n response data:', responseData);
-      return NextResponse.json({ success: true });
-    } else {
-      const errorText = await response.text();
-      console.error('n8n webhook error:', response.status, response.statusText, errorText);
+    if (error) {
+      console.error('Resend error:', error);
       return NextResponse.json(
-        { error: 'Webhook error', details: errorText },
+        { error: 'Email sending failed', details: error },
         { status: 500 }
       );
     }
+
+    console.log('Email sent successfully:', emailData);
+    return NextResponse.json({ success: true, message: 'Email sent successfully' });
+    
   } catch (error) {
     console.error('API route error:', error);
     return NextResponse.json(
