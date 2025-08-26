@@ -2,6 +2,7 @@
 
 // Home sayfası: Bölümleri bir araya getirir. İskelet (tema, header, arka plan) AppShell içinde.
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 import AppShell from "@/components/layout/AppShell";
 import Startseite from "@/components/sections/Startseite";
 import UeberMich from "@/components/sections/UeberMich";
@@ -14,6 +15,19 @@ import { AcademicCapIcon, BriefcaseIcon, RocketLaunchIcon, UserGroupIcon, Docume
 import StatsSection from "@/components/sections/StatsSection";
 
 export default function Home() {
+  // Sayfa yüklendiğinde n8n'i uyandır
+  useEffect(() => {
+    const wakeN8n = async () => {
+      try {
+        await fetch('/api/ping', { method: 'GET' });
+        console.log('Site loaded - n8n woken up');
+      } catch (error) {
+        console.error('Failed to wake n8n:', error);
+      }
+    };
+    
+    wakeN8n();
+  }, []);
   return (
     <AppShell>
 

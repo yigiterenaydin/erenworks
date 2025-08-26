@@ -41,27 +41,12 @@ export default function Kontakt({ title, description, contactInfo }: KontaktProp
   const [copiedNumber, setCopiedNumber] = useState<string | null>(null);
   const [copiedEmail, setCopiedEmail] = useState<string | null>(null);
   const [mathQuestion, setMathQuestion] = useState<{ question: string; answer: number }>({ question: '', answer: 0 });
-  const [hasPinged, setHasPinged] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
   // Sayfa yüklendiğinde matematik sorusu üret
   useEffect(() => {
     setMathQuestion(generateMathQuestion());
   }, []);
-
-  // Pre-wake ping fonksiyonu
-  const pingN8n = async () => {
-    if (hasPinged) return; // Zaten ping atıldıysa tekrar atma
-    
-    try {
-      await fetch('/api/ping', { method: 'GET' });
-      setHasPinged(true);
-      console.log('Pre-wake ping sent to n8n');
-    } catch (error) {
-      console.error('Pre-wake ping failed:', error);
-      // Hata olsa bile devam et, kullanıcı deneyimini bozma
-    }
-  };
 
   const handleCopyNumber = async (phoneNumber: string) => {
     try {
@@ -270,7 +255,6 @@ export default function Kontakt({ title, description, contactInfo }: KontaktProp
                       placeholder="Ihr Name" 
                       required
                       autoComplete="off"
-                      onInput={pingN8n}
                       className="w-full px-6 py-4 border border-slate-300 dark:border-slate-600 rounded-xl bg-white/50 dark:bg-slate-700/50 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 transition-all duration-300 backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-800" 
                     />
                   </div>
