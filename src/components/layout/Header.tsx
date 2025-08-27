@@ -49,9 +49,9 @@ export default function Header({
 
   // Scroll progress calculation with memory leak prevention
   useScrollListener((scrollY) => {
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     const progress = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
-    setScrollProgress(Math.min(progress, 100));
+      setScrollProgress(Math.min(progress, 100));
   }, 16);
 
 
@@ -281,7 +281,7 @@ export default function Header({
                 transition={{ duration: 0.3 }}
               />
               
-              <motion.button
+                             <motion.button
                  whileHover={prefersReducedMotion ? undefined : { 
                    scale: 1.15, 
                    rotate: 360,
@@ -647,7 +647,7 @@ export default function Header({
                     href={item.href}
                     onClick={(e) => { 
                       e.preventDefault(); 
-                      onMobileMenuClose();
+                      onMobileMenuClose(); 
                       scrollToHash(item.href);
                     }}
                     aria-current={activeSection === item.href.replace('#', '') ? 'page' : undefined}

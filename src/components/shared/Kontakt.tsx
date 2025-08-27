@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 
+
 interface ContactInfo {
   type: 'email' | 'phone' | 'github';
   label: string;
@@ -36,12 +37,12 @@ const generateMathQuestion = () => {
 
 export default function Kontakt({ title, description, contactInfo }: KontaktProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [copiedNumber, setCopiedNumber] = useState<string | null>(null);
   const [copiedEmail, setCopiedEmail] = useState<string | null>(null);
   const [mathQuestion, setMathQuestion] = useState<{ question: string; answer: number }>({ question: '', answer: 0 });
   const formRef = useRef<HTMLFormElement>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Sayfa yüklendiğinde matematik sorusu üret
   useEffect(() => {

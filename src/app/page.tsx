@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useEffect, Suspense } from "react";
 import Head from "next/head";
 import dynamic from "next/dynamic";
+import { Skeleton, SkeletonGrid, SkeletonCard, SkeletonForm } from "@/components/shared/Skeleton";
 import AppShell from "@/components/layout/AppShell";
 import Startseite from "@/components/sections/Startseite";
 import { AcademicCapIcon } from "@heroicons/react/24/solid";
@@ -13,31 +14,31 @@ import { RocketLaunchIcon } from "@heroicons/react/24/solid";
 
 // Lazy loaded components
 const UeberMich = dynamic(() => import("@/components/sections/UeberMich"), {
-  loading: () => <div className="h-96 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-slate-800 dark:to-slate-700 animate-pulse rounded-2xl" />
+  loading: () => <SkeletonGrid cols={3} rows={1} className="h-96" />
 });
 
 const ExperienceAccordion = dynamic(() => import("@/components/sections/ExperienceAccordion"), {
-  loading: () => <div className="h-96 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-slate-800 dark:to-slate-700 animate-pulse rounded-2xl" />
+  loading: () => <div className="space-y-4"><SkeletonCard /><SkeletonCard /><SkeletonCard /></div>
 });
 
 const PortfolioColumns = dynamic(() => import("@/components/sections/PortfolioColumns"), {
-  loading: () => <div className="h-96 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-slate-800 dark:to-slate-700 animate-pulse rounded-2xl" />
+  loading: () => <SkeletonGrid cols={3} rows={2} className="h-96" />
 });
 
 const Zeugnisse = dynamic(() => import("@/components/sections/Zeugnisse"), {
-  loading: () => <div className="h-96 bg-gradient-to-r from-rose-50 to-pink-50 dark:from-slate-800 dark:to-slate-700 animate-pulse rounded-2xl" />
+  loading: () => <SkeletonGrid cols={2} rows={1} className="h-96" />
 });
 
 const Kontakt = dynamic(() => import("@/components/shared/Kontakt"), {
-  loading: () => <div className="h-96 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-slate-800 dark:to-slate-700 animate-pulse rounded-2xl" />
+  loading: () => <SkeletonForm className="h-96" />
 });
 
 const Technologies = dynamic(() => import("@/components/shared/Technologies"), {
-  loading: () => <div className="h-32 bg-gradient-to-r from-slate-50 to-gray-50 dark:from-slate-800 dark:to-slate-700 animate-pulse rounded-2xl" />
+  loading: () => <Skeleton height="8rem" width="100%" className="rounded-2xl" />
 });
 
 const StatsSection = dynamic(() => import("@/components/sections/StatsSection"), {
-  loading: () => <div className="h-48 bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-slate-800 dark:to-slate-700 animate-pulse rounded-2xl" />
+  loading: () => <SkeletonGrid cols={4} rows={1} className="h-48" />
 });
 
 export default function Home() {

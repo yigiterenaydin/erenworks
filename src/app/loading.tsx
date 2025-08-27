@@ -1,85 +1,114 @@
-'use client';
-
-import { motion } from 'framer-motion';
+import React from 'react';
 
 export default function Loading() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 flex items-center justify-center">
-      <div className="text-center">
-        {/* Animated Logo */}
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="mb-8"
-        >
-          <div className="w-24 h-24 mx-auto bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-2xl flex items-center justify-center shadow-2xl">
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-              className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full"
-            />
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 flex items-center justify-center">
+      <div className="w-full max-w-4xl mx-auto px-4">
+        {/* Header Skeleton */}
+        <div className="mb-8">
+          <div className="h-16 bg-white dark:bg-slate-800 rounded-lg shadow-sm animate-pulse mb-4" />
+          <div className="h-4 bg-white dark:bg-slate-800 rounded w-1/3 animate-pulse" />
+        </div>
+
+        {/* Hero Section Skeleton */}
+        <div className="mb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            {/* Text Content */}
+            <div className="space-y-4">
+              <div className="h-8 bg-white dark:bg-slate-800 rounded w-3/4 animate-pulse" />
+              <div className="h-6 bg-white dark:bg-slate-800 rounded w-1/2 animate-pulse" />
+              <div className="h-4 bg-white dark:bg-slate-800 rounded w-2/3 animate-pulse" />
+              <div className="h-12 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg w-48 animate-pulse" />
+            </div>
+            
+            {/* Profile Card Skeleton */}
+            <div className="relative">
+              <div className="aspect-[0.718] bg-white dark:bg-slate-800 rounded-3xl shadow-lg animate-pulse overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-600/20 animate-pulse" />
+                <div className="absolute bottom-4 left-4 right-4 h-16 bg-white/10 dark:bg-slate-700/10 rounded-xl backdrop-blur-sm animate-pulse" />
+              </div>
+            </div>
           </div>
-        </motion.div>
+        </div>
 
-        {/* Loading Text */}
-        <motion.h1
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-3xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4"
-        >
-          Eren Aydin
-        </motion.h1>
+        {/* Sections Skeleton */}
+        <div className="space-y-12">
+          {/* About Section */}
+          <div className="space-y-6">
+            <div className="h-8 bg-white dark:bg-slate-800 rounded w-1/4 animate-pulse" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="bg-white dark:bg-slate-800 rounded-lg p-6 shadow-sm animate-pulse">
+                  <div className="h-6 bg-slate-200 dark:bg-slate-700 rounded w-3/4 mb-4" />
+                  <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-full mb-2" />
+                  <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-2/3" />
+                </div>
+              ))}
+            </div>
+          </div>
 
-        {/* Loading Dots */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="flex justify-center space-x-2"
-        >
-          {[0, 1, 2].map((i) => (
-            <motion.div
-              key={i}
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.5, 1, 0.5],
-              }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                delay: i * 0.2,
-              }}
-              className="w-3 h-3 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"
-            />
-          ))}
-        </motion.div>
+          {/* Experience Section */}
+          <div className="space-y-6">
+            <div className="h-8 bg-white dark:bg-slate-800 rounded w-1/4 animate-pulse" />
+            <div className="space-y-4">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="bg-white dark:bg-slate-800 rounded-lg p-6 shadow-sm animate-pulse">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="h-6 bg-slate-200 dark:bg-slate-700 rounded w-1/3" />
+                    <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-1/6" />
+                  </div>
+                  <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-1/2 mb-2" />
+                  <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-3/4" />
+                </div>
+              ))}
+            </div>
+          </div>
 
-        {/* Loading Text */}
-        <motion.p
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-          className="text-slate-600 dark:text-slate-300 mt-6 text-lg"
-        >
-          Portfolio wird geladen...
-        </motion.p>
+          {/* Projects Section */}
+          <div className="space-y-6">
+            <div className="h-8 bg-white dark:bg-slate-800 rounded w-1/4 animate-pulse" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="bg-white dark:bg-slate-800 rounded-lg p-6 shadow-sm animate-pulse">
+                  <div className="h-6 bg-slate-200 dark:bg-slate-700 rounded w-3/4 mb-4" />
+                  <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-full mb-2" />
+                  <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-2/3 mb-4" />
+                  <div className="flex gap-2">
+                    <div className="h-6 bg-slate-200 dark:bg-slate-700 rounded w-16" />
+                    <div className="h-6 bg-slate-200 dark:bg-slate-700 rounded w-20" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
 
-        {/* Progress Bar */}
-        <motion.div
-          initial={{ width: 0 }}
-          animate={{ width: "100%" }}
-          transition={{ duration: 2, ease: "easeInOut" }}
-          className="w-64 h-2 bg-slate-200 dark:bg-slate-700 rounded-full mt-6 mx-auto overflow-hidden"
-        >
-          <motion.div
-            className="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full"
-            initial={{ x: "-100%" }}
-            animate={{ x: "100%" }}
-            transition={{ duration: 2, ease: "easeInOut" }}
-          />
-        </motion.div>
+          {/* Contact Section */}
+          <div className="space-y-6">
+            <div className="h-8 bg-white dark:bg-slate-800 rounded w-1/4 animate-pulse" />
+            <div className="bg-white dark:bg-slate-800 rounded-lg p-8 shadow-sm animate-pulse">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-3/4" />
+                  <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-1/2" />
+                  <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-2/3" />
+                </div>
+                <div className="space-y-4">
+                  <div className="h-12 bg-slate-200 dark:bg-slate-700 rounded" />
+                  <div className="h-12 bg-slate-200 dark:bg-slate-700 rounded" />
+                  <div className="h-24 bg-slate-200 dark:bg-slate-700 rounded" />
+                  <div className="h-12 bg-gradient-to-r from-indigo-500 to-purple-600 rounded w-32" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Loading Spinner */}
+        <div className="fixed bottom-8 right-8">
+          <div className="bg-white dark:bg-slate-800 rounded-full p-4 shadow-lg">
+            <div className="w-6 h-6 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+          </div>
+        </div>
       </div>
     </div>
   );
