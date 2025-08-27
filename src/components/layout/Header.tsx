@@ -11,6 +11,7 @@ import { EnvelopeIcon } from '@heroicons/react/24/outline';
 import { MoonIcon } from '@heroicons/react/24/outline';
 import { SunIcon } from '@heroicons/react/24/outline';
 import { ClockIcon } from '@heroicons/react/24/outline';
+import { useScrollListener, useResizeListener } from "@/utils/memoryLeakPrevention";
 
 interface HeaderProps {
   theme: 'light' | 'dark';
@@ -46,28 +47,12 @@ export default function Header({
 
   const [activeSection, setActiveSection] = useState<string>('home');
 
-  // Scroll progress calculation with throttling
-  useEffect(() => {
-    let ticking = false;
-    
-    const updateScrollProgress = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          const scrollTop = window.scrollY;
-          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-          const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-          setScrollProgress(Math.min(progress, 100));
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', updateScrollProgress, { passive: true });
-    updateScrollProgress(); // Initial calculation
-
-    return () => window.removeEventListener('scroll', updateScrollProgress);
-  }, []);
+  // Scroll progress calculation with memory leak prevention
+  useScrollListener((scrollY) => {
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
+    setScrollProgress(Math.min(progress, 100));
+  }, 16);
 
 
 

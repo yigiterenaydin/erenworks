@@ -7,6 +7,7 @@ import BackToTop from "@/components/shared/BackToTop";
 // AppShell: Sayfanın iskeletini yönetir (tema, mobil menü, header ve arka plan)
 // Bu bileşen sayfanın ortak iskeletini taşır; içerik bölümleri children olarak gelir
 import { useEffect, useState, useCallback, useMemo } from "react";
+import { useTimer, useInterval } from "@/utils/memoryLeakPrevention";
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -44,6 +45,13 @@ export default function AppShell({ children }: AppShellProps) {
     setIsLoaded(true);
   }, [autoTheme, getAutoTheme]);
 
+  // Theme transition with memory leak prevention
+  useTimer(() => {
+    if (!mounted) return;
+    const root = document.documentElement;
+    root.style.transition = '';
+  }, mounted ? 500 : null);
+
   useEffect(() => {
     if (!mounted) return;
     const root = document.documentElement;
@@ -54,37 +62,17 @@ export default function AppShell({ children }: AppShellProps) {
     root.classList.remove('light', 'dark');
     root.classList.add(theme);
     localStorage.setItem('theme', theme);
-    
-    // Remove transition after animation completes
-    const timer = setTimeout(() => {
-      root.style.transition = '';
-    }, 500);
-    
-    return () => clearTimeout(timer);
   }, [theme, mounted]);
 
-  // Otomatik tema kontrolü - her dakika kontrol et
-  useEffect(() => {
-    if (!autoTheme) return;
-    
-    const checkAutoTheme = () => {
-      const newTheme = getAutoTheme();
-      if (newTheme !== theme) {
-        setTheme(newTheme);
-      }
-    };
-    
-    // İlk kontrol
-    checkAutoTheme();
-    
-    // Her dakika kontrol et
-    const interval = setInterval(checkAutoTheme, 60000);
-    
-    // Cleanup function
-    return () => {
-      clearInterval(interval);
-    };
-  }, [autoTheme, theme, getAutoTheme]);
+  // Otomatik tema kontrolü - her dakika kontrol et (memory leak prevention)
+  const checkAutoTheme = useCallback(() => {
+    const newTheme = getAutoTheme();
+    if (newTheme !== theme) {
+      setTheme(newTheme);
+    }
+  }, [getAutoTheme, theme]);
+
+  useInterval(checkAutoTheme, autoTheme ? 60000 : null);
 
   // Manuel tema toggle
   const toggleTheme = useCallback(() => {

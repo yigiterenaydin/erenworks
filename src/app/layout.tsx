@@ -3,6 +3,7 @@ import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { globalCleanup } from "@/utils/memoryLeakPrevention";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -184,6 +185,23 @@ export default function RootLayout({
                     total: Math.round(memory.totalJSHeapSize / 1048576) + 'MB'
                   });
                 }
+              });
+
+              // Memory leak prevention - global cleanup on page unload
+              window.addEventListener('beforeunload', () => {
+                // Clear all timeouts
+                const highestTimeoutId = setTimeout(() => {}, 0);
+                for (let i = 0; i < highestTimeoutId; i++) {
+                  clearTimeout(i);
+                }
+
+                // Clear all intervals
+                const highestIntervalId = setInterval(() => {}, 0);
+                for (let i = 0; i < highestIntervalId; i++) {
+                  clearInterval(i);
+                }
+
+                console.log('🧹 Global cleanup completed on page unload');
               });
             }
           `}

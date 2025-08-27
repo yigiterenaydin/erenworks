@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useCallback, useMemo } from "react";
 import { useReducedMotion } from "framer-motion";
 import Image, { StaticImageData } from "next/image";
+import { useEventListener, useAnimationFrame } from "@/utils/memoryLeakPrevention";
 
 import "./ProfileCard.css";
 
@@ -235,6 +236,34 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     [animationHandlers, mobileTiltSensitivity, prefersReducedMotion]
   );
 
+  // Memory leak prevention for event listeners
+  const card = cardRef.current;
+  
+  useEventListener(card, "pointerenter", handlePointerEnter, { passive: true });
+  useEventListener(card, "pointermove", handlePointerMove, { passive: true });
+  useEventListener(card, "pointerleave", handlePointerLeave, { passive: true });
+  useEventListener(card, "click", () => {
+    if (!enableMobileTilt || location.protocol !== 'https:') return;
+    type DeviceMotionEventConstructor = typeof window.DeviceMotionEvent & {
+      requestPermission?: () => Promise<PermissionState | 'granted' | 'denied'>;
+    };
+    const DeviceMotionEventCtor: DeviceMotionEventConstructor | undefined =
+      (window as unknown as { DeviceMotionEvent?: DeviceMotionEventConstructor }).DeviceMotionEvent;
+    if (DeviceMotionEventCtor && typeof DeviceMotionEventCtor.requestPermission === 'function') {
+      DeviceMotionEventCtor
+        .requestPermission!()
+        .then((state: PermissionState | 'granted' | 'denied') => {
+          if (state === 'granted') {
+            window.addEventListener('deviceorientation', handleDeviceOrientation as EventListener);
+          }
+        })
+        .catch((err: unknown) => console.error(err));
+    } else {
+      window.addEventListener('deviceorientation', handleDeviceOrientation as EventListener);
+    }
+  }, { passive: true });
+
+  // Initialize card transform
   useEffect(() => {
     if (!enableTilt || !animationHandlers || prefersReducedMotion) return;
 
@@ -242,37 +271,6 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     const wrap = wrapRef.current;
 
     if (!card || !wrap) return;
-
-    const pointerMoveHandler = handlePointerMove;
-    const pointerEnterHandler = handlePointerEnter;
-    const pointerLeaveHandler = handlePointerLeave;
-    const deviceOrientationHandler = handleDeviceOrientation;
-
-    const handleClick = () => {
-      if (!enableMobileTilt || location.protocol !== 'https:') return;
-      type DeviceMotionEventConstructor = typeof window.DeviceMotionEvent & {
-        requestPermission?: () => Promise<PermissionState | 'granted' | 'denied'>;
-      };
-      const DeviceMotionEventCtor: DeviceMotionEventConstructor | undefined =
-        (window as unknown as { DeviceMotionEvent?: DeviceMotionEventConstructor }).DeviceMotionEvent;
-      if (DeviceMotionEventCtor && typeof DeviceMotionEventCtor.requestPermission === 'function') {
-        DeviceMotionEventCtor
-          .requestPermission!()
-          .then((state: PermissionState | 'granted' | 'denied') => {
-            if (state === 'granted') {
-              window.addEventListener('deviceorientation', deviceOrientationHandler as EventListener);
-            }
-          })
-          .catch((err: unknown) => console.error(err));
-      } else {
-        window.addEventListener('deviceorientation', deviceOrientationHandler as EventListener);
-      }
-    };
-
-    card.addEventListener("pointerenter", pointerEnterHandler);
-    card.addEventListener("pointermove", pointerMoveHandler);
-    card.addEventListener("pointerleave", pointerLeaveHandler);
-    card.addEventListener("click", handleClick);
 
     const initialX = wrap.clientWidth - ANIMATION_CONFIG.INITIAL_X_OFFSET;
     const initialY = ANIMATION_CONFIG.INITIAL_Y_OFFSET;
@@ -287,21 +285,11 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     );
 
     return () => {
-      card.removeEventListener("pointerenter", pointerEnterHandler);
-      card.removeEventListener("pointermove", pointerMoveHandler);
-      card.removeEventListener("pointerleave", pointerLeaveHandler);
-      card.removeEventListener("click", handleClick);
-      window.removeEventListener('deviceorientation', deviceOrientationHandler);
       animationHandlers.cancelAnimation();
     };
   }, [
     enableTilt,
-    enableMobileTilt,
     animationHandlers,
-    handlePointerMove,
-    handlePointerEnter,
-    handlePointerLeave,
-    handleDeviceOrientation,
     prefersReducedMotion,
   ]);
 
@@ -319,6 +307,21 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   );
 
   const handleContactClick = useCallback(() => {
+    // Kontakt bölümüne scroll yap
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      const elementTop = contactSection.offsetTop;
+      const isMobile = window.innerWidth < 768;
+      const offset = isMobile ? 60 : 80;
+      const scrollTop = elementTop - offset;
+      
+      window.scrollTo({ 
+        top: Math.max(0, scrollTop), 
+        behavior: 'smooth' 
+      });
+    }
+    
+    // Eğer onContactClick prop'u varsa onu da çağır
     onContactClick?.();
   }, [onContactClick]);
 
