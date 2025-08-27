@@ -15,19 +15,19 @@ import { AcademicCapIcon, BriefcaseIcon, RocketLaunchIcon, UserGroupIcon, Docume
 import StatsSection from "@/components/sections/StatsSection";
 
 export default function Home() {
-  // Sayfa yüklendiğinde n8n'i uyandır
-  useEffect(() => {
-    const wakeN8n = async () => {
-      try {
-        await fetch('/api/ping', { method: 'GET' });
-        console.log('Site loaded - n8n woken up');
-      } catch (error) {
-        console.error('Failed to wake n8n:', error);
-      }
-    };
-    
-    wakeN8n();
-  }, []);
+  // n8n ping'i geçici olarak devre dışı
+  // useEffect(() => {
+  //   const wakeN8n = async () => {
+  //     try {
+  //       await fetch('/api/ping', { method: 'GET' });
+  //       console.log('Site loaded - n8n woken up');
+  //     } catch (error) {
+  //       console.error('Failed to wake n8n:', error);
+  //     }
+  //   };
+  //   
+  //   wakeN8n();
+  // }, []);
   return (
     <AppShell>
 

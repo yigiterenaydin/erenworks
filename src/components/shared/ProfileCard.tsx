@@ -339,8 +339,8 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
               width={480}
               height={480}
               sizes={sizes ?? "(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 480px"}
-              priority={priority}
-              loading={priority ? undefined : "lazy"}
+              priority={true}
+              loading="eager"
               placeholder={typeof avatarUrl === 'object' ? 'blur' : undefined}
               blurDataURL={typeof avatarUrl === 'object' ? (avatarUrl as StaticImageData).blurDataURL : undefined}
               onError={(e) => {

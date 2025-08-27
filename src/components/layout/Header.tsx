@@ -11,11 +11,14 @@ import {
   EnvelopeIcon,
   MoonIcon,
   SunIcon,
+  ClockIcon,
 } from '@heroicons/react/24/outline';
 
 interface HeaderProps {
   theme: 'light' | 'dark';
+  autoTheme: boolean;
   onThemeToggle: () => void;
+  onAutoThemeToggle: () => void;
   isMobileMenuOpen: boolean;
   onMobileMenuToggle: () => void;
   onMobileMenuClose: () => void;
@@ -23,12 +26,14 @@ interface HeaderProps {
 
 export default function Header({ 
   theme, 
+  autoTheme,
   onThemeToggle, 
+  onAutoThemeToggle,
   isMobileMenuOpen, 
   onMobileMenuToggle, 
   onMobileMenuClose 
 }: HeaderProps) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = false; // Reduced Motion uyarısını tamamen kapat
   const headerRef = useRef<HTMLElement | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   
@@ -121,6 +126,8 @@ export default function Header({
           duration: prefersReducedMotion ? 0 : 0.1,
           ease: "easeOut"
         }}
+        // Reduced Motion uyarısını engelle
+        suppressHydrationWarning={true}
       />
       
       <motion.header 
@@ -153,27 +160,121 @@ export default function Header({
                     <motion.a
                       href={item.href}
                       onClick={(e) => { e.preventDefault(); scrollToHash(item.href); }}
-                      whileHover={prefersReducedMotion ? undefined : { y: -1 }}
+                      whileHover={prefersReducedMotion ? undefined : { y: -2, scale: 1.05 }}
+                      whileTap={prefersReducedMotion ? undefined : { scale: 0.95 }}
                       aria-current={isActive ? 'page' : undefined}
-                      className={`group flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                      className={`group flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 relative ${
                         isActive
                           ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white shadow-inner'
                           : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/60'
                       } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-900`}
                     >
+                      {isActive && (
+                        <motion.div
+                          className="absolute inset-0 rounded-full bg-indigo-500/20 dark:bg-indigo-400/20"
+                          animate={{ 
+                            scale: [1, 1.1, 1],
+                            opacity: [0.5, 0.8, 0.5]
+                          }}
+                          transition={{ 
+                            duration: 2, 
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                          }}
+                        />
+                      )}
                       {ItemIcon && (
                         <ItemIcon className={`${isActive ? 'text-slate-900 dark:text-slate-100' : 'text-slate-500 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200'} w-4 h-4`} />
                       )}
                       <span>{item.name}</span>
                     </motion.a>
                     {index < navigationItems.length - 1 && (
-                      <span className="h-6 w-px bg-slate-200/80 dark:bg-slate-700/70" />
+                      <motion.span 
+                        className="h-6 w-px bg-slate-200/80 dark:bg-slate-700/70"
+                        whileHover={prefersReducedMotion ? undefined : { 
+                          scaleY: 1.5, 
+                          backgroundColor: "rgba(99, 102, 241, 0.5)" 
+                        }}
+                        transition={{ duration: 0.3 }}
+                      />
                     )}
                   </Fragment>
                 );
               })}
-              <span className="h-6 w-px bg-slate-200/80 dark:bg-slate-700/70" />
-                             <motion.button
+              <motion.span 
+                className="h-6 w-px bg-slate-200/80 dark:bg-slate-700/70"
+                whileHover={prefersReducedMotion ? undefined : { 
+                  scaleY: 1.5, 
+                  backgroundColor: "rgba(99, 102, 241, 0.5)" 
+                }}
+                transition={{ duration: 0.3 }}
+              />
+              
+              {/* Auto Theme Toggle Button */}
+              <motion.button
+                whileHover={prefersReducedMotion ? undefined : { 
+                  scale: 1.15, 
+                  rotate: 360,
+                  boxShadow: autoTheme ? "0 0 30px rgba(34, 197, 94, 0.5)" : "0 0 30px rgba(99, 102, 241, 0.5)"
+                }}
+                whileTap={prefersReducedMotion ? undefined : { scale: 0.85 }}
+                onClick={onAutoThemeToggle}
+                aria-label="Auto theme toggle"
+                className={`ml-1 relative inline-flex h-9 w-9 items-center justify-center rounded-full text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 overflow-hidden ${
+                  autoTheme 
+                    ? 'focus-visible:ring-green-500/70 dark:focus-visible:ring-green-400/70' 
+                    : 'focus-visible:ring-indigo-500/70 dark:focus-visible:ring-indigo-400/70'
+                }`}
+              >
+                {/* Background based on auto theme status */}
+                <motion.div
+                  className="absolute inset-0 rounded-full"
+                  animate={{
+                    background: autoTheme 
+                      ? "radial-gradient(circle, rgba(34, 197, 94, 0.3) 0%, rgba(16, 185, 129, 0.2) 50%, transparent 80%)"
+                      : "radial-gradient(circle, rgba(99, 102, 241, 0.3) 0%, rgba(168, 85, 247, 0.2) 50%, transparent 80%)"
+                  }}
+                  transition={{ duration: 0.8 }}
+                />
+                
+                {/* Icon */}
+                <motion.div
+                  key={autoTheme ? 'auto' : 'manual'}
+                  initial={{ scale: 0, rotate: -180, opacity: 0 }}
+                  animate={{ scale: 1, rotate: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                  className="relative z-10"
+                >
+                  <ClockIcon className={`w-5 h-5 ${autoTheme ? 'text-green-500' : 'text-indigo-500'}`} />
+                </motion.div>
+                
+                {/* Pulse effect when auto theme is active */}
+                {autoTheme && (
+                  <motion.div
+                    className="absolute inset-0 rounded-full border-2 border-green-500/50"
+                    animate={{ 
+                      scale: [1, 1.2, 1], 
+                      opacity: [0.5, 0.8, 0.5] 
+                    }}
+                    transition={{ 
+                      duration: 2, 
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                )}
+              </motion.button>
+              
+              <motion.span 
+                className="h-6 w-px bg-slate-200/80 dark:bg-slate-700/70"
+                whileHover={prefersReducedMotion ? undefined : { 
+                  scaleY: 1.5, 
+                  backgroundColor: "rgba(99, 102, 241, 0.5)" 
+                }}
+                transition={{ duration: 0.3 }}
+              />
+              
+              <motion.button
                  whileHover={prefersReducedMotion ? undefined : { 
                    scale: 1.15, 
                    rotate: 360,
@@ -398,6 +499,7 @@ export default function Header({
 
             {/* Mobile Menu Button */}
             <motion.button
+              whileHover={prefersReducedMotion ? undefined : { scale: 1.05, rotate: 5 }}
               whileTap={prefersReducedMotion ? undefined : { scale: 0.9 }}
               onClick={onMobileMenuToggle}
               className="md:hidden p-3 rounded-xl bg-gradient-to-r from-indigo-100 to-purple-100 dark:from-slate-800 dark:to-indigo-800 hover:from-indigo-200 hover:to-purple-200 dark:hover:from-slate-700 dark:hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-900"
@@ -425,10 +527,10 @@ export default function Header({
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={prefersReducedMotion ? false : { opacity: 0, y: -20, scale: 0.95 }}
-            animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
-            exit={prefersReducedMotion ? undefined : { opacity: 0, y: -20, scale: 0.95 }}
-            transition={prefersReducedMotion ? undefined : { duration: 0.4, ease: [0.4, 0, 0.2, 1], staggerChildren: 0.1 }}
+            initial={prefersReducedMotion ? false : { opacity: 0, y: -30, scale: 0.9, rotateX: -15 }}
+            animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0, scale: 1, rotateX: 0 }}
+            exit={prefersReducedMotion ? undefined : { opacity: 0, y: -30, scale: 0.9, rotateX: -15 }}
+            transition={prefersReducedMotion ? undefined : { duration: 0.5, ease: [0.4, 0, 0.2, 1], staggerChildren: 0.1 }}
             className="md:hidden bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-t border-white/20 dark:border-slate-700/50 shadow-2xl"
           >
             <motion.div 
@@ -479,6 +581,7 @@ export default function Header({
                         initial={prefersReducedMotion ? false : { opacity: 0, x: -10 }}
                         animate={prefersReducedMotion ? undefined : { opacity: 1, x: 0 }}
                         transition={prefersReducedMotion ? undefined : { delay: 0.3 + index * 0.1 }}
+                        whileHover={prefersReducedMotion ? undefined : { scale: 1.5, rotate: 180 }}
                         className="w-2 h-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"
                       />
                     </div>
