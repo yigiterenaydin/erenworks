@@ -6,7 +6,7 @@ import BackToTop from "@/components/shared/BackToTop";
 
 // AppShell: Sayfanın iskeletini yönetir (tema, mobil menü, header ve arka plan)
 // Bu bileşen sayfanın ortak iskeletini taşır; içerik bölümleri children olarak gelir
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useTimer, useInterval } from "@/utils/memoryLeakPrevention";
 
 interface AppShellProps {

@@ -2,7 +2,7 @@
 
 // Home sayfası: Bölümleri bir araya getirir. İskelet (tema, header, arka plan) AppShell içinde.
 import { motion } from "framer-motion";
-import { useEffect, Suspense } from "react";
+import { Suspense } from "react";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 import { Skeleton, SkeletonGrid, SkeletonCard, SkeletonForm } from "@/components/shared/Skeleton";
