@@ -150,61 +150,13 @@ export default function RootLayout({
         >
           Zum Inhalt springen
         </a>
-        {/* Toast container */}
-        <div id="toast-root" />
+        {/* Toast container - Removed for cleaner build */}
         <Analytics />
         <SpeedInsights />
         
         {/* Image Preloading - Removed to fix console warning */}
         
-        {/* Performance Monitoring Script */}
-        <Script id="performance-monitor" strategy="afterInteractive">
-          {`
-            // Performance monitoring
-            if (typeof window !== 'undefined') {
-              // Measure bundle load time
-              const startTime = performance.now();
-              
-              window.addEventListener('load', () => {
-                const loadTime = performance.now() - startTime;
-                console.log('🚀 Bundle load time:', loadTime.toFixed(2) + 'ms');
-                
-                // Check code splitting
-                const scripts = document.querySelectorAll('script[src]');
-                const dynamicChunks = Array.from(scripts).filter(s => 
-                  s.getAttribute('src')?.includes('chunk')
-                );
-                console.log('📦 Dynamic chunks loaded:', dynamicChunks.length);
-                
-                // Memory usage (if available)
-                if ('memory' in performance) {
-                  const memory = performance.memory;
-                  console.log('💾 Memory usage:', {
-                    used: Math.round(memory.usedJSHeapSize / 1048576) + 'MB',
-                    total: Math.round(memory.totalJSHeapSize / 1048576) + 'MB'
-                  });
-                }
-              });
-
-              // Memory leak prevention - global cleanup on page unload
-              window.addEventListener('beforeunload', () => {
-                // Clear all timeouts
-                const highestTimeoutId = setTimeout(() => {}, 0);
-                for (let i = 0; i < highestTimeoutId; i++) {
-                  clearTimeout(i);
-                }
-
-                // Clear all intervals
-                const highestIntervalId = setInterval(() => {}, 0);
-                for (let i = 0; i < highestIntervalId; i++) {
-                  clearInterval(i);
-                }
-
-                console.log('🧹 Global cleanup completed on page unload');
-              });
-            }
-          `}
-        </Script>
+        {/* Performance Monitoring Script - Removed for cleaner build */}
         
         {children}
       </body>

@@ -161,7 +161,7 @@ export default function Startseite({ name }: StartseiteProps) {
               showUserInfo={true}
               enableTilt={true}
               enableMobileTilt={false}
-              onContactClick={() => console.log('Contact clicked')}
+              onContactClick={() => {}}
             />
           </motion.div>
         </div>

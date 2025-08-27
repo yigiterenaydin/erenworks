@@ -47,7 +47,7 @@ export default function Home() {
   //   const wakeN8n = async () => {
   //     try {
   //       await fetch('/api/ping', { method: 'GET' });
-  //       console.log('Site loaded - n8n woken up');
+  // Site loaded
   //     } catch (error) {
   //       console.error('Failed to wake n8n:', error);
   //     }
@@ -55,7 +55,7 @@ export default function Home() {
   //   
   //   wakeN8n();
   // }, []);
-  return (
+    return (
     <>
       <Head>
         <title>Eren Aydin – Portfolio | Schüler Portfolio</title>
