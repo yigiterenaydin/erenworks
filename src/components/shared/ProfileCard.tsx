@@ -239,9 +239,9 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   // Memory leak prevention for event listeners
   const card = cardRef.current;
   
-  useEventListener(card, "pointerenter", handlePointerEnter, { passive: true });
-  useEventListener(card, "pointermove", handlePointerMove, { passive: true });
-  useEventListener(card, "pointerleave", handlePointerLeave, { passive: true });
+  useEventListener(card, "pointerenter", handlePointerEnter as EventListener, { passive: true });
+  useEventListener(card, "pointermove", handlePointerMove as EventListener, { passive: true });
+  useEventListener(card, "pointerleave", handlePointerLeave as EventListener, { passive: true });
   useEventListener(card, "click", () => {
     if (!enableMobileTilt || location.protocol !== 'https:') return;
     type DeviceMotionEventConstructor = typeof window.DeviceMotionEvent & {
