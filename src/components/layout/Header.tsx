@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState, useRef, useCallback, Fragment } from "react";
 import { HomeIcon } from '@heroicons/react/24/outline';
 import { UserCircleIcon } from '@heroicons/react/24/outline';
@@ -11,7 +11,7 @@ import { EnvelopeIcon } from '@heroicons/react/24/outline';
 import { MoonIcon } from '@heroicons/react/24/outline';
 import { SunIcon } from '@heroicons/react/24/outline';
 import { ClockIcon } from '@heroicons/react/24/outline';
-import { useScrollListener, useResizeListener } from "@/utils/memoryLeakPrevention";
+import { useScrollListener } from "@/utils/memoryLeakPrevention";
 
 interface HeaderProps {
   theme: 'light' | 'dark';
@@ -66,7 +66,7 @@ export default function Header({
     
     // Mobilde daha az offset, desktop'ta daha fazla
     const isMobile = window.innerWidth < 768;
-    let offset = isMobile ? 60 : 80; // Desktop'ta daha da yukarıda
+    const offset = isMobile ? 60 : 80; // Desktop'ta daha da yukarıda
     
     // Tüm bölümler için aynı offset - tutarlılık için
     // Kontakt bölümü için özel offset kaldırıldı

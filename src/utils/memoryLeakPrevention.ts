@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef } from 'react';
 
 // Memory leak prevention utilities
 export const memoryLeakPrevention = {
@@ -322,13 +322,13 @@ export const checkMemoryLeaks = () => {
     }
 
     // Check for timers
-    const activeTimers = (global as any).__timers || [];
+    const activeTimers = (global as { __timers?: unknown[] }).__timers || [];
     if (activeTimers.length > 0) {
       console.warn('⚠️ Active Timers:', activeTimers.length);
     }
 
     // Check for animation frames
-    const activeFrames = (global as any).__animationFrames || [];
+    const activeFrames = (global as { __animationFrames?: unknown[] }).__animationFrames || [];
     if (activeFrames.length > 0) {
       console.warn('⚠️ Active Animation Frames:', activeFrames.length);
     }

@@ -55,14 +55,14 @@ export const OptimizedImage = ({
   quality = 85,
   ...props 
 }: {
-  src: string | any;
+  src: string | unknown;
   alt: string;
   width?: number;
   height?: number;
   className?: string;
   priority?: boolean;
   quality?: number;
-  [key: string]: any;
+  [key: string]: unknown;
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -88,6 +88,7 @@ export const OptimizedImage = ({
           src={src}
           quality={quality}
           priority={priority}
+          alt={alt}
           onLoad={() => setIsLoading(false)}
           onError={() => {
             setError(true);
@@ -118,7 +119,7 @@ export const LazyImage = ({
   height?: number;
   className?: string;
   threshold?: number;
-  [key: string]: any;
+  [key: string]: unknown;
 }) => {
   const [isInView, setIsInView] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -152,6 +153,7 @@ export const LazyImage = ({
       
       {isInView && !error && (
         <Image
+          alt={alt}
           {...imageOptimization.getOptimizedProps(src, alt, width, height)}
           {...props}
           onLoad={() => setIsLoaded(true)}

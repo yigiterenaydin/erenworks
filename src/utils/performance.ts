@@ -53,7 +53,7 @@ export const performanceUtils = {
   // Monitor memory usage
   getMemoryUsage: () => {
     if (typeof window !== 'undefined' && 'memory' in performance) {
-      const memory = (performance as any).memory;
+      const memory = (performance as { memory: { usedJSHeapSize: number; totalJSHeapSize: number; jsHeapSizeLimit: number } }).memory;
       return {
         used: Math.round(memory.usedJSHeapSize / 1048576), // MB
         total: Math.round(memory.totalJSHeapSize / 1048576), // MB
@@ -67,7 +67,7 @@ export const performanceUtils = {
 // Bundle size optimization helpers
 export const bundleOptimization = {
   // Lazy load with error boundary
-  lazyLoad: (importFn: () => Promise<any>, fallback?: React.ComponentType) => {
+  lazyLoad: (importFn: () => Promise<unknown>, fallback?: React.ComponentType) => {
     return {
       component: importFn,
       fallback: fallback || (() => <div>Loading...</div>),
