@@ -70,9 +70,9 @@ export default function Header({
     // Element'in pozisyonunu hesapla
     const elementTop = el.offsetTop;
     
-    // Mobilde daha az offset, desktop'ta daha fazla
+    // Mobilde daha fazla offset, desktop'ta daha az
     const isMobile = window.innerWidth < 768;
-    const offset = isMobile ? 60 : 80; // Desktop'ta daha da yukarıda
+    const offset = isMobile ? 150 : 80; // Mobilde daha fazla offset
     
     // Tüm bölümler için aynı offset - tutarlılık için
     // Kontakt bölümü için özel offset kaldırıldı
@@ -654,7 +654,10 @@ export default function Header({
                     onClick={(e) => { 
                       e.preventDefault(); 
                       onMobileMenuClose(); 
-                      scrollToHash(item.href);
+                      // Mobil menü kapanması için biraz bekle
+                      setTimeout(() => {
+                        scrollToHash(item.href);
+                      }, 300);
                     }}
                     aria-current={activeSection === item.href.replace('#', '') ? 'page' : undefined}
                     className={`block text-xl font-semibold transition-all duration-300 py-4 px-4 rounded-xl border-b border-slate-200/50 dark:border-slate-700/50 last:border-b-0 group ${
