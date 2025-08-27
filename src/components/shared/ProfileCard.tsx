@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useCallback, useMemo } from "react";
 import { useReducedMotion } from "framer-motion";
 import Image, { StaticImageData } from "next/image";
+
 import "./ProfileCard.css";
 
 interface ProfileCardProps {
@@ -338,15 +339,10 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
               alt={`${name || "User"} avatar`}
               width={480}
               height={480}
-              sizes={sizes ?? "(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 480px"}
               priority={true}
-              loading="eager"
+              quality={90}
               placeholder={typeof avatarUrl === 'object' ? 'blur' : undefined}
               blurDataURL={typeof avatarUrl === 'object' ? (avatarUrl as StaticImageData).blurDataURL : undefined}
-              onError={(e) => {
-                const target = e.currentTarget as unknown as HTMLImageElement;
-                target.style.display = "none";
-              }}
             />
             {showUserInfo && (
               <div className="pc-user-info">
@@ -357,15 +353,9 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                       alt={`${name || "User"} mini avatar`}
                       width={48}
                       height={48}
-                      sizes="48px"
-                      loading="lazy"
-                      onError={(e) => {
-                        const target = e.currentTarget as unknown as HTMLImageElement;
-                        target.style.opacity = "0.5";
-                        if (typeof avatarUrl === 'string') {
-                          target.src = avatarUrl;
-                        }
-                      }}
+                      quality={75}
+                      placeholder={typeof miniAvatarUrl === 'object' ? 'blur' : undefined}
+                      blurDataURL={typeof miniAvatarUrl === 'object' ? (miniAvatarUrl as StaticImageData).blurDataURL : undefined}
                     />
                   </div>
                   <div className="pc-user-text">
@@ -385,12 +375,10 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
               </div>
             )}
           </div>
-          <div className="pc-content">
-            <div className="pc-details">
-              <h3>{name}</h3>
-              <p>{title}</p>
-            </div>
-          </div>
+                                           <div className="pc-content">
+                        <div className="pc-details">
+                        </div>
+                      </div>
         </div>
       </section>
     </div>

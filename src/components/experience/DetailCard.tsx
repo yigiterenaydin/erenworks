@@ -30,8 +30,8 @@ export default function DetailCard({ title, subtitle, imageUrl, docUrl, children
               width={420}
               height={280}
               className="w-36 sm:w-44 md:w-full h-auto object-contain rounded-md"
-              sizes="(max-width: 768px) 9rem, (max-width: 1024px) 11rem, 220px"
-              priority
+              priority={true}
+              quality={85}
             />
           </a>
         </div>

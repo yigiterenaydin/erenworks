@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "analyze": "ANALYZE=true npm run build",
-    "analyze:win": "set ANALYZE=true && npm run build"
+    "analyze:win": "set ANALYZE=true && npm run build",
+    "optimize-images": "node scripts/optimize-images.js"
   },
   "dependencies": {
     "@heroicons/react": "2.2.0",
