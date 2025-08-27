@@ -48,34 +48,41 @@ export default function Header({
 
   const [activeSection, setActiveSection] = useState<string>('home');
 
-  // Scroll progress calculation
+  // Scroll progress calculation with throttling
   useEffect(() => {
+    let ticking = false;
+    
     const updateScrollProgress = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-      setScrollProgress(Math.min(progress, 100));
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrollTop = window.scrollY;
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+          setScrollProgress(Math.min(progress, 100));
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
-    window.addEventListener('scroll', updateScrollProgress);
+    window.addEventListener('scroll', updateScrollProgress, { passive: true });
     updateScrollProgress(); // Initial calculation
 
     return () => window.removeEventListener('scroll', updateScrollProgress);
   }, []);
+
+
 
   const scrollToHash = useCallback((hash: string) => {
     const id = hash.replace('#', '');
     const el = document.getElementById(id);
     if (!el) return;
     
-    // Header yüksekliğini al
-    const headerHeight = headerRef.current?.offsetHeight ?? 80;
-    
     // Element'in pozisyonunu hesapla
     const elementTop = el.offsetTop;
     
-    // Scroll pozisyonunu hesapla (header'ın altında kalacak şekilde)
-    const scrollTop = elementTop - headerHeight - 20; // 20px ekstra boşluk
+    // Scroll pozisyonunu hesapla
+    const scrollTop = elementTop - 100; // Sabit offset
     
     // Smooth scroll yap
     window.scrollTo({ 
@@ -562,9 +569,8 @@ export default function Header({
                     href={item.href}
                     onClick={(e) => { 
                       e.preventDefault(); 
-                      onMobileMenuClose(); 
-                      // Menü kapanması için kısa bir gecikme
-                      setTimeout(() => scrollToHash(item.href), 100);
+                      onMobileMenuClose();
+                      scrollToHash(item.href);
                     }}
                     aria-current={activeSection === item.href.replace('#', '') ? 'page' : undefined}
                     className={`block text-xl font-semibold transition-all duration-300 py-4 px-4 rounded-xl border-b border-slate-200/50 dark:border-slate-700/50 last:border-b-0 group ${

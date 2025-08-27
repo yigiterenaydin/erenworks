@@ -56,9 +56,19 @@ export default function PortfolioColumns({ languages, references }: PortfolioCol
                     <span className="text-sm text-slate-300">{lang.note}</span>
                   </div>
                     <div className="relative h-3 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
-                    <div
+                    <motion.div
                       className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-rose-300 via-fuchsia-300 to-indigo-300 dark:from-rose-400 dark:via-fuchsia-400 dark:to-indigo-400"
-                      style={{ width: `${Math.max(0, Math.min(100, lang.level))}%` }}
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${Math.max(0, Math.min(100, lang.level))}%` }}
+                      transition={{ duration: 1.5, delay: idx * 0.2, ease: "easeOut" }}
+                      viewport={{ once: true }}
+                    />
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                      initial={{ x: '-100%' }}
+                      whileInView={{ x: '100%' }}
+                      transition={{ duration: 1, delay: 0.5 + idx * 0.2, ease: "easeInOut" }}
+                      viewport={{ once: true }}
                     />
                   </div>
                 </div>

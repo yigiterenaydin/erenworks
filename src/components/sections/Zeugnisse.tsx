@@ -30,7 +30,7 @@ export default function Zeugnisse({ title, reports }: ZeugnisseProps) {
   }, []);
 
   return (
-    <section id="reports" className="pt-16 pb-16 scroll-mt-24 md:scroll-mt-28 lg:scroll-mt-32 bg-rose-50/60 dark:bg-slate-800/30 backdrop-blur-sm">
+    <section id="reports" className="pt-16 pb-16 bg-rose-50/60 dark:bg-slate-800/30 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={prefersReducedMotion ? false : { opacity: 0, y: 50 }}
@@ -121,7 +121,7 @@ export default function Zeugnisse({ title, reports }: ZeugnisseProps) {
 
       {openFile && (
         <div className="fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="relative w-full h-[85vh] max-w-5xl bg-white dark:bg-slate-900 rounded-2xl shadow-2xl overflow-hidden">
+          <div className="relative w-full h-[90vh] max-w-6xl bg-white dark:bg-slate-900 rounded-2xl shadow-2xl overflow-hidden">
             <button
               aria-label="Schliessen"
               onClick={() => setOpenFile(null)}

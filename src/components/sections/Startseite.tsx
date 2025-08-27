@@ -53,22 +53,20 @@ export default function Startseite({ name }: StartseiteProps) {
                   <TypeAnimation
                     sequence={[
                       "freundlich und höflich.",
-                      1500,
-                      "mit anderen respektvoll und fair.",
-                      1500,
-                      "bei wichtigen Themen offen.",
-                      1500,
-                      "gut darin, mit Menschen aus verschiedenen Kulturen auszukommen.",
-                      1500,
-                      "sorgfältig und aufmerksam bei der Erledigung von Aufgaben.",
-                      1500,
-                      "offen für Neues und kann mich gut anpassen.",
-                      1500,
-                      "auch in stressigen Situationen ruhig.",
-                      1500,
+                      2000,
+                      "respektvoll und fair.",
+                      2000,
+                      "offen für Neues.",
+                      2000,
+                      "zuverlässig und sorgfältig.",
+                      2000,
+                      "teamorientiert.",
+                      2000,
+                      "stressresistent.",
+                      2000,
                     ]}
                     wrapper="span"
-                    speed={50}
+                    speed={60}
                     repeat={Infinity}
                     cursor={true}
                   />
@@ -119,12 +117,18 @@ export default function Startseite({ name }: StartseiteProps) {
                    href="https://github.com/yigiterenaydin"
                    target="_blank"
                    rel="noopener noreferrer"
-                   whileHover={{ scale: 1.05, y: -2 }}
+                   whileHover={{ scale: 1.05, y: -3, rotate: 1 }}
                    whileTap={{ scale: 0.95 }}
                    aria-label="Projekte ansehen – öffnet in neuem Tab"
-                   className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/80 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-300/80 dark:focus-visible:ring-offset-slate-900 transition-base text-center"
+                   className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:shadow-indigo-500/25 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/80 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-300/80 dark:focus-visible:ring-offset-slate-900 text-center relative overflow-hidden group"
                  >
-                   Projekte ansehen
+                   <span className="relative z-10">Projekte ansehen</span>
+                   <motion.div
+                     className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                     initial={{ x: '-100%' }}
+                     whileHover={{ x: '0%' }}
+                     transition={{ duration: 0.3 }}
+                   />
                  </motion.a>
                  <motion.a
                    href="/assets/pdfs/ErenLebensL.pdf"

@@ -80,7 +80,10 @@ export default function AppShell({ children }: AppShellProps) {
     // Her dakika kontrol et
     const interval = setInterval(checkAutoTheme, 60000);
     
-    return () => clearInterval(interval);
+    // Cleanup function
+    return () => {
+      clearInterval(interval);
+    };
   }, [autoTheme, theme, getAutoTheme]);
 
   // Manuel tema toggle

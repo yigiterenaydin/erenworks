@@ -129,6 +129,22 @@ export default function Kontakt({ title, description, contactInfo }: KontaktProp
           formRef.current.reset();
         }
         setMathQuestion(generateMathQuestion());
+        
+        // Mobilde teşekkür mesajına scroll et
+        setTimeout(() => {
+          const contactSection = document.getElementById('contact');
+          if (contactSection) {
+            const isMobile = window.innerWidth < 768;
+            const offset = isMobile ? 100 : 150;
+            const elementTop = contactSection.offsetTop;
+            const scrollTop = elementTop - offset;
+            
+            window.scrollTo({ 
+              top: Math.max(0, scrollTop), 
+              behavior: 'smooth' 
+            });
+          }
+        }, 100);
       } else {
         setErrorMsg('Etwas ist schiefgelaufen. Bitte später erneut versuchen.');
         setIsSubmitted(false);
