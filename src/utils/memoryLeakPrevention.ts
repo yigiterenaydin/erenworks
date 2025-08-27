@@ -91,7 +91,7 @@ export const memoryLeakPrevention = {
 export const useEventListener = (
   element: HTMLElement | Window | null,
   event: string,
-  handler: EventListener,
+  handler: EventListener | ((event: Event) => void),
   options?: AddEventListenerOptions
 ) => {
   const savedHandler = useRef(handler);

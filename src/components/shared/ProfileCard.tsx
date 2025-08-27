@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useCallback, useMemo } from "react";
 import { useReducedMotion } from "framer-motion";
 import Image, { StaticImageData } from "next/image";
-import { useEventListener, useAnimationFrame } from "@/utils/memoryLeakPrevention";
+import { useEventListener } from "@/utils/memoryLeakPrevention";
 
 import "./ProfileCard.css";
 
