@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useCallback, useMemo } from "react";
 import { useReducedMotion } from "framer-motion";
 import Image, { StaticImageData } from "next/image";
-import { useEventListener } from "@/utils/memoryLeakPrevention";
+
 
 import "./ProfileCard.css";
 
@@ -236,32 +236,44 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     [animationHandlers, mobileTiltSensitivity, prefersReducedMotion]
   );
 
-  // Memory leak prevention for event listeners
-  const card = cardRef.current;
-  
-  useEventListener(card, "pointerenter", handlePointerEnter as EventListener, { passive: true });
-  useEventListener(card, "pointermove", handlePointerMove as EventListener, { passive: true });
-  useEventListener(card, "pointerleave", handlePointerLeave as EventListener, { passive: true });
-  useEventListener(card, "click", () => {
-    if (!enableMobileTilt || location.protocol !== 'https:') return;
-    type DeviceMotionEventConstructor = typeof window.DeviceMotionEvent & {
-      requestPermission?: () => Promise<PermissionState | 'granted' | 'denied'>;
+  // Event listeners
+  useEffect(() => {
+    const card = cardRef.current;
+    if (!card) return;
+
+    const handleClick = () => {
+      if (!enableMobileTilt || location.protocol !== 'https:') return;
+      type DeviceMotionEventConstructor = typeof window.DeviceMotionEvent & {
+        requestPermission?: () => Promise<PermissionState | 'granted' | 'denied'>;
+      };
+      const DeviceMotionEventCtor: DeviceMotionEventConstructor | undefined =
+        (window as unknown as { DeviceMotionEvent?: DeviceMotionEventConstructor }).DeviceMotionEvent;
+      if (DeviceMotionEventCtor && typeof DeviceMotionEventCtor.requestPermission === 'function') {
+        DeviceMotionEventCtor
+          .requestPermission!()
+          .then((state: PermissionState | 'granted' | 'denied') => {
+            if (state === 'granted') {
+              window.addEventListener('deviceorientation', handleDeviceOrientation as EventListener);
+            }
+          })
+          .catch((err: unknown) => console.error(err));
+      } else {
+        window.addEventListener('deviceorientation', handleDeviceOrientation as EventListener);
+      }
     };
-    const DeviceMotionEventCtor: DeviceMotionEventConstructor | undefined =
-      (window as unknown as { DeviceMotionEvent?: DeviceMotionEventConstructor }).DeviceMotionEvent;
-    if (DeviceMotionEventCtor && typeof DeviceMotionEventCtor.requestPermission === 'function') {
-      DeviceMotionEventCtor
-        .requestPermission!()
-        .then((state: PermissionState | 'granted' | 'denied') => {
-          if (state === 'granted') {
-            window.addEventListener('deviceorientation', handleDeviceOrientation as EventListener);
-          }
-        })
-        .catch((err: unknown) => console.error(err));
-    } else {
-      window.addEventListener('deviceorientation', handleDeviceOrientation as EventListener);
-    }
-  }, { passive: true });
+
+    card.addEventListener("pointerenter", handlePointerEnter as EventListener, { passive: true });
+    card.addEventListener("pointermove", handlePointerMove as EventListener, { passive: true });
+    card.addEventListener("pointerleave", handlePointerLeave as EventListener, { passive: true });
+    card.addEventListener("click", handleClick, { passive: true });
+
+    return () => {
+      card.removeEventListener("pointerenter", handlePointerEnter as EventListener);
+      card.removeEventListener("pointermove", handlePointerMove as EventListener);
+      card.removeEventListener("pointerleave", handlePointerLeave as EventListener);
+      card.removeEventListener("click", handleClick);
+    };
+  }, [handlePointerEnter, handlePointerMove, handlePointerLeave, enableMobileTilt, handleDeviceOrientation]);
 
   // Initialize card transform
   useEffect(() => {
