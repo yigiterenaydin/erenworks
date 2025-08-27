@@ -1,17 +1,18 @@
 'use client';
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useEffect, useState, useRef, useCallback, Fragment } from "react";
-import { HomeIcon } from '@heroicons/react/24/outline';
-import { UserCircleIcon } from '@heroicons/react/24/outline';
-import { AcademicCapIcon } from '@heroicons/react/24/outline';
-import { BriefcaseIcon } from '@heroicons/react/24/outline';
-import { Squares2X2Icon } from '@heroicons/react/24/outline';
-import { EnvelopeIcon } from '@heroicons/react/24/outline';
-import { MoonIcon } from '@heroicons/react/24/outline';
-import { SunIcon } from '@heroicons/react/24/outline';
-import { ClockIcon } from '@heroicons/react/24/outline';
-
+import {
+  HomeIcon,
+  UserCircleIcon,
+  AcademicCapIcon,
+  BriefcaseIcon,
+  Squares2X2Icon,
+  EnvelopeIcon,
+  MoonIcon,
+  SunIcon,
+  ClockIcon,
+} from '@heroicons/react/24/outline';
 
 interface HeaderProps {
   theme: 'light' | 'dark';
@@ -49,33 +50,30 @@ export default function Header({
 
   // Scroll progress calculation
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
+    const updateScrollProgress = () => {
+      const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
       setScrollProgress(Math.min(progress, 100));
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', updateScrollProgress);
+    updateScrollProgress(); // Initial calculation
+
+    return () => window.removeEventListener('scroll', updateScrollProgress);
   }, []);
-
-
 
   const scrollToHash = useCallback((hash: string) => {
     const id = hash.replace('#', '');
     const el = document.getElementById(id);
     if (!el) return;
     
+    // Mobilde daha fazla offset, desktop'ta daha az
+    const isMobile = window.innerWidth < 768;
+    const offset = isMobile ? 120 : 80; // Mobilde daha fazla offset
+    
     // Element'in pozisyonunu hesapla
     const elementTop = el.offsetTop;
-    
-    // Mobilde daha az offset, desktop'ta daha fazla
-    const isMobile = window.innerWidth < 768;
-    const offset = isMobile ? 100 : 80; // Mobilde daha az offset
-    
-    // Tüm bölümler için aynı offset - tutarlılık için
-    // Kontakt bölümü için özel offset kaldırıldı
     
     // Scroll pozisyonunu hesapla
     const scrollTop = elementTop - offset;
@@ -153,7 +151,6 @@ export default function Header({
           <div className="hidden md:flex flex-1 justify-center">
             <nav
               aria-label="Primary"
-              role="menubar"
               className="flex items-center gap-1 rounded-full border border-slate-200/70 dark:border-slate-700/60 bg-white/90 dark:bg-slate-900/70 backdrop-blur-md shadow-[0_2px_20px_rgba(0,0,0,0.06)] px-2 py-2"
             >
               {navigationItems.map((item, index) => {
@@ -167,15 +164,6 @@ export default function Header({
                       whileHover={prefersReducedMotion ? undefined : { y: -2, scale: 1.05 }}
                       whileTap={prefersReducedMotion ? undefined : { scale: 0.95 }}
                       aria-current={isActive ? 'page' : undefined}
-                      aria-label={`${item.name} bölümüne git`}
-                      role="menuitem"
-                      tabIndex={0}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                          e.preventDefault();
-                          scrollToHash(item.href);
-                        }
-                      }}
                       className={`group flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 relative ${
                         isActive
                           ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white shadow-inner'
@@ -287,7 +275,7 @@ export default function Header({
                 transition={{ duration: 0.3 }}
               />
               
-                             <motion.button
+              <motion.button
                  whileHover={prefersReducedMotion ? undefined : { 
                    scale: 1.15, 
                    rotate: 360,
@@ -587,9 +575,6 @@ export default function Header({
               whileHover={prefersReducedMotion ? undefined : { scale: 1.05, rotate: 5 }}
               whileTap={prefersReducedMotion ? undefined : { scale: 0.9 }}
               onClick={onMobileMenuToggle}
-              aria-label={isMobileMenuOpen ? "Menü schließen" : "Menü öffnen"}
-              aria-expanded={isMobileMenuOpen}
-              aria-controls="mobile-menu"
               className="md:hidden p-3 rounded-xl bg-gradient-to-r from-indigo-100 to-purple-100 dark:from-slate-800 dark:to-indigo-800 hover:from-indigo-200 hover:to-purple-200 dark:hover:from-slate-700 dark:hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-900"
             >
               <div className="w-6 h-6 flex flex-col justify-center items-center">
@@ -615,9 +600,6 @@ export default function Header({
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            id="mobile-menu"
-            role="navigation"
-            aria-label="Mobile Navigation"
             initial={prefersReducedMotion ? false : { opacity: 0, y: -30, scale: 0.9, rotateX: -15 }}
             animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0, scale: 1, rotateX: 0 }}
             exit={prefersReducedMotion ? undefined : { opacity: 0, y: -30, scale: 0.9, rotateX: -15 }}
@@ -654,10 +636,8 @@ export default function Header({
                     onClick={(e) => { 
                       e.preventDefault(); 
                       onMobileMenuClose(); 
-                      // Mobil menü kapanması için biraz bekle
-                      setTimeout(() => {
-                        scrollToHash(item.href);
-                      }, 300);
+                      // Menü kapanması için gecikme
+                      setTimeout(() => scrollToHash(item.href), 300);
                     }}
                     aria-current={activeSection === item.href.replace('#', '') ? 'page' : undefined}
                     className={`block text-xl font-semibold transition-all duration-300 py-4 px-4 rounded-xl border-b border-slate-200/50 dark:border-slate-700/50 last:border-b-0 group ${
