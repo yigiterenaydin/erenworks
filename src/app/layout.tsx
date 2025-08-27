@@ -155,8 +155,7 @@ export default function RootLayout({
         <Analytics />
         <SpeedInsights />
         
-        {/* Image Preloading */}
-        <link rel="preload" as="image" href="/assets/bilder/eren-photo.png" />
+        {/* Image Preloading - Removed to fix console warning */}
         
         {/* Performance Monitoring Script */}
         <Script id="performance-monitor" strategy="afterInteractive">

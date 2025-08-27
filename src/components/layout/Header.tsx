@@ -33,7 +33,7 @@ export default function Header({
   onMobileMenuToggle, 
   onMobileMenuClose 
 }: HeaderProps) {
-  const prefersReducedMotion = false; // Reduced Motion uyarısını tamamen kapat
+  const prefersReducedMotion = useReducedMotion(); // Gerçek reduced motion kullan
   const headerRef = useRef<HTMLElement | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   
@@ -124,11 +124,12 @@ export default function Header({
         initial={{ scaleX: 0 }}
         animate={{ scaleX: scrollProgress / 100 }}
         transition={{ 
-          duration: prefersReducedMotion ? 0 : 0.1,
-          ease: "easeOut"
+          duration: prefersReducedMotion ? 0 : 0.05,
+          ease: "linear"
         }}
         // Reduced Motion uyarısını engelle
         suppressHydrationWarning={true}
+        aria-hidden="true"
       />
       
       <motion.header 
