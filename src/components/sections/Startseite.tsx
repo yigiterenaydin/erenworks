@@ -12,7 +12,7 @@ interface StartseiteProps {
 export default function Startseite({ name }: StartseiteProps) {
   const prefersReducedMotion = useReducedMotion();
   return (
-    <section id="home" className="relative pt-20 pb-16 bg-rose-50/60 dark:bg-slate-800/30 backdrop-blur-sm section-anchor">
+    <section id="home" className="relative pt-20 pb-16 bg-rose-50/60 dark:bg-slate-800/30 backdrop-blur-sm section-anchor" style={{ scrollMarginTop: '120px' }}>
 
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

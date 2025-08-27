@@ -70,9 +70,9 @@ export default function Header({
     // Element'in pozisyonunu hesapla
     const elementTop = el.offsetTop;
     
-    // Mobilde daha fazla offset, desktop'ta daha az
+    // Mobilde daha az offset, desktop'ta daha fazla
     const isMobile = window.innerWidth < 768;
-    const offset = isMobile ? 150 : 80; // Mobilde daha fazla offset
+    const offset = isMobile ? 100 : 80; // Mobilde daha az offset
     
     // Tüm bölümler için aynı offset - tutarlılık için
     // Kontakt bölümü için özel offset kaldırıldı

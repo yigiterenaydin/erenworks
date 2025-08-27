@@ -29,7 +29,7 @@ export default function UeberMich({ title, skills }: UeberMichProps) {
   ];
 
   return (
-    <section id="about" className="relative pt-16 pb-16 bg-rose-50/60 dark:bg-slate-900/50 backdrop-blur-sm section-anchor overflow-hidden">
+    <section id="about" className="relative pt-16 pb-16 bg-rose-50/60 dark:bg-slate-900/50 backdrop-blur-sm section-anchor overflow-hidden" style={{ scrollMarginTop: '120px' }}>
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img 

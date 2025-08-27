@@ -160,7 +160,7 @@ export default function Kontakt({ title, description, contactInfo }: KontaktProp
   };
 
   return (
-    <section id="contact" className="pt-16 pb-16 bg-rose-50/60 dark:bg-slate-900/50 backdrop-blur-sm section-anchor">
+    <section id="contact" className="pt-16 pb-16 bg-rose-50/60 dark:bg-slate-900/50 backdrop-blur-sm section-anchor" style={{ scrollMarginTop: '120px' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8">
           <h3 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-6">

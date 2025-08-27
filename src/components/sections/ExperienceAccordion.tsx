@@ -94,7 +94,7 @@ export default function ExperienceAccordion({ items }: Props) {
   }, [selectedIndex, sorted]);
 
   return (
-    <section id="experience" className="pt-16 md:pt-16 pb-16 bg-rose-50/60 dark:bg-slate-900/50 backdrop-blur-sm section-anchor">
+    <section id="experience" className="pt-16 md:pt-16 pb-16 bg-rose-50/60 dark:bg-slate-900/50 backdrop-blur-sm section-anchor" style={{ scrollMarginTop: '120px' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={prefersReducedMotion ? false : { opacity: 0, y: 50 }}
