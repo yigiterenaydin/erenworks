@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
 import { PencilIcon } from '@heroicons/react/24/outline';
 import { FlagIcon } from '@heroicons/react/24/outline';
 import { RocketLaunchIcon } from '@heroicons/react/24/outline';
+import Image from 'next/image';
 
 interface Skill {
   icon: ReactNode;
@@ -32,10 +33,13 @@ export default function UeberMich({ title, skills }: UeberMichProps) {
     <section id="about" className="relative pt-16 pb-16 bg-rose-50/60 dark:bg-slate-900/50 backdrop-blur-sm section-anchor overflow-hidden" style={{ scrollMarginTop: '120px' }}>
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <img 
+        <Image 
           src="/assets/bilder/schule-bg.png" 
           alt="Schule Hintergrund" 
+          width={1920}
+          height={1080}
           className="w-full h-full object-cover object-top opacity-5 sm:opacity-3 dark:opacity-3 sm:dark:opacity-2"
+          priority={false}
         />
       </div>
       

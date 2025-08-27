@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { FaUtensils, FaMusic, FaTree, FaCamera, FaFileWord, FaFileExcel, FaSwimmer } from 'react-icons/fa';
 import { FaPersonWalking } from 'react-icons/fa6';
 import { MdSportsMartialArts } from 'react-icons/md';

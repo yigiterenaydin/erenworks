@@ -1,16 +1,7 @@
 'use client';
 
-import { motion, useReducedMotion } from 'framer-motion';
-import { useInView } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
-
-
-interface StatItem {
-  number: number;
-  label: string;
-  description: string;
-  color: string;
-}
 
 
 
