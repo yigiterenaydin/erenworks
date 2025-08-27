@@ -81,8 +81,17 @@ export default function Header({
     // Element'in pozisyonunu hesapla
     const elementTop = el.offsetTop;
     
+    // Mobilde daha az offset, desktop'ta daha fazla
+    const isMobile = window.innerWidth < 768;
+    let offset = isMobile ? 80 : 120;
+    
+    // Kontakt bölümü için özel offset
+    if (id === 'contact') {
+      offset = isMobile ? 60 : 100;
+    }
+    
     // Scroll pozisyonunu hesapla
-    const scrollTop = elementTop - 100; // Sabit offset
+    const scrollTop = elementTop - offset;
     
     // Smooth scroll yap
     window.scrollTo({ 

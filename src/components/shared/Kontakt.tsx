@@ -135,7 +135,7 @@ export default function Kontakt({ title, description, contactInfo }: KontaktProp
           const contactSection = document.getElementById('contact');
           if (contactSection) {
             const isMobile = window.innerWidth < 768;
-            const offset = isMobile ? 100 : 150;
+            const offset = isMobile ? 60 : 100; // Kontakt bölümü ile aynı offset
             const elementTop = contactSection.offsetTop;
             const scrollTop = elementTop - offset;
             
