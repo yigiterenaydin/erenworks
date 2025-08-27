@@ -45,12 +45,15 @@ export default function AppShell({ children }: AppShellProps) {
     setIsLoaded(true);
   }, [autoTheme, getAutoTheme]);
 
-  // Theme transition with memory leak prevention
-  useTimer(() => {
+  // Theme transition
+  useEffect(() => {
     if (!mounted) return;
-    const root = document.documentElement;
-    root.style.transition = '';
-  }, mounted ? 500 : null);
+    const timer = setTimeout(() => {
+      const root = document.documentElement;
+      root.style.transition = '';
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [mounted]);
 
   useEffect(() => {
     if (!mounted) return;
@@ -72,7 +75,11 @@ export default function AppShell({ children }: AppShellProps) {
     }
   }, [getAutoTheme, theme]);
 
-  useInterval(checkAutoTheme, autoTheme ? 60000 : null);
+  useEffect(() => {
+    if (!autoTheme) return;
+    const interval = setInterval(checkAutoTheme, 60000);
+    return () => clearInterval(interval);
+  }, [autoTheme, checkAutoTheme]);
 
   // Manuel tema toggle
   const toggleTheme = useCallback(() => {
