@@ -12,9 +12,7 @@ interface StatItem {
   color: string;
 }
 
-interface StatsSectionProps {
-  stats: StatItem[];
-}
+
 
 // Animated Counter Component
 function AnimatedCounter({ value, isInView }: { value: number; isInView: boolean }) {
@@ -56,7 +54,7 @@ function AnimatedCounter({ value, isInView }: { value: number; isInView: boolean
 export default function StatsSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
-  const prefersReducedMotion = useReducedMotion();
+
 
   // Burada rakamları güncelleyebilirsiniz
   const stats = [

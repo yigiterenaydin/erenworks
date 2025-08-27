@@ -72,14 +72,13 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   mobileTiltSensitivity = 5,
   miniAvatarUrl,
   name = "Eren Aydin",
-  title = "Schüler",
+
   handle = "eren_aydin",
   status = "Online",
   contactText = "Kontakt",
   showUserInfo = true,
   onContactClick,
-  sizes,
-  priority = false,
+
 }) => {
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const cardRef = useRef<HTMLElement | null>(null);

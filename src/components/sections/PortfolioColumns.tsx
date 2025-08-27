@@ -27,7 +27,7 @@ interface PortfolioColumnsProps {
 }
 
 export default function PortfolioColumns({ languages, references }: PortfolioColumnsProps) {
-  const prefersReducedMotion = useReducedMotion();
+
   return (
     <section id="projects" className="pt-16 pb-16 bg-rose-50/60 dark:bg-slate-800/30 backdrop-blur-sm section-anchor">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
