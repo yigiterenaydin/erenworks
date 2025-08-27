@@ -2,17 +2,43 @@
 
 // Home sayfası: Bölümleri bir araya getirir. İskelet (tema, header, arka plan) AppShell içinde.
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
+import Head from "next/head";
+import dynamic from "next/dynamic";
 import AppShell from "@/components/layout/AppShell";
 import Startseite from "@/components/sections/Startseite";
-import UeberMich from "@/components/sections/UeberMich";
-import ExperienceAccordion from "@/components/sections/ExperienceAccordion";
-import PortfolioColumns from "@/components/sections/PortfolioColumns";
-import Zeugnisse from "@/components/sections/Zeugnisse";
-import Kontakt from "@/components/shared/Kontakt";
-import Technologies from "@/components/shared/Technologies";
-import { AcademicCapIcon, BriefcaseIcon, RocketLaunchIcon, UserGroupIcon, DocumentTextIcon } from "@heroicons/react/24/solid";
-import StatsSection from "@/components/sections/StatsSection";
+import { AcademicCapIcon } from "@heroicons/react/24/solid";
+import { BriefcaseIcon } from "@heroicons/react/24/solid";
+import { RocketLaunchIcon } from "@heroicons/react/24/solid";
+
+// Lazy loaded components
+const UeberMich = dynamic(() => import("@/components/sections/UeberMich"), {
+  loading: () => <div className="h-96 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-slate-800 dark:to-slate-700 animate-pulse rounded-2xl" />
+});
+
+const ExperienceAccordion = dynamic(() => import("@/components/sections/ExperienceAccordion"), {
+  loading: () => <div className="h-96 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-slate-800 dark:to-slate-700 animate-pulse rounded-2xl" />
+});
+
+const PortfolioColumns = dynamic(() => import("@/components/sections/PortfolioColumns"), {
+  loading: () => <div className="h-96 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-slate-800 dark:to-slate-700 animate-pulse rounded-2xl" />
+});
+
+const Zeugnisse = dynamic(() => import("@/components/sections/Zeugnisse"), {
+  loading: () => <div className="h-96 bg-gradient-to-r from-rose-50 to-pink-50 dark:from-slate-800 dark:to-slate-700 animate-pulse rounded-2xl" />
+});
+
+const Kontakt = dynamic(() => import("@/components/shared/Kontakt"), {
+  loading: () => <div className="h-96 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-slate-800 dark:to-slate-700 animate-pulse rounded-2xl" />
+});
+
+const Technologies = dynamic(() => import("@/components/shared/Technologies"), {
+  loading: () => <div className="h-32 bg-gradient-to-r from-slate-50 to-gray-50 dark:from-slate-800 dark:to-slate-700 animate-pulse rounded-2xl" />
+});
+
+const StatsSection = dynamic(() => import("@/components/sections/StatsSection"), {
+  loading: () => <div className="h-48 bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-slate-800 dark:to-slate-700 animate-pulse rounded-2xl" />
+});
 
 export default function Home() {
   // n8n ping'i geçici olarak devre dışı
@@ -29,13 +55,23 @@ export default function Home() {
   //   wakeN8n();
   // }, []);
   return (
-    <AppShell>
+    <>
+      <Head>
+        <title>Eren Aydin – Portfolio | Schüler Portfolio</title>
+        <meta name="description" content="Persönliches Profil, Schulische Unterlagen (PDF), Erfahrungen & Schnupperlehren, Sprachkenntnisse, Interessen, Referenzen und Kontakt. Portfolio von Eren Aydin aus Zürich." />
+        <meta name="keywords" content="portfolio, lebenslauf, schulische unterlagen, zeugnisse, erfahrungen, schnupperlehren, sprachkenntnisse, next.js, typescript, react, tailwind css, javascript, zürich, schweiz, schüler, entwickler, programmierer" />
+        <meta name="author" content="Eren Aydin" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://erenworks.vercel.app" />
+      </Head>
+      <AppShell>
 
       <Startseite
         name="Eren"
       />
 
-      <UeberMich
+      <Suspense fallback={<div className="h-96 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-slate-800 dark:to-slate-700 animate-pulse rounded-2xl" />}>
+        <UeberMich
         title="Persönliches Profil"
         skills={[
           {
@@ -57,20 +93,26 @@ export default function Home() {
             color: "from-green-500 to-emerald-600"
           }
         ]}
-      />
+        />
+      </Suspense>
 
-      <StatsSection />
+      <Suspense fallback={<div className="h-48 bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-slate-800 dark:to-slate-700 animate-pulse rounded-2xl" />}>
+        <StatsSection />
+      </Suspense>
 
-      <Zeugnisse
-        title="Schulische Unterlagen"
-        reports={[
-          { term: 'Zeugnisse 1. Sek (Gesamt)', date: '2023', file: '/assets/pdfs/SekundarSchuleZeugnisse1sek.pdf' },
-          { term: 'Zeugnisse 2. Sek (Gesamt)', date: '2024', file: '/assets/pdfs/SekundarSchuleZeugnisse2sek.pdf' },
-          { term: 'Semesterzeugnis 3. Sek – 1. Semester', date: '01/2025', file: '/assets/pdfs/zeugnis-2025-01.pdf', available: false, comingText: 'In ~6 Monaten verfügbar' },
-        ]}
-      />
+      <Suspense fallback={<div className="h-96 bg-gradient-to-r from-rose-50 to-pink-50 dark:from-slate-800 dark:to-slate-700 animate-pulse rounded-2xl" />}>
+        <Zeugnisse
+          title="Schulische Unterlagen"
+          reports={[
+            { term: 'Zeugnisse 1. Sek (Gesamt)', date: '2023', file: '/assets/pdfs/SekundarSchuleZeugnisse1sek.pdf' },
+            { term: 'Zeugnisse 2. Sek (Gesamt)', date: '2024', file: '/assets/pdfs/SekundarSchuleZeugnisse2sek.pdf' },
+            { term: 'Semesterzeugnis 3. Sek – 1. Semester', date: '01/2025', file: '/assets/pdfs/zeugnis-2025-01.pdf', available: false, comingText: 'In ~6 Monaten verfügbar' },
+          ]}
+        />
+      </Suspense>
 
-      <ExperienceAccordion
+              <Suspense fallback={<div className="h-96 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-slate-800 dark:to-slate-700 animate-pulse rounded-2xl" />}>
+          <ExperienceAccordion
         items={[
           {
             date: "05/2025",
@@ -169,11 +211,13 @@ export default function Home() {
               "Beim UBS-Schnuppertag erhielt ich Einblicke in zentrale Bereiche und Tätigkeiten einer internationalen Bank, setzte mich spielerisch mit bankenspezifischen Themen auseinander, informierte mich über die Lehre und den Rekrutierungsprozess und tauschte mich mit Lernenden, Mitarbeitenden und Personalverantwortlichen in einer UBS-Geschäftsstelle aus.",
           },
         ]}
-      />
+        />
+      </Suspense>
 
       {/* Sprachkenntnisse menüden kaldırıldı ve aşağıdaki proje kartına gömülü gösteriliyor */}
 
-      <PortfolioColumns
+      <Suspense fallback={<div className="h-96 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-slate-800 dark:to-slate-700 animate-pulse rounded-2xl" />}>
+        <PortfolioColumns
         languages={[
           { code: 'DE', name: 'Deutsch', note: 'Muttersprache', level: 100 },
           { code: 'TR', name: 'Türkisch', note: 'Muttersprache', level: 100 },
@@ -184,11 +228,11 @@ export default function Home() {
           { name: 'Thomas Seinige', title: 'Klassenlehrer', email: 'thomas.seinige@schulen.zuerich.ch', phone: 'Nach fragen' },
           { name: 'Cyrill Lam', title: 'Kung‑Fu Lehrer', email: 'zuerich@skema.ch', phone: '044 401 40 42' },
         ]}
-      />
+        />
+      </Suspense>
 
-      
-
-             <Kontakt
+      <Suspense fallback={<div className="h-96 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-slate-800 dark:to-slate-700 animate-pulse rounded-2xl" />}>
+        <Kontakt
          title="Kontaktieren Sie mich über"
          description=""
                  contactInfo={[
@@ -212,6 +256,7 @@ export default function Home() {
            }
          ]}
        />
+      </Suspense>
 
       {/* Footer */}
       <footer className="bg-slate-900 dark:bg-black text-white py-16">
@@ -240,7 +285,9 @@ export default function Home() {
                 </ul>
               </div>
             </div>
-            <Technologies />
+            <Suspense fallback={<div className="h-32 bg-gradient-to-r from-slate-50 to-gray-50 dark:from-slate-800 dark:to-slate-700 animate-pulse rounded-2xl" />}>
+              <Technologies />
+            </Suspense>
             <div>
               <h4 className="text-2xl font-bold mb-6">Kontakt</h4>
                                                     <div className="flex space-x-4">
@@ -337,5 +384,6 @@ export default function Home() {
         </div>
       </footer>
     </AppShell>
+    </>
   );
 }

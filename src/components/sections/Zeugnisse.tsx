@@ -2,7 +2,9 @@
 
 import { motion, useReducedMotion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { DocumentArrowDownIcon, EyeIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import { DocumentArrowDownIcon } from '@heroicons/react/24/solid';
+import { EyeIcon } from '@heroicons/react/24/solid';
+import { XMarkIcon } from '@heroicons/react/24/solid';
 
 interface ReportItem {
   term: string;

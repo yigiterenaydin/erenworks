@@ -2,7 +2,9 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from 'react';
-import { PencilIcon, FlagIcon, RocketLaunchIcon } from '@heroicons/react/24/outline';
+import { PencilIcon } from '@heroicons/react/24/outline';
+import { FlagIcon } from '@heroicons/react/24/outline';
+import { RocketLaunchIcon } from '@heroicons/react/24/outline';
 
 interface Skill {
   icon: ReactNode;

@@ -262,7 +262,7 @@ export default function Kontakt({ title, description, contactInfo }: KontaktProp
             {!isSubmitted ? (
               <>
                 <h4 className="text-3xl font-bold text-slate-900 dark:text-white mb-8">Nachricht senden</h4>
-                <form ref={formRef} onSubmit={handleSubmit} className="space-y-6" id="contact-form" autoComplete="off">
+                <form ref={formRef} onSubmit={handleSubmit} className="space-y-6" id="contact-form" autoComplete="off" role="form" aria-label="Kontaktformular">
                   <div className="transition-base">
                     <label htmlFor="contact-name" className="sr-only">Ihr Name</label>
                     <input 
@@ -271,7 +271,9 @@ export default function Kontakt({ title, description, contactInfo }: KontaktProp
                       name="name"
                       placeholder="Ihr Name" 
                       required
-                      autoComplete="off"
+                      autoComplete="name"
+                      aria-required="true"
+                      aria-describedby="name-error"
                       className="w-full px-6 py-4 border border-slate-300 dark:border-slate-600 rounded-xl bg-white/50 dark:bg-slate-700/50 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 transition-all duration-300 backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-800" 
                     />
                   </div>
@@ -283,7 +285,9 @@ export default function Kontakt({ title, description, contactInfo }: KontaktProp
                       name="email"
                       placeholder="Ihre Email" 
                       required
-                      autoComplete="off"
+                      autoComplete="email"
+                      aria-required="true"
+                      aria-describedby="email-error"
                       className="w-full px-6 py-4 border border-slate-300 dark:border-slate-600 rounded-xl bg-white/50 dark:bg-slate-700/50 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 transition-all duration-300 backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-800" 
                     />
                   </div>
@@ -296,6 +300,8 @@ export default function Kontakt({ title, description, contactInfo }: KontaktProp
                       rows={4} 
                       required
                       autoComplete="off"
+                      aria-required="true"
+                      aria-describedby="message-error"
                       className="w-full px-6 py-4 border border-slate-300 dark:border-slate-600 rounded-xl bg-white/50 dark:bg-slate-700/50 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 transition-all duration-300 backdrop-blur-sm resize-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-800"
                     ></textarea>
                   </div>

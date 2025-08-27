@@ -2,17 +2,15 @@
 
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useEffect, useState, useRef, useCallback, Fragment } from "react";
-import {
-  HomeIcon,
-  UserCircleIcon,
-  AcademicCapIcon,
-  BriefcaseIcon,
-  Squares2X2Icon,
-  EnvelopeIcon,
-  MoonIcon,
-  SunIcon,
-  ClockIcon,
-} from '@heroicons/react/24/outline';
+import { HomeIcon } from '@heroicons/react/24/outline';
+import { UserCircleIcon } from '@heroicons/react/24/outline';
+import { AcademicCapIcon } from '@heroicons/react/24/outline';
+import { BriefcaseIcon } from '@heroicons/react/24/outline';
+import { Squares2X2Icon } from '@heroicons/react/24/outline';
+import { EnvelopeIcon } from '@heroicons/react/24/outline';
+import { MoonIcon } from '@heroicons/react/24/outline';
+import { SunIcon } from '@heroicons/react/24/outline';
+import { ClockIcon } from '@heroicons/react/24/outline';
 
 interface HeaderProps {
   theme: 'light' | 'dark';
@@ -164,6 +162,7 @@ export default function Header({
           <div className="hidden md:flex flex-1 justify-center">
             <nav
               aria-label="Primary"
+              role="menubar"
               className="flex items-center gap-1 rounded-full border border-slate-200/70 dark:border-slate-700/60 bg-white/90 dark:bg-slate-900/70 backdrop-blur-md shadow-[0_2px_20px_rgba(0,0,0,0.06)] px-2 py-2"
             >
               {navigationItems.map((item, index) => {
@@ -177,6 +176,15 @@ export default function Header({
                       whileHover={prefersReducedMotion ? undefined : { y: -2, scale: 1.05 }}
                       whileTap={prefersReducedMotion ? undefined : { scale: 0.95 }}
                       aria-current={isActive ? 'page' : undefined}
+                      aria-label={`${item.name} bölümüne git`}
+                      role="menuitem"
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          scrollToHash(item.href);
+                        }
+                      }}
                       className={`group flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 relative ${
                         isActive
                           ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white shadow-inner'
@@ -588,6 +596,9 @@ export default function Header({
               whileHover={prefersReducedMotion ? undefined : { scale: 1.05, rotate: 5 }}
               whileTap={prefersReducedMotion ? undefined : { scale: 0.9 }}
               onClick={onMobileMenuToggle}
+              aria-label={isMobileMenuOpen ? "Menü schließen" : "Menü öffnen"}
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-menu"
               className="md:hidden p-3 rounded-xl bg-gradient-to-r from-indigo-100 to-purple-100 dark:from-slate-800 dark:to-indigo-800 hover:from-indigo-200 hover:to-purple-200 dark:hover:from-slate-700 dark:hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-900"
             >
               <div className="w-6 h-6 flex flex-col justify-center items-center">
@@ -613,6 +624,9 @@ export default function Header({
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
+            id="mobile-menu"
+            role="navigation"
+            aria-label="Mobile Navigation"
             initial={prefersReducedMotion ? false : { opacity: 0, y: -30, scale: 0.9, rotateX: -15 }}
             animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0, scale: 1, rotateX: 0 }}
             exit={prefersReducedMotion ? undefined : { opacity: 0, y: -30, scale: 0.9, rotateX: -15 }}

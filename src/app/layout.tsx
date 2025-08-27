@@ -17,9 +17,9 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://erenworks.vercel.app"),
-  title: "Eren Aydin – Portfolio",
+  title: "Eren Aydin – Portfolio | Schüler Portfolio",
   description:
-    "Persönliches Profil, Schulische Unterlagen (PDF), Erfahrungen & Schnupperlehren, Sprachkenntnisse, Interessen, Referenzen und Kontakt.",
+    "Persönliches Profil, Schulische Unterlagen (PDF), Erfahrungen & Schnupperlehren, Sprachkenntnisse, Interessen, Referenzen und Kontakt. Portfolio von Eren Aydin aus Zürich.",
   keywords: [
     "portfolio",
     "lebenslauf",
@@ -30,8 +30,20 @@ export const metadata: Metadata = {
     "sprachkenntnisse",
     "next.js",
     "typescript",
+    "react",
+    "tailwind css",
+    "javascript",
+    "zürich",
+    "schweiz",
+    "schüler",
+    "entwickler",
+    "programmierer"
   ],
   authors: [{ name: "Eren Aydin" }],
+  creator: "Eren Aydin",
+  publisher: "Eren Aydin",
+  category: "Portfolio",
+  classification: "Personal Website",
   openGraph: {
     title: "Eren Aydin – Portfolio",
     description:
@@ -76,7 +88,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
-        {/* JSON-LD Person */}
+        {/* Enhanced JSON-LD Person */}
         <Script id="ld-person" type="application/ld+json" strategy="afterInteractive">
           {JSON.stringify({
             "@context": "https://schema.org",
@@ -88,7 +100,46 @@ export default function RootLayout({
               "https://www.instagram.com/eren_zhhh/"
             ],
             jobTitle: "Schüler",
-            image: "https://erenworks.vercel.app/assets/bilder/eren-photo.png"
+            description: "Portfolio website showcasing personal profile, school documents, experiences, language skills, and projects.",
+            image: "https://erenworks.vercel.app/assets/bilder/eren-photo.png",
+            knowsAbout: [
+              "Next.js",
+              "TypeScript", 
+              "React",
+              "Tailwind CSS",
+              "JavaScript",
+              "HTML",
+              "CSS"
+            ],
+            address: {
+              "@type": "PostalAddress",
+              "addressCountry": "CH",
+              "addressLocality": "Zürich"
+            },
+            alumniOf: {
+              "@type": "EducationalOrganization",
+              "name": "Sekundarschule"
+            }
+          })}
+        </Script>
+        
+        {/* JSON-LD Website */}
+        <Script id="ld-website" type="application/ld+json" strategy="afterInteractive">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "Eren Aydin Portfolio",
+            url: "https://erenworks.vercel.app",
+            description: "Personal portfolio website with school documents, experiences, and projects.",
+            author: {
+              "@type": "Person",
+              name: "Eren Aydin"
+            },
+            potentialAction: {
+              "@type": "SearchAction",
+              target: "https://erenworks.vercel.app/#projects",
+              "query-input": "required name=search_term_string"
+            }
           })}
         </Script>
         {/* Skip to content */}
@@ -102,6 +153,39 @@ export default function RootLayout({
         <div id="toast-root" />
         <Analytics />
         <SpeedInsights />
+        
+        {/* Performance Monitoring Script */}
+        <Script id="performance-monitor" strategy="afterInteractive">
+          {`
+            // Performance monitoring
+            if (typeof window !== 'undefined') {
+              // Measure bundle load time
+              const startTime = performance.now();
+              
+              window.addEventListener('load', () => {
+                const loadTime = performance.now() - startTime;
+                console.log('🚀 Bundle load time:', loadTime.toFixed(2) + 'ms');
+                
+                // Check code splitting
+                const scripts = document.querySelectorAll('script[src]');
+                const dynamicChunks = Array.from(scripts).filter(s => 
+                  s.getAttribute('src')?.includes('chunk')
+                );
+                console.log('📦 Dynamic chunks loaded:', dynamicChunks.length);
+                
+                // Memory usage (if available)
+                if ('memory' in performance) {
+                  const memory = performance.memory;
+                  console.log('💾 Memory usage:', {
+                    used: Math.round(memory.usedJSHeapSize / 1048576) + 'MB',
+                    total: Math.round(memory.totalJSHeapSize / 1048576) + 'MB'
+                  });
+                }
+              });
+            }
+          `}
+        </Script>
+        
         {children}
       </body>
     </html>
