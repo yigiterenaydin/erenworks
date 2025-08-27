@@ -136,7 +136,7 @@ export default function Kontakt({ title, description, contactInfo }: KontaktProp
           if (contactSection) {
             const isMobile = window.innerWidth < 768;
             // Teşekkür mesajının başlangıcına scroll et - kontakt bilgileri görünmesin
-            const offset = isMobile ? 200 : 300; // Çok daha fazla offset - sadece teşekkür mesajı görünsün
+            const offset = isMobile ? 400 : 500; // Çok daha fazla offset - sadece teşekkür mesajı görünsün
             const elementTop = contactSection.offsetTop;
             const scrollTop = elementTop + offset; // + offset ile daha aşağıya scroll et
             

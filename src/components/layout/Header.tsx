@@ -83,12 +83,10 @@ export default function Header({
     
     // Mobilde daha az offset, desktop'ta daha fazla
     const isMobile = window.innerWidth < 768;
-    let offset = isMobile ? 80 : 120;
+    let offset = isMobile ? 60 : 80; // Desktop'ta daha da yukarıda
     
-    // Kontakt bölümü için özel offset
-    if (id === 'contact') {
-      offset = isMobile ? 60 : 100;
-    }
+    // Tüm bölümler için aynı offset - tutarlılık için
+    // Kontakt bölümü için özel offset kaldırıldı
     
     // Scroll pozisyonunu hesapla
     const scrollTop = elementTop - offset;
@@ -399,6 +397,78 @@ export default function Header({
           </div>
 
           <div className="flex items-center space-x-4">
+            {/* Auto Theme Toggle (mobile) */}
+            <motion.button
+              whileHover={prefersReducedMotion ? undefined : { 
+                scale: 1.1, 
+                rotate: 360,
+                boxShadow: autoTheme ? "0 0 35px rgba(34, 197, 94, 0.6)" : "0 0 35px rgba(99, 102, 241, 0.6)"
+              }}
+              whileTap={prefersReducedMotion ? undefined : { scale: 0.9 }}
+              onClick={onAutoThemeToggle}
+              className="md:hidden relative p-3 rounded-xl bg-gradient-to-r from-green-100 to-emerald-100 dark:from-slate-800 dark:to-green-800 hover:from-green-200 hover:to-emerald-200 dark:hover:from-slate-700 dark:hover:to-green-700 transition-all duration-300 shadow-lg hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-green-400/70 dark:focus-visible:ring-offset-slate-900 overflow-hidden"
+            >
+              {/* Enhanced animated background */}
+              <motion.div
+                className="absolute inset-0 rounded-xl"
+                animate={{
+                  background: autoTheme 
+                    ? "linear-gradient(45deg, rgba(34, 197, 94, 0.3), rgba(16, 185, 129, 0.2), rgba(34, 197, 94, 0.1))"
+                    : "linear-gradient(45deg, rgba(99, 102, 241, 0.3), rgba(168, 85, 247, 0.2), rgba(99, 102, 241, 0.1))"
+                }}
+                transition={{ duration: 1 }}
+              />
+              
+              {/* Icon with morphing animation */}
+              <motion.div
+                key={autoTheme ? 'auto' : 'manual'}
+                initial={{ 
+                  scale: 0, 
+                  rotate: -180, 
+                  opacity: 0,
+                  filter: "blur(6px)"
+                }}
+                animate={{ 
+                  scale: 1, 
+                  rotate: 0, 
+                  opacity: 1,
+                  filter: "blur(0px)"
+                }}
+                exit={{ 
+                  scale: 0, 
+                  rotate: 180, 
+                  opacity: 0,
+                  filter: "blur(6px)"
+                }}
+                transition={{ 
+                  duration: 1.5, 
+                  ease: "easeInOut",
+                  type: "spring",
+                  stiffness: 120,
+                  damping: 12
+                }}
+                className="relative z-10"
+              >
+                <ClockIcon className={`w-6 h-6 ${autoTheme ? 'text-green-500' : 'text-indigo-500'}`} />
+              </motion.div>
+              
+              {/* Pulse effect when auto theme is active */}
+              {autoTheme && (
+                <motion.div
+                  className="absolute inset-0 rounded-xl border-2 border-green-500/50"
+                  animate={{ 
+                    scale: [1, 1.1, 1], 
+                    opacity: [0.5, 0.8, 0.5] 
+                  }}
+                  transition={{ 
+                    duration: 2, 
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+              )}
+            </motion.button>
+            
             {/* Theme Toggle (mobile) */}
             <motion.button
               whileHover={prefersReducedMotion ? undefined : { 
