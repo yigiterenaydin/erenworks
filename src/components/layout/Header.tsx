@@ -383,6 +383,61 @@ export default function Header({
           </div>
 
           <div className="flex items-center space-x-4">
+            {/* Auto Theme Toggle (mobile) */}
+            <motion.button
+              whileHover={prefersReducedMotion ? undefined : { 
+                scale: 1.1, 
+                rotate: 360,
+                boxShadow: "0 0 35px rgba(99, 102, 241, 0.6)"
+              }}
+              whileTap={prefersReducedMotion ? undefined : { scale: 0.9 }}
+              onClick={onAutoThemeToggle}
+              aria-label="Auto theme toggle"
+              className={`md:hidden relative p-3 rounded-xl bg-gradient-to-r from-indigo-100 to-purple-100 dark:from-slate-800 dark:to-indigo-800 hover:from-indigo-200 hover:to-purple-200 dark:hover:from-slate-700 dark:hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 overflow-hidden ${
+                autoTheme 
+                  ? 'focus-visible:ring-green-500/70 dark:focus-visible:ring-green-400/70' 
+                  : 'focus-visible:ring-indigo-500/70 dark:focus-visible:ring-indigo-400/70'
+              }`}
+            >
+              {/* Background based on auto theme status */}
+              <motion.div
+                className="absolute inset-0 rounded-xl"
+                animate={{
+                  background: autoTheme 
+                    ? "linear-gradient(45deg, rgba(34, 197, 94, 0.3), rgba(16, 185, 129, 0.2), rgba(34, 197, 94, 0.1))"
+                    : "linear-gradient(45deg, rgba(99, 102, 241, 0.3), rgba(168, 85, 247, 0.2), rgba(99, 102, 241, 0.1))"
+                }}
+                transition={{ duration: 1 }}
+              />
+              
+              {/* Icon */}
+              <motion.div
+                key={autoTheme ? 'auto' : 'manual'}
+                initial={{ scale: 0, rotate: -180, opacity: 0 }}
+                animate={{ scale: 1, rotate: 0, opacity: 1 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                className="relative z-10"
+              >
+                <ClockIcon className={`w-6 h-6 ${autoTheme ? 'text-green-500' : 'text-indigo-500'}`} />
+              </motion.div>
+              
+              {/* Pulse effect when auto theme is active */}
+              {autoTheme && (
+                <motion.div
+                  className="absolute inset-0 rounded-xl border-2 border-green-500/50"
+                  animate={{ 
+                    scale: [1, 1.2, 1], 
+                    opacity: [0.5, 0.8, 0.5] 
+                  }}
+                  transition={{ 
+                    duration: 2, 
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+              )}
+            </motion.button>
+
             {/* Theme Toggle (mobile) */}
             <motion.button
               whileHover={prefersReducedMotion ? undefined : { 
