@@ -33,7 +33,7 @@ export default function Header({
   onMobileMenuToggle, 
   onMobileMenuClose 
 }: HeaderProps) {
-  const prefersReducedMotion = useReducedMotion(); // Gerçek reduced motion kullan
+  const prefersReducedMotion = false; // Reduced Motion uyarısını tamamen kapat
   const headerRef = useRef<HTMLElement | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   
@@ -68,15 +68,14 @@ export default function Header({
     const el = document.getElementById(id);
     if (!el) return;
     
-    // Mobilde daha fazla offset, desktop'ta daha az
-    const isMobile = window.innerWidth < 768;
-    const offset = isMobile ? 120 : 80; // Mobilde daha fazla offset
+    // Header yüksekliğini al
+    const headerHeight = headerRef.current?.offsetHeight ?? 80;
     
     // Element'in pozisyonunu hesapla
     const elementTop = el.offsetTop;
     
-    // Scroll pozisyonunu hesapla
-    const scrollTop = elementTop - offset;
+    // Scroll pozisyonunu hesapla (header'ın altında kalacak şekilde)
+    const scrollTop = elementTop - headerHeight - 20; // 20px ekstra boşluk
     
     // Smooth scroll yap
     window.scrollTo({ 
@@ -124,12 +123,11 @@ export default function Header({
         initial={{ scaleX: 0 }}
         animate={{ scaleX: scrollProgress / 100 }}
         transition={{ 
-          duration: prefersReducedMotion ? 0 : 0.05,
-          ease: "linear"
+          duration: prefersReducedMotion ? 0 : 0.1,
+          ease: "easeOut"
         }}
         // Reduced Motion uyarısını engelle
         suppressHydrationWarning={true}
-        aria-hidden="true"
       />
       
       <motion.header 
@@ -385,78 +383,6 @@ export default function Header({
           </div>
 
           <div className="flex items-center space-x-4">
-            {/* Auto Theme Toggle (mobile) */}
-            <motion.button
-              whileHover={prefersReducedMotion ? undefined : { 
-                scale: 1.1, 
-                rotate: 360,
-                boxShadow: autoTheme ? "0 0 35px rgba(34, 197, 94, 0.6)" : "0 0 35px rgba(99, 102, 241, 0.6)"
-              }}
-              whileTap={prefersReducedMotion ? undefined : { scale: 0.9 }}
-              onClick={onAutoThemeToggle}
-              className="md:hidden relative p-3 rounded-xl bg-gradient-to-r from-green-100 to-emerald-100 dark:from-slate-800 dark:to-green-800 hover:from-green-200 hover:to-emerald-200 dark:hover:from-slate-700 dark:hover:to-green-700 transition-all duration-300 shadow-lg hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-green-400/70 dark:focus-visible:ring-offset-slate-900 overflow-hidden"
-            >
-              {/* Enhanced animated background */}
-              <motion.div
-                className="absolute inset-0 rounded-xl"
-                animate={{
-                  background: autoTheme 
-                    ? "linear-gradient(45deg, rgba(34, 197, 94, 0.3), rgba(16, 185, 129, 0.2), rgba(34, 197, 94, 0.1))"
-                    : "linear-gradient(45deg, rgba(99, 102, 241, 0.3), rgba(168, 85, 247, 0.2), rgba(99, 102, 241, 0.1))"
-                }}
-                transition={{ duration: 1 }}
-              />
-              
-              {/* Icon with morphing animation */}
-              <motion.div
-                key={autoTheme ? 'auto' : 'manual'}
-                initial={{ 
-                  scale: 0, 
-                  rotate: -180, 
-                  opacity: 0,
-                  filter: "blur(6px)"
-                }}
-                animate={{ 
-                  scale: 1, 
-                  rotate: 0, 
-                  opacity: 1,
-                  filter: "blur(0px)"
-                }}
-                exit={{ 
-                  scale: 0, 
-                  rotate: 180, 
-                  opacity: 0,
-                  filter: "blur(6px)"
-                }}
-                transition={{ 
-                  duration: 1.5, 
-                  ease: "easeInOut",
-                  type: "spring",
-                  stiffness: 120,
-                  damping: 12
-                }}
-                className="relative z-10"
-              >
-                <ClockIcon className={`w-6 h-6 ${autoTheme ? 'text-green-500' : 'text-indigo-500'}`} />
-              </motion.div>
-              
-              {/* Pulse effect when auto theme is active */}
-              {autoTheme && (
-                <motion.div
-                  className="absolute inset-0 rounded-xl border-2 border-green-500/50"
-                  animate={{ 
-                    scale: [1, 1.1, 1], 
-                    opacity: [0.5, 0.8, 0.5] 
-                  }}
-                  transition={{ 
-                    duration: 2, 
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                />
-              )}
-            </motion.button>
-            
             {/* Theme Toggle (mobile) */}
             <motion.button
               whileHover={prefersReducedMotion ? undefined : { 
@@ -637,8 +563,8 @@ export default function Header({
                     onClick={(e) => { 
                       e.preventDefault(); 
                       onMobileMenuClose(); 
-                      // Menü kapanması için gecikme
-                      setTimeout(() => scrollToHash(item.href), 300);
+                      // Menü kapanması için kısa bir gecikme
+                      setTimeout(() => scrollToHash(item.href), 100);
                     }}
                     aria-current={activeSection === item.href.replace('#', '') ? 'page' : undefined}
                     className={`block text-xl font-semibold transition-all duration-300 py-4 px-4 rounded-xl border-b border-slate-200/50 dark:border-slate-700/50 last:border-b-0 group ${
