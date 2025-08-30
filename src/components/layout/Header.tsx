@@ -68,6 +68,9 @@ export default function Header({
     const el = document.getElementById(id);
     if (!el) return;
     
+    // Aktif section'ı güncelle
+    setActiveSection(id);
+    
     // Header yüksekliğini al
     const headerHeight = headerRef.current?.offsetHeight ?? 80;
     
@@ -75,7 +78,7 @@ export default function Header({
     const elementTop = el.offsetTop;
     
     // Scroll pozisyonunu hesapla (header'ın altında kalacak şekilde)
-    const scrollTop = elementTop - headerHeight - 20; // 20px ekstra boşluk
+    const scrollTop = elementTop - headerHeight; // Ekstra boşluk yok
     
     // Smooth scroll yap
     window.scrollTo({ 
@@ -84,32 +87,7 @@ export default function Header({
     });
   }, []);
 
-  useEffect(() => {
-    const sectionIds = navigationItems.map((i) => i.href.replace('#', ''));
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      {
-        root: null,
-        rootMargin: '-20% 0px -60% 0px',
-        threshold: 0.1,
-      }
-    );
-
-    const elements = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => Boolean(el));
-
-    elements.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // Intersection Observer'ı kaldırdık - sadece tıklama ile aktif section belirleniyor
 
   return (
     <>
@@ -589,7 +567,7 @@ export default function Header({
             className="md:hidden fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-t border-white/20 dark:border-slate-700/50 shadow-2xl mobile-menu-full"
           >
             <motion.div 
-              className="px-6 py-8 min-h-screen pt-24"
+              className="px-6 py-8"
               initial="hidden"
               animate="visible"
               variants={{
