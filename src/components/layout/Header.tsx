@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState, useRef, useCallback, Fragment } from "react";
 import {
   HomeIcon,

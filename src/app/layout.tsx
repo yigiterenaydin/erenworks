@@ -19,13 +19,6 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://erenworks.vercel.app"),
   title: "Eren Aydin – Portfolio | Schüler Portfolio",
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
-    userScalable: true,
-    viewportFit: 'cover',
-  },
   description:
     "Persönliches Profil, Schulische Unterlagen (PDF), Erfahrungen & Schnupperlehren, Sprachkenntnisse, Interessen, Referenzen und Kontakt. Portfolio von Eren Aydin aus Zürich.",
   keywords: [
@@ -83,6 +76,14 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://erenworks.vercel.app",
   },
+};
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  viewportFit: 'cover' as const,
 };
 
 export default function RootLayout({
