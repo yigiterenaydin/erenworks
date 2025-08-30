@@ -220,7 +220,7 @@ export default function Header({
                 whileTap={prefersReducedMotion ? undefined : { scale: 0.85 }}
                 onClick={onAutoThemeToggle}
                 aria-label="Auto theme toggle"
-                className={`ml-1 relative inline-flex h-9 w-9 items-center justify-center rounded-full text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 overflow-hidden ${
+                className={`ml-1 relative inline-flex h-8 w-8 md:h-9 md:w-9 items-center justify-center rounded-full text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 overflow-hidden ${
                   autoTheme 
                     ? 'focus-visible:ring-green-500/70 dark:focus-visible:ring-green-400/70' 
                     : 'focus-visible:ring-indigo-500/70 dark:focus-visible:ring-indigo-400/70'
@@ -245,7 +245,7 @@ export default function Header({
                   transition={{ duration: 0.5, ease: "easeInOut" }}
                   className="relative z-10"
                 >
-                  <ClockIcon className={`w-5 h-5 ${autoTheme ? 'text-green-500' : 'text-indigo-500'}`} />
+                  <ClockIcon className={`w-4 h-4 md:w-5 md:h-5 ${autoTheme ? 'text-green-500' : 'text-indigo-500'}`} />
                 </motion.div>
                 
                 {/* Pulse effect when auto theme is active */}
@@ -283,7 +283,7 @@ export default function Header({
                  whileTap={prefersReducedMotion ? undefined : { scale: 0.85 }}
                  onClick={onThemeToggle}
                  aria-label="Theme toggle"
-                 className="ml-1 relative inline-flex h-9 w-9 items-center justify-center rounded-full text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-900 overflow-hidden"
+                 className="ml-1 relative inline-flex h-8 w-8 md:h-9 md:w-9 items-center justify-center rounded-full text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-900 overflow-hidden"
                >
                  {/* Enhanced background glow effect */}
                  <motion.div
@@ -418,7 +418,7 @@ export default function Header({
                 transition={{ duration: 0.5, ease: "easeInOut" }}
                 className="relative z-10"
               >
-                <ClockIcon className={`w-6 h-6 ${autoTheme ? 'text-green-500' : 'text-indigo-500'}`} />
+                                  <ClockIcon className={`w-5 h-5 md:w-6 md:h-6 ${autoTheme ? 'text-green-500' : 'text-indigo-500'}`} />
               </motion.div>
               
               {/* Pulse effect when auto theme is active */}
@@ -503,7 +503,7 @@ export default function Header({
               >
                 {theme === 'light' ? (
                   <motion.svg 
-                    className="w-6 h-6 text-slate-700" 
+                    className="w-5 h-5 md:w-6 md:h-6 text-slate-700" 
                     fill="none" 
                     stroke="currentColor" 
                     viewBox="0 0 24 24"
@@ -515,7 +515,7 @@ export default function Header({
                   </motion.svg>
                 ) : (
                   <motion.svg 
-                    className="w-6 h-6 text-yellow-400" 
+                    className="w-5 h-5 md:w-6 md:h-6 text-yellow-400" 
                     fill="none" 
                     stroke="currentColor" 
                     viewBox="0 0 24 24"
@@ -557,20 +557,20 @@ export default function Header({
               whileHover={prefersReducedMotion ? undefined : { scale: 1.05, rotate: 5 }}
               whileTap={prefersReducedMotion ? undefined : { scale: 0.9 }}
               onClick={onMobileMenuToggle}
-              className="md:hidden p-3 rounded-xl bg-gradient-to-r from-indigo-100 to-purple-100 dark:from-slate-800 dark:to-indigo-800 hover:from-indigo-200 hover:to-purple-200 dark:hover:from-slate-700 dark:hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-900"
+              className="md:hidden p-2 md:p-3 rounded-xl bg-gradient-to-r from-indigo-100 to-purple-100 dark:from-slate-800 dark:to-indigo-800 hover:from-indigo-200 hover:to-purple-200 dark:hover:from-slate-700 dark:hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-indigo-400/70 dark:focus-visible:ring-offset-slate-900"
             >
-              <div className="w-6 h-6 flex flex-col justify-center items-center">
+              <div className="w-5 h-5 md:w-6 md:h-6 flex flex-col justify-center items-center">
                 <motion.span
                   animate={isMobileMenuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-                  className="w-6 h-0.5 bg-slate-700 dark:bg-slate-300 rounded-full transition-all duration-300"
+                  className="w-5 h-0.5 md:w-6 md:h-0.5 bg-slate-700 dark:bg-slate-300 rounded-full transition-all duration-300"
                 />
                 <motion.span
                   animate={isMobileMenuOpen ? { opacity: 0 } : { opacity: 1 }}
-                  className="w-6 h-0.5 bg-slate-700 dark:bg-slate-300 rounded-full mt-1 transition-all duration-300"
+                  className="w-5 h-0.5 md:w-6 md:h-0.5 bg-slate-700 dark:bg-slate-300 rounded-full mt-1 transition-all duration-300"
                 />
                 <motion.span
                   animate={isMobileMenuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-                  className="w-6 h-0.5 bg-slate-700 dark:bg-slate-300 rounded-full mt-1 transition-all duration-300"
+                  className="w-5 h-0.5 md:w-6 md:h-0.5 bg-slate-700 dark:bg-slate-300 rounded-full mt-1 transition-all duration-300"
                 />
               </div>
             </motion.button>
