@@ -531,10 +531,10 @@ export default function Header({
             animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0, scale: 1, rotateX: 0 }}
             exit={prefersReducedMotion ? undefined : { opacity: 0, y: -30, scale: 0.9, rotateX: -15 }}
             transition={prefersReducedMotion ? undefined : { duration: 0.5, ease: [0.4, 0, 0.2, 1], staggerChildren: 0.1 }}
-            className="md:hidden bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-t border-white/20 dark:border-slate-700/50 shadow-2xl"
+            className="md:hidden fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-t border-white/20 dark:border-slate-700/50 shadow-2xl mobile-menu-full"
           >
             <motion.div 
-              className="px-6 py-8"
+              className="px-6 py-8 min-h-screen pt-24"
               initial="hidden"
               animate="visible"
               variants={{
