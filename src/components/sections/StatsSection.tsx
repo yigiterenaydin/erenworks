@@ -50,13 +50,13 @@ export default function StatsSection() {
   // Burada rakamları güncelleyebilirsiniz
   const stats = [
     {
-      number: 14,
+      number: 12,
       label: "Schnupperlehren",
       description: "so viele Schnupperlehren habe ich bisher besucht.",
       color: "bg-gradient-to-br from-blue-600 to-indigo-700"
     },
     {
-      number: 63,
+      number: 58,
       label: "Lehrstellenbewerbungen",
       description: " für eine Lehrstelle habe ich bisher abgeschickt.",
       color: "bg-gradient-to-br from-emerald-600 to-teal-700"
