@@ -105,9 +105,9 @@ export default function Home() {
         <Zeugnisse
           title="Schulische Unterlagen"
           reports={[
-            { term: 'Zeugnisse 1. Sek (Gesamt)', date: '2023', file: '/assets/pdfs/SekundarSchuleZeugnisse1sek.pdf' },
-            { term: 'Zeugnisse 2. Sek (Gesamt)', date: '2024', file: '/assets/pdfs/SekundarSchuleZeugnisse2sek.pdf' },
-            { term: 'Semesterzeugnis 3. Sek – 1. Semester', date: '01/2025', file: '/assets/pdfs/zeugnis-2025-01.pdf', available: false, comingText: 'In ~1 Woche verfügbar' },
+            { term: 'Zeugnisse 1. Sek (Gesamt)', date: '2024', file: '/assets/pdfs/SekundarSchuleZeugnisse1sek.pdf' },
+            { term: 'Zeugnisse 2. Sek (Gesamt)', date: '2025', file: '/assets/pdfs/SekundarSchuleZeugnisse2sek.pdf' },
+            { term: 'Semesterzeugnis 3. Sek – 1. Semester', date: '01/2026', file: '/assets/pdfs/SekundarSchuleZeugnisse3sek.pdf' },
           ]}
         />
       </Suspense>
