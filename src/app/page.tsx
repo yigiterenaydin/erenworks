@@ -107,7 +107,7 @@ export default function Home() {
           reports={[
             { term: 'Zeugnisse 1. Sek (Gesamt)', date: '2024', file: '/assets/pdfs/SekundarSchuleZeugnisse1sek.pdf' },
             { term: 'Zeugnisse 2. Sek (Gesamt)', date: '2025', file: '/assets/pdfs/SekundarSchuleZeugnisse2sek.pdf' },
-            { term: 'Semesterzeugnis 3. Sek – 1. Semester', date: '01/2026', file: '/assets/pdfs/SekundarSchuleZeugnisse3sek.pdf' },
+            { term: 'Semesterzeugnis 3. Sek – 1. Semester', date: '2026', file: '/assets/pdfs/SekundarSchuleZeugnisse3sek.pdf' },
           ]}
         />
       </Suspense>
