@@ -1,0 +1,264 @@
+MASTER CURSOR PROMPT — Happy Bäckerei (Next.js + TS + Tailwind + Supabase)
+
+- Amaç: “Happy Bäckerei” için kurumsal vitrin + ürün kataloğu + admin paneli. Kod modüler, okunaklı, test edilebilir. TSX sayfalar kompozisyon-only ve kısa. Deploy: GitHub → Vercel. Veri: Supabase (Postgres + Auth + Storage, free tier).
+
+1) Teknoloji Yığını
+- Next.js (App Router) + TypeScript
+- Tailwind CSS, shadcn/ui, lucide-react
+- Prisma ORM (postgresql)
+- Supabase: Postgres + Auth (email + magic link), Storage
+- Form: react-hook-form + zod
+- i18n: next-intl (varsayılan de-CH, ikincil tr)
+- Log/Hata: Vercel Analytics (+ Sentry opsiyon)
+- Test: Vitest + Testing Library + Playwright (E2E)
+- Kalite: ESLint + Prettier + Husky + lint-staged
+- Harita: Leaflet + OpenStreetMap
+- SEO: Metadata, OG, sitemap, robots
+
+2) Dosya Düzeni (feature-based + app router)
+
+happybaeckerei/
+├─ app/
+│  ├─ (public)/
+│  │  ├─ page.tsx                 # Home (≤ 40–60 satır)
+│  │  ├─ about/page.tsx
+│  │  ├─ contact/page.tsx
+│  │  └─ layout.tsx
+│  ├─ (shop)/
+│  │  ├─ products/page.tsx        # Liste (kısa)
+│  │  ├─ products/[slug]/page.tsx # Detay (kısa)
+│  │  └─ layout.tsx
+│  ├─ admin/
+│  │  ├─ dashboard/page.tsx
+│  │  ├─ products/page.tsx
+│  │  ├─ categories/page.tsx
+│  │  ├─ orders/page.tsx          # opsiyonel
+│  │  └─ layout.tsx
+│  ├─ api/
+│  │  ├─ products/route.ts        # JSON API (yalın)
+│  │  └─ upload/route.ts
+│  ├─ sitemap.ts
+│  └─ robots.ts
+│
+├─ components/
+│  ├─ layout/                     # Header/Footer/Nav
+│  ├─ ui/                         # shadcn sarmalayıcılar
+│  ├─ shared/                     # küçük tekrar kullanılabilirler
+│  └─ feature/
+│     ├─ products/
+│     │  ├─ ProductCard.tsx
+│     │  ├─ ProductGrid.tsx
+│     │  ├─ ProductFilters.tsx
+│     │  └─ index.ts
+│     └─ categories/
+│        ├─ CategoryBadge.tsx
+│        └─ index.ts
+│
+├─ features/
+│  ├─ products/
+│  │  ├─ actions.ts               # server actions (create/update…)
+│  │  ├─ queries.ts               # read-only sorgular
+│  │  ├─ service.ts               # iş kuralları
+│  │  ├─ mappers.ts               # DB <-> DTO
+│  │  ├─ validators.ts            # zod şemaları
+│  │  └─ types.ts                 # tipler/DTO
+│  └─ categories/
+│     ├─ actions.ts
+│     ├─ queries.ts
+│     ├─ service.ts
+│     ├─ validators.ts
+│     └─ types.ts
+│
+├─ lib/
+│  ├─ db.ts                       # Prisma client
+│  ├─ supabase.ts                 # Supabase client (server)
+│  ├─ auth.ts                     # RBAC helper (assertRole)
+│  ├─ i18n.ts                     # next-intl yükleme
+│  ├─ image.ts                    # görsel yardımcıları (webp, ratio)
+│  ├─ seo.ts                      # meta/OG yardımcıları
+│  └─ utils.ts
+│
+├─ prisma/
+│  ├─ schema.prisma
+│  └─ seed.ts
+│
+├─ tests/
+│  ├─ unit/
+│  ├─ integration/
+│  └─ e2e/                        # Playwright: login/CRUD smoke
+│
+├─ public/                        # logo, ikon, manifest (PWA ops.)
+├─ scripts/                       # bakım/seed/ci yardımcıları
+├─ styles/globals.css
+├─ middleware.ts                  # /admin access gate (kısa)
+├─ eslint.config.mjs
+├─ tailwind.config.ts
+├─ tsconfig.json
+└─ README.md
+
+3) “Kısa TSX” Kuralları (zorunlu)
+- Sayfalar: yalnız kompozisyon, ≤ 40–60 satır.
+  - Read: features/*/queries.ts
+  - Write: features/*/actions.ts (server actions)
+  - Mantık/RBAC/mapping: service ve mappers
+- UI parçala: grid/card/filter/modal ayrı bileşenler.
+- Import sınırı: sayfalardan '@/lib/db' doğrudan import yok.
+
+Örnek kısa sayfa:
+
+// app/(shop)/products/page.tsx
+import { getProducts } from "@/features/products/queries";
+import { ProductGrid } from "@/components/feature/products/ProductGrid";
+
+export default async function ProductsPage() {
+  const items = await getProducts();
+  return <ProductGrid items={items} />;
+}
+
+4) Prisma Şeması (çekirdek)
+
+datasource db { provider = "postgresql"; url = env("DATABASE_URL") }
+generator client { provider = "prisma-client-js" }
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  role      Role     @default(STAFF)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  AuditLogs AuditLog[]
+  Orders    Order[]
+}
+
+enum Role { ADMIN MANAGER STAFF VIEWER }
+
+model Category {
+  id       String    @id @default(cuid())
+  slug     String    @unique
+  name_de  String
+  name_tr  String?
+  sort     Int       @default(0)
+  products Product[]
+}
+
+model Product {
+  id             String   @id @default(cuid())
+  categoryId     String
+  category       Category  @relation(fields: [categoryId], references: [id])
+  slug           String    @unique
+  name_de        String
+  name_tr        String?
+  description_de String?
+  description_tr String?
+  price_chf      Decimal   @db.Decimal(10,2)
+  tax_rate       Decimal   @default(0.0) @db.Decimal(4,1)
+  active         Boolean   @default(true)
+  image_url      String?
+  badges         String[]
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Order {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  items     Json
+  total_chf Decimal  @db.Decimal(10,2)
+  status    String   @default("pending")
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  actorId   String?
+  actor     User?    @relation(fields: [actorId], references: [id])
+  action    String
+  entity    String
+  entityId  String
+  diff      Json
+  createdAt DateTime @default(now())
+}
+
+5) Admin Modülü (RBAC + CRUD)
+- RBAC: ADMIN, MANAGER → CRUD; STAFF → view-only; VIEWER → sınırlı görünüm.
+- Ürün/Kategori: liste, ara/filtre, oluştur/düzenle/sil, drag‑drop upload → Supabase Storage (mime/size kontrol).
+- CSV/Excel import/export (fiyat ve kütlesel güncelleme).
+- Soft-delete + versiyonlama (flag + AuditLog).
+
+6) Güvenlik & Uyum
+- Auth: Supabase Auth (email + magic link), 2FA/TOTP opsiyonel.
+- Rate limit, CSRF, bot koruması (Cloudflare Turnstile).
+- Yasal: Impressum, Datenschutzerklärung (DSG/DSGVO).
+- Ürün detay: alerjen/içerik alanları.
+- MWST: gıda için indirimli oranlar (nihai oranlar Treuhand ile teyit).
+
+7) Performans, Erişilebilirlik, i18n
+- Lighthouse: Perf ≥ 85, A11y ≥ 95.
+- Görseller: Next/Image, webp türev, sabit aspect-ratio, lazy.
+- Erişilebilirlik: klavye navigasyonu, ARIA, kontrast ≥ 4.5:1.
+- i18n: next-intl de‑CH varsayılan, tr anahtarlar hazır.
+
+8) PWA (opsiyonel, “lite”)
+- Shell + kritik görseller cache; offline sepet yok.
+- Minimal manifest.json + service worker.
+
+9) CI/CD, Test, Yedekleme
+- GitHub Actions: typecheck + lint + test + build.
+- Playwright E2E: login, ürün liste, admin CRUD smoke.
+- Sentry entegrasyonu (ops.).
+- DB snapshot günlük; Storage versiyonlama (Supabase).
+- Ortamlar: dev / staging / prod.
+
+10) ESLint Kuralları (TSX kısa tutma)
+
+// eslint.config.mjs
+export default [
+  {
+    files: ["app/**/*.tsx"],
+    rules: {
+      "max-lines-per-function": ["error", { max: 60, skipBlankLines: true, skipComments: true }],
+      "complexity": ["error", 10],
+      "no-restricted-imports": ["error", {
+        paths: [{ name: "@/lib/db", message: "Sayfalardan DB'ye doğrudan erişme. queries/actions kullan." }]
+      }]
+    }
+  }
+];
+
+11) Ortam Değişkenleri (.env)
+
+NEXT_PUBLIC_SITE_NAME="Happy Bäckerei"
+NEXT_PUBLIC_BASE_URL="http://localhost:3000"
+NEXT_PUBLIC_DEFAULT_LOCALE="de"
+
+SUPABASE_URL=...
+SUPABASE_ANON_KEY=...
+SUPABASE_SERVICE_ROLE_KEY=...
+
+DATABASE_URL="postgresql://USER:PWD@HOST:5432/postgres"
+
+SENTRY_DSN=
+
+12) İlk Çıktılar
+1) Çalışan proje iskeleti (Next + TS + Tailwind + shadcn)
+2) prisma/schema.prisma + seed.ts (2 kategori, 6 ürün, 3 kullanıcı: admin/manager/staff)
+3) features/* (queries/actions/service/mappers/validators/types)
+4) /admin/products tablo + arama + “Yeni Ürün” formu + upload
+5) Header (logo placeholder, menü, DE|TR dil seçici) ve Footer (adres, saatler, sosyal)
+6) Sayfalar: Home, Menü (products), Ürün detay, Hakkımızda, İletişim (Leaflet harita)
+7) README.md: kurulum, env, seed, deploy
+8) GitHub Actions + ESLint/Prettier/Husky/lint-staged
+
+13) Done-Definition (Kabul Kriteri)
+- Responsive kusursuz: iPhone/iPad Safari ve Chrome/Edge/Firefox.
+- Admin’de RBAC çalışır, CRUD + AuditLog kaydı oluşur.
+- Lighthouse hedefleri sağlanır; CI yeşil; staging/production ayrımı.
+- Seed ile demo veri yüklenir; Vercel production deploy açıklaması tamamdır.
+
+14) Uygulama Talimatı
+- Yukarıdaki dosya yapısını oluştur.
+- TSX sayfaları kısa tut; iş mantığını features/* katmanına taşı.
+- Eksik kalan yerlerde kurumsal ve sade varsayılanları tercih et.
+
