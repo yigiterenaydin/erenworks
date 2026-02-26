@@ -78,19 +78,19 @@ export default function Home() {
           {
                 icon: <AcademicCapIcon className="w-7 h-7 text-white" />,
             title: "Bildung & Motivation",
-                description: "Ich arbeite gerne im Team, kann mich aber auch gut selbstständig organisieren und Aufgaben zuverlässig erledigen. Neue Herausforderungen sehe ich als Chance, mich weiterzuentwickeln und neue Fähigkeiten zu erlernen. In meiner Freizeit interessiere ich mich für digitale Medien und Wirtschaftsthemen, was mir hilft, Zusammenhänge schnell zu verstehen. Durch meine offene Art fällt es mir leicht, mit verschiedenen Menschen ins Gespräch zu kommen und gemeinsam Lösungen zu finden.",
+                description: "Teamfähig und selbstständig, arbeite ich zuverlässig und sehe neue Herausforderungen als Chance zur Weiterentwicklung. Interesse an digitalen Medien und Wirtschaft.",
             color: "from-blue-500 to-indigo-600"
           },
           {
                 icon: <BriefcaseIcon className="w-7 h-7 text-white" />,
             title: "Berufsziel",
-            description: "Mein Ziel ist es, eine Lehrstelle als Kaufmann EFZ in einem Büro – am liebsten in einer Bank – zu finden. Mir ist bewusst, dass dieser Beruf hohe Anforderungen stellt, doch ich bin überzeugt, dass ich mit Einsatzbereitschaft, Lernwillen und Motivation erfolgreich sein kann. Alternativ interessieren mich auch die Berufe Programmierer oder Mediamatiker, da ich gerne mit digitalen Medien arbeite und Freude daran habe, kreative sowie technische Lösungen zu entwickeln.",
+            description: "Mein Ziel ist eine Lehrstelle als Kaufmann EFZ, idealerweise in einer Bank. Ich bin motiviert und lernbereit. Alternativ interessieren mich auch Programmierer oder Mediamatiker im digitalen Bereich.",
             color: "from-purple-500 to-pink-600"
           },
           {
                 icon: <RocketLaunchIcon className="w-7 h-7 text-white" />,
             title: "Zukunftsperspektive",
-            description: "Mein Ziel ist es, nach einer erfolgreichen Lehrzeit von meinem Ausbildungsbetrieb übernommen zu werden. Ich möchte mich dort Schritt für Schritt weiterentwickeln, neue Aufgaben übernehmen und mit der Zeit mehr Verantwortung tragen. Wenn ich mein Bestes gebe und meine Ziele verfolge, bin ich überzeugt, dass ich in meinem Beruf wachsen und langfristig erfolgreich sein kann.",
+            description: "Mein Zukunftsperspektive ist es, nach der Lehre im Betrieb zu bleiben, mich weiterzuentwickeln und mehr Verantwortung zu übernehmen.",
             color: "from-green-500 to-emerald-600"
           }
         ]}
