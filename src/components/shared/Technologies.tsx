@@ -24,7 +24,7 @@ export default function Technologies() {
              <p className="text-slate-400 mb-4">
          Diese Portfolio-Website wurde mit modernen Technologien entwickelt. Insgesamt wurden{' '}
          <br />
-         <span className="text-blue-400 font-semibold">19 verschiedene Technologien</span> verwendet.
+         <span className="text-blue-400 font-semibold">12 verschiedene Technologien</span> verwendet.
        </p>
                <div className="grid grid-cols-6 gap-x-0 gap-y-2 max-w-lg sm:gap-x-0 md:gap-x-1 lg:gap-x-2">
                    {technologies.map((tech, index) => (
