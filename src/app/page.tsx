@@ -3,11 +3,11 @@
 // Home sayfası: Bölümleri bir araya getirir. İskelet (tema, header, arka plan) AppShell içinde.
 import { motion } from "framer-motion";
 import { Suspense } from "react";
-import Head from "next/head";
 import dynamic from "next/dynamic";
 import { Skeleton, SkeletonGrid, SkeletonCard, SkeletonForm } from "@/components/shared/Skeleton";
 import AppShell from "@/components/layout/AppShell";
 import Startseite from "@/components/sections/Startseite";
+import { experienceItems } from "@/data/experienceItems";
 import { AcademicCapIcon } from "@heroicons/react/24/solid";
 import { BriefcaseIcon } from "@heroicons/react/24/solid";
 import { RocketLaunchIcon } from "@heroicons/react/24/solid";
@@ -56,15 +56,6 @@ export default function Home() {
   //   wakeN8n();
   // }, []);
     return (
-    <>
-      <Head>
-        <title>Eren Aydin – Portfolio | Schüler Portfolio</title>
-        <meta name="description" content="Persönliches Profil, Schulische Unterlagen (PDF), Erfahrungen & Schnupperlehren, Sprachkenntnisse, Interessen, Referenzen und Kontakt. Portfolio von Eren Aydin aus Zürich." />
-        <meta name="keywords" content="portfolio, lebenslauf, schulische unterlagen, zeugnisse, erfahrungen, schnupperlehren, sprachkenntnisse, next.js, typescript, react, tailwind css, javascript, zürich, schweiz, schüler, entwickler, programmierer" />
-        <meta name="author" content="Eren Aydin" />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://erenworks.vercel.app" />
-      </Head>
       <AppShell>
 
       <Startseite
@@ -113,106 +104,7 @@ export default function Home() {
       </Suspense>
 
               <Suspense fallback={<div className="h-96 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-slate-800 dark:to-slate-700 animate-pulse rounded-2xl" />}>
-          <ExperienceAccordion
-        items={[
-          {
-            date: "05/2025",
-            city: "Zürich",
-            company: "EWZ",
-            program: "Berufsinformations Veranstaltung",
-            description:
-              "Teilnahme an einer Berufsinformationsveranstaltung mit Einblicken in verschiedene kaufmännische und technische Berufsbilder sowie Austausch mit Lernenden und Ausbildungsverantwortlichen.",
-          },
-          {
-            date: "04/2025",
-            city: "Zürich",
-            company: "Kornhaus Verwaltungs AG",
-            program: "KV Treuhand / Immobilien",
-            description:
-              "Einblicke in die Tätigkeiten im Treuhand- und Immobilienbereich, Kennenlernen kaufmännischer Abläufe und der Rekrutierungs- sowie Bewerbungsprozesse, Austausch mit Lernenden und Mitarbeitenden.",
-          },
-          {
-            date: "04/2025",
-            city: "Zürich",
-            company: "Ergon Smart Software",
-            program: "Informatiker EFZ",
-            description:
-              "Im Rahmen mehrerer Informationsveranstaltungen zur KV‑Branche Bank & Mediamatik sowie zu Informatik und digitalem Business erhielt ich umfassende Einblicke in ICT‑Lehrberufe – mit Fokus auf Applikationsentwicklung. Ich lernte die Firma Ergon Informatik AG und laufende Projekte kennen, informierte mich über Voraussetzungen und Selektionsprozess, nahm an praktischen Übungen wie ‘CS Unplugged’ teil und tauschte mich intensiv mit Lernenden aus.",
-          },
-          {
-            date: "03/2025",
-            city: "Zürich",
-            company: "E. Weber & Cie AG",
-            program: "Kaufmann EFZ",
-            description:
-              "Beim Schnuppertag erhielt ich einen vielseitigen Einblick in die kaufmännischen Abläufe eines grossen Unternehmens – insbesondere in die Bereiche Kundendienst, Buchhaltung, Einkauf, Marketing und Verkauf.",
-          },
-          {
-            date: "03/2025",
-            city: "Zürich",
-            company: "Zürcher Kantonalbank",
-            program: "Informationsveranstaltung KV Branche Bank & Mediamatik",
-            description:
-              "Ich erhielt einen Einblick in die ZKB und ihre Ausbildungswelt, tauchte in die Tätigkeiten der Informatik ein, entwickelte eine Website mit HTML und CSS, lernte den Lehrablauf mit den drei Lernorten kennen und tauschte mich mit Lernenden, Mitarbeitenden und Personalverantwortlichen aus.",
-          },
-          {
-            date: "03/2025",
-            city: "Zürich",
-            company: "Zürcher Kantonalbank",
-            program: "Informationsveranstaltung Informatik & Entwicklung digitales Business",
-            description:
-              "Beim Kennenlernen der ZKB und ihrer Ausbildungswelt erhielt ich Einblicke in den Ablauf der IT‑ und EDB‑Lehre, informierte mich über Bewerbungs- und Rekrutierungsprozesse und klärte allgemeine Fragen rund um die Lehre im Austausch mit Lernenden und Ausbildungsverantwortlichen.",
-          },
-          {
-            date: "01/2025",
-            city: "Glattpark",
-            company: "Sunrise GmbH",
-            program: "Kaufmann EFZ",
-            description:
-              "Teilnahme an einem Informationstag mit Einblicken in kaufmännische Tätigkeiten in der Telekommunikationsbranche.",
-          },
-          {
-            date: "11/2024",
-            city: "Zürich",
-            company: "Post Immobilien AG, Zürich",
-            program: "Kaufmann EFZ",
-            description:
-              "Einblick in die kaufmännischen Abläufe eines grossen Unternehmens.",
-          },
-          {
-            date: "8/2024 - 2025",
-            city: "Zürich",
-            company: "Kita Bärlis Oerlikon",
-            program: "",
-            description:
-              "Unterstützung bei der Betreuung von Kindern im Alter von 0 bis 3 Jahren; Mithilfe beim Aufräumen sowie bei der Organisation von Materialien.",
-          },
-          {
-            date: "06/2025",
-            city: "Zürich",
-            company: "Zürcher Kantonalbank",
-            program: "Schnupperparcours KV Branche Bank",
-            description:
-              "Beim Schnuppertag erhielt ich einen umfassenden Einblick in eine Filiale der Zürcher Kantonalbank, tauchte in ausbildungs- und bankspezifische Themen ein, lernte die Tätigkeiten eines Kaufmanns EFZ sowie den Lehrablauf mit den drei Lernorten kennen und konnte mich mit Lernenden, Mitarbeitenden sowie Personalverantwortlichen austauschen – dabei wurden der Bewerbungsprozess und allgemeine Fragen zur Lehre beantwortet.",
-          },
-          {
-            date: "05/2025",
-            city: "Zürich",
-            company: "Zürcher Kantonalbank",
-            program: "Schnupperparcours Informatik",
-            description:
-              "Beim Informatik-Schnuppertag erhielt ich einen vielseitigen Einblick in die Ausbildungswelt der Zürcher Kantonalbank, entwickelte eine Website mit HTML und CSS, löste logische Aufgaben am Computer, programmierte Roboter mit Codeblöcken, lernte den Lehrablauf mit den drei Lernorten kennen und konnte mich mit Lernenden, Mitarbeitenden und Personalverantwortlichen über den Bewerbungsprozess sowie allgemeine Fragen zur Lehre austauschen.",
-          },
-          {
-            date: "05/2025",
-            city: "Zürich",
-            company: "UBS Bank",
-            program: "Kaufmännische Grundbildung UBS Bank",
-            description:
-              "Beim UBS-Schnuppertag erhielt ich Einblicke in zentrale Bereiche und Tätigkeiten einer internationalen Bank, setzte mich spielerisch mit bankenspezifischen Themen auseinander, informierte mich über die Lehre und den Rekrutierungsprozess und tauschte mich mit Lernenden, Mitarbeitenden und Personalverantwortlichen in einer UBS-Geschäftsstelle aus.",
-          },
-        ]}
-        />
+          <ExperienceAccordion items={experienceItems} />
       </Suspense>
 
       {/* Sprachkenntnisse menüden kaldırıldı ve aşağıdaki proje kartına gömülü gösteriliyor */}
@@ -385,6 +277,5 @@ export default function Home() {
         </div>
       </footer>
     </AppShell>
-    </>
   );
 }
