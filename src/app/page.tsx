@@ -75,7 +75,7 @@ export default function Home() {
           {
                 icon: <BriefcaseIcon className="w-7 h-7 text-white" />,
             title: "Berufsziel",
-            description: "Mein Ziel ist eine Lehrstelle als Kaufmann EFZ. Ich bin motiviert und lernbereit. Alternativ interessieren mich auch Programmierer oder Mediamatiker im digitalen Bereich.",
+            description: "Mein Ziel ist eine Lehrstelle als Kaufmann EFZ. Ich bin motiviert und lernbereit. Alternativ interessieren mich auch der Beruf des Elektroinstallateurs EFZ sowie Tätigkeiten im Bereich Programmierung oder Mediamatik.",
             color: "from-purple-500 to-pink-600"
           },
           {
