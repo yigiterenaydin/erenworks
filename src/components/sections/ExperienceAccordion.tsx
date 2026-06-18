@@ -1,19 +1,13 @@
 "use client";
 
-import { useMemo, useState, useRef } from "react";
+import { useMemo, useState, useRef, useCallback } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import dynamic from "next/dynamic";
+import DetailCard from "@/components/experience/DetailCard";
+import type { ExperienceItem } from "@/data/experienceItems";
 
-interface ExperienceItem {
-  date: string; // e.g. 05/2025
-  city: string;
-  company: string; // e.g. Zürcher Kantonalbank
-  program: string; // e.g. Kaufmann EFZ
-  description: string;
-  pdfUrl?: string;
+interface Props {
+  items: ExperienceItem[];
 }
-
-interface Props { items: ExperienceItem[]; }
 
 function sortValue(dateString: string): number {
   const raw = dateString.trim();
@@ -28,73 +22,70 @@ function sortValue(dateString: string): number {
   return anyYYYY ? parseInt(anyYYYY[1], 10) * 100 : 0;
 }
 
+function ExperienceDetail({ item }: { item: ExperienceItem }) {
+  if (!item.imageUrl) {
+    return (
+      <div className="text-sm text-slate-600 dark:text-slate-300">
+        <p className="font-semibold text-slate-900 dark:text-white">{item.company}</p>
+        {item.program && <p className="text-slate-500 dark:text-slate-400">{item.program}</p>}
+        <p className="mt-3">{item.description}</p>
+      </div>
+    );
+  }
+
+  return (
+    <DetailCard
+      title={item.detailTitle || item.company}
+      subtitle={item.detailSubtitle || item.program || "Erfahrungsbericht"}
+      imageUrl={item.imageUrl}
+      docUrl={item.pdfUrl}
+    >
+      {item.description}
+    </DetailCard>
+  );
+}
+
 export default function ExperienceAccordion({ items }: Props) {
   const prefersReducedMotion = useReducedMotion();
   const sorted = useMemo(() => [...items].sort((a, b) => sortValue(b.date) - sortValue(a.date)), [items]);
-  const [openIndex, setOpenIndex] = useState<number | null>(null); // masaüstünde sağ panel var, listede varsayılan olarak kapalı
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null); // Hiçbir kart seçili değil
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
-  const SelectedDetail = useMemo(() => {
-    if (selectedIndex == null) return null;
-    const item = sorted[selectedIndex];
-    const company = (item.company || '').toLowerCase();
-    const program = (item.program || '').toLowerCase();
+  const selectedItem = selectedIndex != null ? sorted[selectedIndex] : null;
 
-    // Kita
-    if (company.includes('kita')) {
-      return dynamic(() => import('../experience/Kita'), { ssr: false });
-    }
+  const scrollToItem = useCallback((idx: number) => {
+    if (typeof window === "undefined" || window.innerWidth >= 768) return;
 
-    // ZKB mappings with precise intent
-    if (company.includes('zürcher kantonalbank')) {
-      const isSchnupper = program.includes('schnupper');
-      const hasKVBank = program.includes('kv branche bank');
-      const hasInformatik = program.includes('informatik');
-      const hasMediamatik = program.includes('mediamatik');
-      const hasEDB = program.includes('entwicklung digitales business') || program.includes('edb');
+    setTimeout(() => {
+      const button = buttonRefs.current[idx];
+      if (!button) return;
 
-      if (isSchnupper && hasKVBank) {
-        return dynamic(() => import('../experience/ZkbParcoursKVBank'), { ssr: false });
-      }
-      if (isSchnupper && hasInformatik) {
-        return dynamic(() => import('../experience/kantonalbankinfoschpark'), { ssr: false });
-      }
-      if (!isSchnupper && hasMediamatik) {
-        return dynamic(() => import('../experience/KBInfoKVMediamatik'), { ssr: false });
-      }
-      if (!isSchnupper && (hasEDB || (hasInformatik && program.includes('&')))) {
-        return dynamic(() => import('../experience/KBInforInformatikBus'), { ssr: false });
-      }
-    }
+      const rect = button.getBoundingClientRect();
+      const headerHeight = 80;
+      const extraOffset = 20;
+      const targetScroll = window.scrollY + rect.top - headerHeight - extraOffset;
 
-    // Other companies
-    if (company.includes('ewz')) {
-      return dynamic(() => import('../experience/Ewz'), { ssr: false });
-    }
-    if (company.includes('ubs')) {
-      return dynamic(() => import('../experience/ubs'), { ssr: false });
-    }
-    if (company.includes('kornhaus')) {
-      return dynamic(() => import('../experience/kornhaus'), { ssr: false });
-    }
-    if (company.includes('ergon smart software')) {
-      return dynamic(() => import('../experience/ergon'), { ssr: false });
-    }
-    if (company.includes('e. weber & cie ag')) {
-      return dynamic(() => import('../experience/weber'), { ssr: false });
-    }
-    if (company.includes('sunrise')) {
-      return dynamic(() => import('../experience/sunrise'), { ssr: false });
-    }
-    if (company.includes('post immobilien')) {
-      return dynamic(() => import('../experience/post'), { ssr: false });
-    }
-    return null;
-  }, [selectedIndex, sorted]);
+      window.scrollTo({ top: targetScroll, behavior: "smooth" });
+    }, 150);
+  }, []);
+
+  const handleSelect = useCallback(
+    (idx: number) => {
+      const isOpen = openIndex === idx;
+      setOpenIndex(isOpen ? null : idx);
+      setSelectedIndex(idx);
+      scrollToItem(idx);
+    },
+    [openIndex, scrollToItem]
+  );
 
   return (
-    <section id="experience" className="pt-16 md:pt-16 pb-16 bg-rose-50/60 dark:bg-slate-900/50 backdrop-blur-sm section-anchor" style={{ scrollMarginTop: '120px' }}>
+    <section
+      id="experience"
+      className="pt-16 md:pt-16 pb-16 bg-rose-50/60 dark:bg-slate-900/50 backdrop-blur-sm section-anchor"
+      style={{ scrollMarginTop: "120px" }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={prefersReducedMotion ? false : { opacity: 0, y: 50 }}
@@ -103,105 +94,92 @@ export default function ExperienceAccordion({ items }: Props) {
           viewport={{ once: true }}
           className="text-center mb-8"
         >
-          <h3 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Erfahrungen und Schnupperlehren</h3>
+          <h3 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">
+            Erfahrungen und Schnupperlehren
+          </h3>
         </motion.div>
 
         <div className="md:grid md:grid-cols-[340px,1fr] md:gap-6">
-          {/* Sol: Liste */}
           <div className="space-y-3">
-          {sorted.map((exp, idx) => {
-            const isOpen = openIndex === idx;
-            const isSelected = selectedIndex === idx;
-            return (
-              <div key={`${exp.company}-${idx}`} className="w-full rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow">
-                {/* Header */}
-                <button
-                  ref={(el) => {
-                    buttonRefs.current[idx] = el;
-                  }}
-                  type="button"
-                  aria-expanded={isOpen}
-                  onClick={(e) => { 
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    setOpenIndex(isOpen ? null : idx); 
-                    setSelectedIndex(idx); 
-                    
-                    // Mobilde scroll pozisyonunu ayarla
-                    if (window.innerWidth < 768) {
-                      setTimeout(() => {
-                        const button = buttonRefs.current[idx];
-                        if (button) {
-                          const rect = button.getBoundingClientRect();
-                          const headerHeight = 80; // Header yüksekliği
-                          const extraOffset = 20; // Ekstra boşluk
-                          const targetScroll = window.scrollY + rect.top - headerHeight - extraOffset;
-                          
-                          window.scrollTo({
-                            top: targetScroll,
-                            behavior: 'smooth'
-                          });
-                        }
-                      }, 150); // Biraz daha uzun gecikme
-                    }
-                  }}
-                  onTouchEnd={(e) => {
-                    // Touch event'ler için ek kontrol
-                    if (window.innerWidth < 768) {
-                      e.preventDefault();
-                      
-                      // Kart durumunu güncelle
-                      setOpenIndex(isOpen ? null : idx);
-                      setSelectedIndex(idx);
-                      
-                      setTimeout(() => {
-                        const button = buttonRefs.current[idx];
-                        if (button) {
-                          const rect = button.getBoundingClientRect();
-                          const headerHeight = 80;
-                          const extraOffset = 20;
-                          const targetScroll = window.scrollY + rect.top - headerHeight - extraOffset;
-                          
-                          window.scrollTo({
-                            top: targetScroll,
-                            behavior: 'smooth'
-                          });
-                        }
-                      }, 200);
-                    }
-                  }}
-                  className={`w-full text-left px-5 py-4 flex items-center justify-between gap-4 transition-colors duration-200 ${isSelected ? 'bg-rose-50/80 dark:bg-rose-900/25' : 'bg-white dark:bg-slate-800'} hover:bg-rose-50/60 dark:hover:bg-rose-900/20`}
+            {sorted.map((exp, idx) => {
+              const isOpen = openIndex === idx;
+              const isSelected = selectedIndex === idx;
+
+              return (
+                <div
+                  key={`${exp.company}-${exp.program}-${idx}`}
+                  className="w-full rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow"
                 >
-                  <div className="min-w-0 flex-1 flex items-center gap-3">
-                    <span className="px-2 py-0.5 text-xs rounded bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-200">{exp.date}</span>
-                    <span className="font-semibold text-slate-900 dark:text-white truncate flex-1">{exp.company}</span>
-                  </div>
-                  <div className="flex items-center justify-end gap-3 shrink-0">
-                    <svg className={`w-4 h-4 ${isSelected ? 'text-rose-600 dark:text-rose-300' : 'text-slate-500'}`} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                      {isSelected ? (
-                        <path d="M13 5l-5 5 5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      ) : (
-                        <path d="M7 5l5 5-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      )}
-                    </svg>
-                  </div>
-                </button>
-                {/* Mobile detail: show selected item's component under the header */}
-                {selectedIndex === idx && SelectedDetail && (
-                  <div className="md:hidden bg-white dark:bg-slate-900 px-5 pb-5">
-                    <SelectedDetail />
-                  </div>
-                )}
-              </div>
-            );
-          })}
+                  <button
+                    ref={(el) => {
+                      buttonRefs.current[idx] = el;
+                    }}
+                    type="button"
+                    aria-expanded={isOpen}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      handleSelect(idx);
+                    }}
+                    className={`w-full text-left px-5 py-4 flex items-center justify-between gap-4 transition-colors duration-200 ${
+                      isSelected
+                        ? "bg-rose-50/80 dark:bg-rose-900/25"
+                        : "bg-white dark:bg-slate-800"
+                    } hover:bg-rose-50/60 dark:hover:bg-rose-900/20`}
+                  >
+                    <div className="min-w-0 flex-1 flex items-center gap-3">
+                      <span className="px-2 py-0.5 text-xs rounded bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-200">
+                        {exp.date}
+                      </span>
+                      <span className="font-semibold text-slate-900 dark:text-white truncate flex-1">
+                        {exp.company}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-end gap-3 shrink-0">
+                      <svg
+                        className={`w-4 h-4 ${
+                          isSelected ? "text-rose-600 dark:text-rose-300" : "text-slate-500"
+                        }`}
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        {isSelected ? (
+                          <path
+                            d="M13 5l-5 5 5 5"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        ) : (
+                          <path
+                            d="M7 5l5 5-5 5"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        )}
+                      </svg>
+                    </div>
+                  </button>
+
+                  {selectedIndex === idx && selectedItem && (
+                    <div className="md:hidden bg-white dark:bg-slate-900 px-5 pb-5">
+                      <ExperienceDetail item={selectedItem} />
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
-          {/* Sağ: Detay alanı */}
+
           <div className="hidden md:block">
             <div className="sticky top-28 rounded-xl border border-rose-200/70 dark:border-slate-700/70 bg-white/70 dark:bg-slate-900/40 backdrop-blur-sm min-h-[380px] p-5">
-              {SelectedDetail ? (
-                <SelectedDetail />
+              {selectedItem ? (
+                <ExperienceDetail item={selectedItem} />
               ) : (
                 <div className="h-full w-full flex items-center justify-center text-slate-400">Platz frei</div>
               )}
@@ -212,5 +190,3 @@ export default function ExperienceAccordion({ items }: Props) {
     </section>
   );
 }
-
-
