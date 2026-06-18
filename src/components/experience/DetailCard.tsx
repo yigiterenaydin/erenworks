@@ -18,12 +18,21 @@ interface DetailCardProps {
  * Mobile: stacked – image on top, then title/description/actions.
  */
 export default function DetailCard({ title, subtitle, imageUrl, docUrl, children }: DetailCardProps) {
+  const hasValidDoc = Boolean(
+    docUrl &&
+      docUrl.toLowerCase().endsWith(".pdf") &&
+      !docUrl.toLowerCase().includes("/x.pdf")
+  );
+  const safeDocUrl = hasValidDoc && docUrl ? docUrl : undefined;
+  const primaryTarget = safeDocUrl || imageUrl;
+  const primaryLabel = safeDocUrl ? "PDF in neuem Tab öffnen" : "Bild in neuem Tab öffnen";
+
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-[220px,1fr] gap-4 items-start">
         {/* Thumbnail */}
         <div className="rounded-lg border border-rose-200/70 dark:border-slate-700/70 bg-white dark:bg-slate-900 p-2 shadow-sm flex justify-center">
-          <a href={imageUrl} target="_blank" rel="noopener noreferrer" className="block" aria-label="Bild in neuem Tab öffnen">
+          <a href={primaryTarget} target="_blank" rel="noopener noreferrer" className="block" aria-label={primaryLabel}>
             <Image
               src={imageUrl}
               alt={title}
@@ -48,22 +57,32 @@ export default function DetailCard({ title, subtitle, imageUrl, docUrl, children
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            {docUrl && (
-              <a
-                href={docUrl}
-                download
-                className="inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-full border border-slate-300/70 dark:border-slate-700 hover:bg-rose-50/60 dark:hover:bg-slate-800/60"
-              >
-                <FiFileText /> Beleg herunterladen
-              </a>
+            {safeDocUrl && (
+              <>
+                <a
+                  href={safeDocUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-full border border-slate-300/70 dark:border-slate-700 bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100 shadow-sm hover:bg-rose-50 hover:border-rose-300 dark:hover:bg-slate-800 dark:hover:border-rose-400 font-medium"
+                >
+                  <FiFileText /> PDF öffnen
+                </a>
+                <a
+                  href={safeDocUrl}
+                  download
+                  className="inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-full border border-slate-300/70 dark:border-slate-700 bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100 shadow-sm hover:bg-rose-50 hover:border-rose-300 dark:hover:bg-slate-800 dark:hover:border-rose-400 font-medium"
+                >
+                  <FiFileText /> Herunterladen
+                </a>
+              </>
             )}
             <a
-              href={imageUrl}
+              href={primaryTarget}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-full border border-slate-300/70 dark:border-slate-700 hover:bg-rose-50/60 dark:hover:bg-slate-800/60"
+              className="inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-full border border-slate-300/70 dark:border-slate-700 bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100 shadow-sm hover:bg-rose-50 hover:border-rose-300 dark:hover:bg-slate-800 dark:hover:border-rose-400 font-medium"
             >
-              <FiExternalLink /> Im neuen Tab öffnen
+              <FiExternalLink /> {safeDocUrl ? "Dokument in neuem Tab" : "Logo in neuem Tab"}
             </a>
           </div>
         </div>
