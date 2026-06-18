@@ -201,7 +201,7 @@ export const experienceItems: ExperienceItem[] = [
     imageUrl: "/assets/bilder/micom.png",
     pdfUrl: "/assets/pdfs/x.pdf",
     description:
-      "Im Rahmen meines Schnuppertags als Elektroinstallateur habe ich praktische Erfahrungen gesammelt, indem ich mit der Bohrmaschine gearbeitet, Kabel verlegt, Kanäle erstellt und Leitungen eingezogen habe.",
+      "Im Rahmen meines Schnuppertags als Elektroinstallateur habe ich praktische Erfahrungen gesammelt, indem ich mit der Bohrmaschine gearbeitet, Kabel verlegt, Steckdosen und Schalter vorbereitet Kanäle erstellt und Leitungen eingezogen habe.",
   },
       {
     date: "05/2026",
@@ -213,7 +213,7 @@ export const experienceItems: ExperienceItem[] = [
     imageUrl: "/assets/bilder/kasper.png",
     pdfUrl: "/assets/pdfs/x.pdf",
     description:
-      "Im Rahmen meines Schnuppertags als Elektroinstallateur habe ich praktische Erfahrungen gesammelt, indem ich mit der Bohrmaschine gearbeitet, Kabel verlegt, Kanäle erstellt und Leitungen eingezogen habe.",
+      "Im Rahmen meines Schnuppertags als Elektroinstallateur habe ich praktische Erfahrungen gesammelt, indem ich mit der Bohrmaschine gearbeitet, Kabel verlegt, Werkzeuge kennengelernt und richtig benutzt Kanäle erstellt und Leitungen eingezogen habe.",
   },
         {
     date: "06/2026",
@@ -225,7 +225,7 @@ export const experienceItems: ExperienceItem[] = [
     imageUrl: "/assets/bilder/sprecher.jpg",
     pdfUrl: "/assets/pdfs/sprecher.pdf",
     description:
-      "Im Rahmen meines Schnuppertags als Elektroinstallateur habe ich praktische Erfahrungen gesammelt, indem ich mit der Bohrmaschine gearbeitet, Kabel verlegt, Kanäle erstellt und Leitungen eingezogen habe.",
+      "Im Rahmen meines Schnuppertags als Elektroinstallateur habe ich praktische Erfahrungen gesammelt, indem ich mit der Bohrmaschine gearbeitet, Kabel verlegt, Einfache Montagearbeiten unter Anleitung durchgeführt Kanäle erstellt und Leitungen eingezogen habe.",
   },
    {
     date: "06/2026",
